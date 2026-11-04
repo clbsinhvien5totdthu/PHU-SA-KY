@@ -1,1 +1,30 @@
-# IQ-EQ-25
+# Phù Sa Ký – dự án game (Map 01)
+
+Chạy: `sh serve.sh` (hoặc `serve.bat`) rồi mở http://localhost:8080 — hoặc mở thẳng `index.html`.
+Tham số URL: `?skip` bỏ cảnh mở đầu · `?debug` bật dịch chuyển (phím 1–6) và hiển thị toạ độ.
+Offline: đặt `phaser.min.js` (3.80.1) vào `vendor/`. Chia sẻ 1 file: `python tools/build_single.py` → `dist/phu_sa_ky.html`.
+
+## Cấu trúc
+| Đường dẫn | Vai trò |
+|---|---|
+| `index.html` | Khung HTML/HUD + thứ tự nạp script (script thường, không cần bundler, chạy được qua file://) |
+| `css/style.css` | Toàn bộ giao diện (HUD, hộp thoại, cutscene) |
+| `js/psk.js` | `PSK`: cấu hình + bus sự kiện `ready · start · step · zone · end` |
+| `js/data/` | **Nội dung**: `quests.js` (nhiệm vụ, thoại), `characters.js` (hồ sơ nhân vật), `zones.js` (tên khu vực) |
+| `js/map.js` | Dựng bản đồ từ toạ độ sơ đồ thật; `Q` (config.js) là tỉ lệ ô/pixel sơ đồ |
+| `js/scene.js` | Phaser scene: sprite sinh bằng code, đối tượng, camera |
+| `js/cutscene.js`, `js/hud.js`, `js/ui.js`, `js/portraits.js` | Hệ thống tương ứng |
+| `js/plugins/` | Tính năng gắn thêm qua `PSK.on(...)` (xem `_template.js`) |
+| `data/` | Dữ liệu ngoài code: `sources.example.json` (cấu trúc tư liệu, tài liệu mục 11.1), `chapters.json` (8 chương; chưa được nạp) |
+| `assets/` | Chỗ đặt `audio/`, `img/`, `fonts/` khi thay đồ họa/âm thanh thủ tục bằng tài nguyên thật |
+| `docs/` | `INTEGRATION.md` và tài liệu thiết kế gốc |
+
+## Thêm gì ở đâu
+- **Bước nhiệm vụ / NPC mới:** thêm phần tử vào `STEPS` (`js/data/quests.js`): `{p:[x*Q,y*Q], o:'mục tiêu', run:()=>seq([[người nói, thoại, lựa chọn?], …], ()=>nx())}`. Toạ độ tính theo sơ đồ 800×600 rồi nhân `Q`.
+- **Nhân vật:** thêm vào `PC` (chân dung) và `CH` (hồ sơ) trong `js/data/characters.js`; sprite đi lại tạo bằng `chr(...)` trong `js/scene.js`.
+- **Chương/bản đồ mới:** tách `map.js` + `STEPS` theo chương, hoặc nạp lại scene với bộ dữ liệu khác; danh sách chương ở `data/chapters.json`.
+- **Âm thanh, lưu game, thống kê:** viết plugin dùng `PSK.on('step'|'zone'|'end')`.
+- **Đồ họa thật:** thêm `preload(){this.load.image(...)}` vào `class G` và thay các lệnh `mk(...)`/`chr(...)`.
+
+## Lưu ý nội dung (theo tài liệu thiết kế)
+Cuốn sách, ghi chú bên lề, thầy Lâm, "Người lái đò", An/Emma/Khoa, cô Hạnh, bác Tư và mọi lời thoại là **hư cấu**. Dữ kiện về di tích phải được ban quản lý đối chiếu trước khi khóa nội dung; không đặt câu đố ở khu mộ/nơi thờ tự; không gian Khmer (chương 7) cần cộng đồng duyệt.
