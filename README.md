@@ -15,7 +15,9 @@ Offline: đặt `phaser.min.js` (3.80.1) vào `vendor/`. Chia sẻ 1 file: `pyth
 | `js/scene.js` | Phaser scene: sprite sinh bằng code, đối tượng, camera |
 | `js/cutscene.js`, `js/hud.js`, `js/ui.js`, `js/portraits.js` | Hệ thống tương ứng |
 | `js/plugins/` | Tính năng gắn thêm qua `PSK.on(...)` (xem `_template.js`) |
+| `js/cutscene.js`, `js/cine_art.js` | Cutscene mở đầu dựng như phim: danh sách cú máy (`SH`), camera có thị sai, chuyển cảnh, ánh sáng/bloom/hạt phim; mỗi câu thoại tự đổi góc máy (`onLine`). Xem thử một cú máy: `CIN.preview('anA',3)` trong console |
 | `js/plugins/music.js` | Nhạc nền khu di tích (`assets/audio/sang_mekong_delta.mp3`), phím **U** bật/tắt, tự nhỏ lại khi có hội thoại |
+| `js/plugins/sfx_ui.js`, `js/data/sfxdata.js` | Hiệu ứng âm thanh: bước chân (cỏ/sỏi), bấm nút, thông báo, xong mục tiêu. Mẫu gốc ở `assets/audio/sfx/src/`, bản đã xử lý ở `assets/audio/sfx/*.wav`; `sfxdata.js` là bản nhúng base64 của các file này |
 | `data/` | Dữ liệu ngoài code: `sources.example.json` (cấu trúc tư liệu, mục 11.1); khung 8 chương nay ở `js/data/chapters.js` |
 | `assets/` | Chỗ đặt `audio/`, `img/`, `fonts/` khi thay đồ họa/âm thanh thủ tục bằng tài nguyên thật |
 | `docs/` | `INTEGRATION.md` và tài liệu thiết kế gốc |

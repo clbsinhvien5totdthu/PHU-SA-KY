@@ -72,7 +72,7 @@ update(t,dt){const sc=this,pl=this.pl,S=STEPS[st.step];if(ended)return;
  let vx=0,vy=0;if(!busy&&!nbOpen){if(kd.arrowleft||kd.a)vx--;if(kd.arrowright||kd.d)vx++;if(kd.arrowup||kd.w)vy--;if(kd.arrowdown||kd.s)vy++;
   const p=this.input.activePointer;if(!vx&&!vy&&p.isDown){const w=this.cam.getWorldPoint(p.x,p.y),dx=w.x-pl.x,dy=w.y-pl.y+6,h=Math.hypot(dx,dy);if(h>5){vx=dx/h;vy=dy/h}}}
  if(vx||vy){const l=Math.hypot(vx,vy),sp=84*dt/1000;vx=vx/l*sp;vy=vy/l*sp;const bk=(x,y)=>[[-4,0],[4,0],[-4,-3],[4,-3]].some(([a,b])=>B[Math.floor((y+b)/T)]?.[Math.floor((x+a)/T)]!==0);
-  if(!bk(pl.x+vx,pl.y))pl.x+=vx;if(!bk(pl.x,pl.y+vy))pl.y+=vy;this.d=Math.abs(vx)>Math.abs(vy)?(vx<0?2:3):(vy<0?1:0);this.wt+=dt}
+  if(!bk(pl.x+vx,pl.y))pl.x+=vx;if(!bk(pl.x,pl.y+vy))pl.y+=vy;this.d=Math.abs(vx)>Math.abs(vy)?(vx<0?2:3):(vy<0?1:0);this.wt+=dt;const sk=this.wt/300|0;if(sk!==this.sk){this.sk=sk;window.SFX&&SFX.step(M[Math.floor((pl.y-1)/T)]?.[Math.floor(pl.x/T)])}}
  pl.setTexture('a'+this.d+((this.wt/150|0)%2)).setDepth(pl.y);hudTick(this,dt);
  if(S){this.arr.setVisible(!S.zone||qt<20).setX(S.p[0]*T).setDepth(9999);if(!this.arr.tw)this.arr.tw=1;this.arr.y=S.p[1]*T-30+Math.sin(t/220)*3;
   near=!busy&&Math.hypot(pl.x-S.p[0]*T,pl.y-S.p[1]*T)<26&&!S.zone;$('act').style.display=near&&!nbOpen?'block':'none';
