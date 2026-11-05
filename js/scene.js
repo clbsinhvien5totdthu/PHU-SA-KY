@@ -42,28 +42,27 @@ const AN={ha:0x1b1b1b,sk:0xf0c8a0,sh:0xdfe6ee,pa:0x2c3e6b,bag:0xa0622d,pk:0xc48a
 for(let d=0;d<4;d++)for(let f=0;f<2;f++)chr('a'+d+f,AN,d,f);
 chr('emma',{ha:0x6b4423,sk:0xf3d0b0,sh:0xf2d27a,pa:0x3a5a8c,hp:1,rec:1,long:1});chr('khoa',{ha:0x222222,sk:0xe8bd90,sh:0x2a6f6a,pa:0x444444,strap:1,ph:1});chr('tu',{ha:0xcfcfcf,sk:0xc99b70,sh:0x6f7d5a,pa:0x3a3a2a,scarf:1,wr:1});
 mk('eng',14,10,P=>{P(0,1,9,12,1,.3);P(0x4a5a4a,1,3,10,6);P(0x6a7a6a,1,3,10,2);P(0xb33,3,1,3,2);P(0x222,10,5,3,3)});
-const ob=(k,cx,cy)=>{const f=sc.textures.get(k).getSourceImage(),w=f.width/T*SS,h=f.height/T*SS,x0=cx*Q-w/2,y0=cy*Q-h/2;sc.add.image(x0*T,(y0+h)*T,k).setOrigin(0,1).setScale(SS).setDepth((y0+h)*T);for(let i=0;i<Math.ceil(w);i++)for(let j=0;j<Math.ceil(h);j++){const X=Math.floor(x0)+i,Y=Math.floor(y0)+j;if(B[Y]?.[X]===0)B[Y][X]=1}};
+const ob=(k,cx,cy,m=1)=>{const f=sc.textures.get(k).getSourceImage(),w=f.width/T*SS*m,h=f.height/T*SS*m,x0=cx*Q-w/2,y0=cy*Q-h/2;sc.add.image(x0*T,(y0+h)*T,k).setOrigin(0,1).setScale(SS*m).setDepth((y0+h)*T);for(let i=0;i<Math.ceil(w);i++)for(let j=0;j<Math.ceil(h);j++){const X=Math.floor(x0)+i,Y=Math.floor(y0)+j;if(B[Y]?.[X]===0)B[Y][X]=1}};
 const lab=(x,y,t,c='#fff')=>sc.add.text(x*Q*T,y*Q*T,t,{fontFamily:'Pixelify Sans,sans-serif',fontSize:'6px',color:c,stroke:'#3b2412',strokeThickness:2,align:'center'}).setOrigin(.5).setResolution(4).setDepth(9998);
-/* Công trình: toạ độ px theo ảnh sơ đồ thật */
-[['exh',292,306],['bql',372,489],['san',385,392],['dt',409,303],['nd',347,310],['chua',438,228],['stat',483,343],['cafe',647,490]].forEach(a=>ob(...a));
-[[465,316],[458,376],[494,421],[540,431],[577,406],[615,422],[573,448],[640,372],[660,442],[630,504],[594,508]].forEach(([x,y])=>ob('th2',x,y));
-[['pk',422,370],['pk',247,464],['pk',544,492],['pk',252,414],['pk',252,432],['bl',248,449],['bl',568,352],['bl',569,370],['bl',606,343],['bl',456,483],['bg',673,406],['mr',215,358],['mr',252,358],['mr',251,384],['bk',212,239],['bk',236,426],['bk',692,385],['bk',559,527],['bk',418,308]].forEach(a=>ob(...a));
-sc.add.image(375*Q*T,246*Q*T,'tomb').setOrigin(.5,1).setScale(1.3).setDepth(246*Q*T);
-sc.add.rectangle(393*Q*T,194*Q*T,25*Q*T,52*Q*T).setOrigin(0).setStrokeStyle(2,0xc9c5b8).setDepth(2);sc.add.circle(375*Q*T,270*Q*T,24*Q*T).setStrokeStyle(2,0xd8d4c6).setDepth(2);sc.add.star(375*Q*T,270*Q*T,5,4,11,0x3f8f3a).setDepth(3);
-LBL.filter(l=>l[6]!='needs_verification'||PSK.cfg.debug).forEach(([x,y,t,c])=>lab(x,y,t,c));
-GATES.forEach(([gx,gy,n,a,b,x,y])=>{sc.add.image(x*Q*T,y*Q*T,'rg').setDepth(y*Q*T-1);lab(x,y-12,n,'#ffd27a')});sc.add.image(440*Q*T,343*Q*T,'rg').setAngle(90).setDepth(9000);
+/* Công trình: đặt theo 51 hạng mục của sơ đồ chuẩn (features.js), toạ độ px sơ đồ đã cắt khung — chỉ vẽ hình dáng, không thêm công trình ngoài sơ đồ */
+FT.forEach(f=>{const id=f[1],x=f[7],y=f[8],S=SPR[id],MU=MULTI[id];if(S)ob(S[0],x,y,S[1]);if(MU)MU[1].forEach(([dx,dy])=>ob(MU[0],x+dx,y+dy));
+ if(['A4_NHA_KIENG','B2_DIEU_KHAC_1','B3_DIEU_KHAC_2'].includes(id))sc.add.star(x*Q*T,y*Q*T,4,2.2,5.5,0xffd27a).setStrokeStyle(1,0x3b2412).setDepth(5)});
+const tb=FID.A1_MO_CU;sc.add.image(tb[7]*Q*T,(tb[8]+30)*Q*T,'tomb').setOrigin(.5,1).setScale(1.9).setDepth((tb[8]+30)*Q*T);for(let y=63;y<=69;y++)for(let x=104;x<=113;x++)B[y][x]=1;
+CHUA.forEach(([c,r,w,h])=>{sc.add.rectangle(c*T,r*T,w*T,h*T,0xe9e5d8).setOrigin(0).setStrokeStyle(2,0x3b3a36).setDepth(3);for(let y=r;y<r+h;y++)for(let x=c;x<c+w;x++)B[y][x]=1});
+sc.add.rectangle(115*T,60*T,8*T,15*T).setOrigin(0).setStrokeStyle(2,0xe9e5d8).setDepth(3);sc.add.rectangle(116*T,61*T,6*T,13*T).setOrigin(0).setStrokeStyle(1,0xe9e5d8).setDepth(3);
+sc.add.polygon(0,0,[[162.5,121],[165,116],[167,118],[165,124]].map(([x,y])=>[x*T,y*T]).flat(),0,0).setOrigin(0).setStrokeStyle(2,0xffffff).setDepth(3);
+sc.add.rectangle(141*T,148*T,9*T,8*T).setOrigin(0).setStrokeStyle(2,0xffffff).setDepth(3);
+LBL.filter(l=>!HIDE.has(l[7])||PSK.cfg.debug).forEach(([x,y,t,c,,,,id])=>lab(x,y,t,PSK.cfg.debug&&VERIFY.has(id)?'#ffb4a8':c||'#fff'));
+GATES.forEach(([gx,gy,n,a,b,x,y])=>{sc.add.image(x*Q*T,y*Q*T,'rg').setDepth(y*Q*T-1);if(n)lab(x,y-14,n,'#ffd27a')});
 const tree=(x,y,k)=>{if(B[y]?.[x]!==0)return;B[y][x]=1;sc.add.image((x+.5)*T,(y+1)*T,k).setOrigin(.5,1).setDepth((y+1)*T)};
-[[340,150],[418,158],[345,325],[345,205],[418,325],[360,190],[400,186]].forEach(([x,y])=>{const a=Math.floor(x*Q),b=Math.floor(y*Q);M[b]?.[a]==4&&tree(a,b,'tree')});
-let n=0;for(let a=0;a<9000&&n<300;a++){const x=R()*W|0,y=R()*H|0;if(M[y][x]!=0||B[y][x]||STEPS.some(t=>Math.hypot(x+.5-t.p[0],y+.5-t.p[1])<3))continue;let ok=1;for(let i=-1;i<=1;i++)for(let j=-1;j<=1;j++)if([1,5,7,8,2].includes(M[y+j]?.[x+i]))ok=0;if(ok){tree(x,y,x>52?'palm':'tree');n++}}
-for(let i=0;i<110;i++){const x=58+R()*20|0,y=70+R()*16|0;if(M[y][x]==2){const p=sc.add.image(x*T+R()*8,y*T+R()*8,R()<.3?'flw':'pad').setDepth(2);sc.tweens.add({targets:p,y:p.y+1.5,yoyo:true,repeat:-1,duration:1500+R()*1500})}}
-for(let i=0;i<450;i++){const x=R()*W|0,y=R()*H|0;if(M[y][x]==2){const p=sc.add.image(x*T+R()*12,y*T+R()*14,'sp').setDepth(2).setAlpha(0);sc.tweens.add({targets:p,alpha:.8,yoyo:true,repeat:-1,duration:700+R()*1200,delay:R()*2000})}}
+MAPDATA.TREES.forEach(([x,y])=>tree(x,y,'tree'));
+for(let i=0;i<260;i++){const hs=R()<.6,x=hs?88+R()*24|0:50+R()*28|0,y=hs?109+R()*22|0:70+R()*34|0;if(M[y][x]==2){const p=sc.add.image(x*T+R()*8,y*T+R()*8,R()<.3?'flw':'pad').setDepth(2);sc.tweens.add({targets:p,y:p.y+1.5,yoyo:true,repeat:-1,duration:1500+R()*1500})}}
+for(let i=0;i<700;i++){const x=R()*W|0,y=R()*H|0;if(M[y][x]==2){const p=sc.add.image(x*T+R()*12,y*T+R()*14,'sp').setDepth(2).setAlpha(0);sc.tweens.add({targets:p,alpha:.8,yoyo:true,repeat:-1,duration:700+R()*1200,delay:R()*2000})}}
 for(let i=0;i<60;i++){const p=sc.add.image(R()*W*T,R()*H*T,'lf').setDepth(9000).setAlpha(0);sc.tweens.add({targets:p,x:'+=40',y:'+=55',alpha:{from:0,to:1},duration:6000+R()*4000,delay:R()*5000,repeat:-1})}
-for(let a=0,k=0;a<6000&&k<70;a++){const x=R()*W|0,y=R()*H|0;if(M[y][x]!=6)continue;let rdn=0,bad=0;for(let i=-5;i<=5;i++)for(let j=-5;j<=5;j++){const m=M[y+j]?.[x+i],d=Math.max(Math.abs(i),Math.abs(j));if(m==9&&d<=5)rdn=1;if((m==9&&d<=2)||(d<=2&&(m==0||m==3||m==2)))bad=1}if(rdn&&!bad){ob(pick(['th2','dt','bql','nd']),(x+.5)/Q,(y+.5)/Q);k++}}
-for(let a=0,k=0;a<2000&&k<90;a++){const x=R()*W|0,y=R()*H|0;if(M[y][x]==6&&R()<.5){sc.add.image((x+.5)*T,(y+1)*T,'palm').setOrigin(.5,1).setDepth((y+1)*T);k++}}
 const npc=(k,x,y)=>sc.add.image(x*Q*T,y*Q*T,k).setOrigin(.5,1).setDepth(y*Q*T);
-npc('emma',262,474);npc('khoa',284,474);npc('tu',460,392);
-sc.add.image(431*Q*T,424*Q*T,'boat').setOrigin(.5,1).setDepth(424*Q*T-1);sc.add.image(468*Q*T,394*Q*T,'eng').setOrigin(.5,1).setDepth(394*Q*T-1).setScale(1.2);
-const pl=sc.add.image(276*Q*T,478*Q*T,'a00').setOrigin(.5,1),arr=sc.add.image(0,0,'arr').setDepth(9999);
+npc('emma',620,1160);npc('khoa',676,1160);npc('tu',1108,952);
+sc.add.image(1136*T/8,952*T/8,'eng').setOrigin(.5,1).setDepth(952*T/8-1).setScale(1.2);
+const pl=sc.add.image(81.5*T,145*T,'a00').setOrigin(.5,1),arr=sc.add.image(0,0,'arr').setDepth(9999);
 
 const cam=sc.cameras.main;cam.setBounds(0,0,W*T,H*T);cam.startFollow(pl,true,.12,.12);
 const zoom=()=>cam.setZoom(Math.max(2,Math.round(Math.min(innerWidth/330,innerHeight/210))));zoom();sc.scale.on('resize',zoom);

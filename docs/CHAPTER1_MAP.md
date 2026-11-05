@@ -8,7 +8,7 @@
 | 4 | Nhà trưng bày: dòng thời gian, đối chiếu ghi chú | Nhiệm vụ chính 01 |
 | 5 | Nhà sàn mô phỏng | §5.2 |
 | 6 | Bác Tư, làng Hòa An | Nhiệm vụ chính 02, §8.2 |
-| 7 | Bến sổ: ba cột, giữ dấu hỏi hay điền tên | Nhiệm vụ chính 03 |
+| 7 | Bến sổ (chỗ đứng cạnh bờ Hồ Sen, không dựng bến thật): ba cột, giữ dấu hỏi hay điền tên | Nhiệm vụ chính 03 |
 | 8 | Cổng số 2: ký hiệu, bản ghi âm | §5.4 |
 Không có thanh điểm đúng/sai (§6.4): lựa chọn chỉ đổi thái độ NPC và chú giải cuối chương.
 

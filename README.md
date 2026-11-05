@@ -11,7 +11,7 @@ Offline: đặt `phaser.min.js` (3.80.1) vào `vendor/`. Chia sẻ 1 file: `pyth
 | `css/style.css` | Toàn bộ giao diện (HUD, hộp thoại, cutscene) |
 | `js/psk.js` | `PSK`: cấu hình + bus sự kiện `ready · start · step · zone · end` |
 | `js/data/` | **Nội dung**: `quests.js` (nhiệm vụ, thoại), `characters.js` (hồ sơ nhân vật), `zones.js` (tên khu vực) |
-| `js/map.js` | Dựng bản đồ từ toạ độ sơ đồ thật; `Q` (config.js) là tỉ lệ ô/pixel sơ đồ |
+| `js/map.js`, `js/data/mapdata.js` | Nạp lưới 230×176 ô sinh bởi `tools/build_map.py` từ sơ đồ chuẩn (đừng sửa tay mapdata.js) |
 | `js/scene.js` | Phaser scene: sprite sinh bằng code, đối tượng, camera |
 | `js/cutscene.js`, `js/hud.js`, `js/ui.js`, `js/portraits.js` | Hệ thống tương ứng |
 | `js/plugins/` | Tính năng gắn thêm qua `PSK.on(...)` (xem `_template.js`) |
@@ -20,7 +20,7 @@ Offline: đặt `phaser.min.js` (3.80.1) vào `vendor/`. Chia sẻ 1 file: `pyth
 | `docs/` | `INTEGRATION.md` và tài liệu thiết kế gốc |
 
 ## Thêm gì ở đâu
-- **Bước nhiệm vụ / NPC mới:** thêm phần tử vào `STEPS` (`js/data/quests.js`): `{p:[x*Q,y*Q], o:'mục tiêu', run:()=>seq([[người nói, thoại, lựa chọn?], …], ()=>nx())}`. Toạ độ tính theo sơ đồ 800×600 rồi nhân `Q`.
+- **Bước nhiệm vụ / NPC mới:** thêm phần tử vào `STEPS` (`js/data/quests.js`): `{p:[x*Q,y*Q], o:'mục tiêu', run:()=>seq([[người nói, thoại, lựa chọn?], …], ()=>nx())}`. Toạ độ `p` là ô lưới (col,row) của sơ đồ chuẩn 230×176; tra ô trong `js/data/features.js`.
 - **Nhân vật:** thêm vào `PC` (chân dung) và `CH` (hồ sơ) trong `js/data/characters.js`; sprite đi lại tạo bằng `chr(...)` trong `js/scene.js`.
 - **Chương/bản đồ mới:** tách `map.js` + `STEPS` theo chương, hoặc nạp lại scene với bộ dữ liệu khác; danh sách chương ở `data/chapters.json`.
 - **Âm thanh, lưu game, thống kê:** viết plugin dùng `PSK.on('step'|'zone'|'end')`.

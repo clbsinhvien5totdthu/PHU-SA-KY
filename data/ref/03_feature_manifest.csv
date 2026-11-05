@@ -1,0 +1,52 @@
+﻿num,id,name_vi,zone,feature_type,x_px,y_px,tile_col,tile_row,u,v,symbol_on_map,confidence,spatial_status,status,notes
+1,A1_MO_CU,Mộ cụ,A,tomb,908,585,108,68,0.472,0.387,"Biểu tượng vòm tròn nhiều cánh, nằm trong mảng xanh lục đậm",B,approximate,provisional,Trục chính của khu mộ; dùng sprite riêng (vòm mái cánh sen)
+2,A2_HO_SAO,Hồ Sao,A,water,916,688,109,81,0.476,0.460,Hồ hình ngôi sao nằm trong vòng tròn bao,B,approximate,provisional,Giữ đúng số cánh sao; không đổi thành hồ tròn
+3,A3_DEN_THO,Đền thờ cụ,A,temple,986,820,118,97,0.514,0.554,"Biểu tượng bát giác nhiều cạnh, cạnh một WC nhỏ",B,approximate,provisional,Mặt bằng bát giác; chỉ dựng đúng hình dạng này
+4,A4_NHA_KIENG,Nhà kiểng,A,building,851,805,101,95,0.441,0.543,Nhãn xoay dọc ở mép trái sân Hồ Sao,B,approximate,provisional,"Chưa có footprint rõ; chỉ ghi nhãn, chờ xác minh"
+5,A5_CONG_MO,Cổng vào mộ cụ,A,gate,915,872,109,104,0.476,0.591,Chữ nhật cam trên mép dưới mảng xanh,B,approximate,provisional,Cửa vào từ trục ngang phía dưới
+6,A6_CHUA_HOA_LONG,Chùa Hòa Long,A,building,1060,560,127,65,0.554,0.369,Dãy khối chữ nhật nối nhau cạnh kênh,B,approximate,provisional,Có trên sơ đồ nhưng chưa có trong cẩm nang v1.1; cần xác minh chức năng
+7,A7_WC_DEN,WC (cạnh Đền thờ),A,service,1017,798,122,94,0.531,0.538,Ô vuông đen nhỏ,B,approximate,provisional,Dịch vụ; kiểm tra tình trạng hiện nay
+8,B1_NHA_TRUNG_BAY,Nhà trưng bày,B,building,709,800,83,95,0.364,0.540,Khối lưới hình chữ nhật có khung bao,B,approximate,provisional,Chưa rõ là Nhà trưng bày nào; không gộp với nhà trưng bày HCM
+9,B2_DIEU_KHAC_1,Điêu khắc Trống đồng & 9 đầu rồng,B,sculpture,680,660,80,77,0.348,0.440,Nhãn nhỏ cạnh lối vòng,B,approximate,provisional,Chưa có footprint; đánh dấu điểm
+10,B3_DIEU_KHAC_2,Điêu khắc Hoa sen & 12 con giáp,B,sculpture,560,716,65,84,0.283,0.480,Nhãn nhỏ cạnh vùng nước,B,approximate,provisional,Chưa có footprint; đánh dấu điểm
+11,B4_WC,WC (góc trên trái),B,service,535,640,61,75,0.269,0.426,Ô vuông đen nhỏ,B,approximate,provisional,Dịch vụ
+12,B5_NUOC_TRAI,Mặt nước (nhiều nhánh),B,water,580,770,67,91,0.293,0.518,"Vùng xanh nhạt uốn cong, gồm nhiều dải",B,approximate,provisional,Không gộp thành một hồ; trace từng dải
+13,G4_CONG_4,Cổng số 4,B,gate,467,885,53,105,0.232,0.600,"Chữ nhật cam ở cạnh trái, nhãn xoay dọc",B,approximate,provisional,"Giữ số 4 ở cạnh trái, gần mép Via hè"
+14,C1_DIEM_DUNG_CHAN,Điểm dừng chân (cụm 3 ô),C,service,639,957,74,114,0.326,0.651,"3 ô vuông đen có viền (trên trái, trên phải, dưới phải)",B,approximate,provisional,Chưa rõ chức năng chi tiết; giữ đúng 3 ô
+15,C2_WC,WC (trái dưới),C,service,609,1083,71,130,0.309,0.741,Ô vuông đen,B,approximate,provisional,Dịch vụ
+16,C3_DIEM_DUNG_CHAN,Điểm dừng chân (ô xanh),C,service,637,1136,74,137,0.324,0.778,Ô vuông xanh dương,B,approximate,provisional,Dịch vụ
+17,C4_QUAY_LUU_NIEM,Quầy lưu niệm (trái),C,service,637,1170,74,141,0.324,0.803,Ô vuông hồng nhạt,B,approximate,provisional,Dịch vụ
+18,G1_CONG_1,Cổng số 1,C,gate,688,1222,81,147,0.352,0.839,Chữ nhật cam ở mép dưới trái,B,approximate,provisional,Giữ đúng số 1; lối bộ có mũi tên đi lên
+19,D1_HO_SEN,Hồ Sen,D,water,815,1010,96,121,0.421,0.689,"Mảng nước xanh nhạt hình đa giác, có cây rải quanh",B,approximate,provisional,Giữ đường bờ; cây là lớp phụ
+20,D2_NHA_SAN,Nhà sàn,D,building,943,1002,112,120,0.491,0.683,Khối lưới đen cạnh lối vòng,B,approximate,provisional,"Mô hình nhà sàn: sprite riêng (sàn nâng, hàng cột, mái)"
+21,D3_QUAY_LUU_NIEM,Quầy lưu niệm (cạnh Nhà sàn),D,service,1027,935,123,111,0.536,0.636,Ô vuông hồng nhạt,B,approximate,provisional,Dịch vụ
+22,D4_BAN_QUAN_LY,Ban quản lý khu di tích,D,building,916,1228,109,148,0.476,0.844,Khối đen có nhiều ô,B,approximate,provisional,Footprint rõ trên sơ đồ
+23,D5_LOI_BO,Lối bộ xanh (mũi tên đi lên),D,path,686,1013,80,121,0.351,0.691,"Dải xanh lá hẹp, mũi tên vàng",B,approximate,provisional,Trục từ Cổng số 1 đi lên
+24,G2_CONG_2,Cổng số 2,E,gate,1255,1327,151,160,0.660,0.914,Chữ nhật cam ở mép dưới phải,B,approximate,provisional,Đã có ảnh thực địa
+25,E1_BAI_XE,Bãi xe,E,service,1173,1262,141,152,0.616,0.868,Vùng viền trắng cạnh dải nước hẹp,B,approximate,provisional,Chưa có footprint rõ
+26,E2_DIEM_DUNG_CHAN,Điểm dừng chân (cạnh bãi xe),E,service,1105,1213,133,146,0.579,0.833,Ô vuông xanh dương,B,approximate,provisional,Dịch vụ
+27,E3_QUAY_LUU_NIEM,Quầy lưu niệm (gần Cổng 2),E,service,1310,1235,158,149,0.690,0.849,Ô vuông hồng nhạt,B,approximate,provisional,Khớp với dãy ki-ốt trong ảnh thực địa (cần xác minh)
+28,E4_NHA_CHU_DINH_1,Nhà chữ đinh 1,E,house,1421,1259,172,152,0.751,0.866,"Khối lưới đen, phần nhô hình chữ đinh",B,approximate,provisional,Nhà truyền thống gần Cổng số 2
+29,E5_WC,WC (gần Cổng 2),E,service,1337,1310,162,158,0.705,0.902,Ô vuông đen nhỏ,B,approximate,provisional,Dịch vụ
+30,F1_NHA_NOC_NGUA_1,Nhà nọc ngựa 1,F,house,1126,817,135,97,0.590,0.552,Khối lưới đen gần kênh,B,approximate,provisional,Nhà truyền thống
+31,F2_TUONG_CU,Tượng cụ,F,statue,1166,866,140,103,0.612,0.587,Vòng tròn đồng tâm có tượng,B,approximate,provisional,Điểm nhấn trục; giữ nguyên dạng tròn
+32,F3_DIEM_DUNG_CHAN,Điểm dừng chân (2 ô xanh),F,service,1371,922,166,110,0.723,0.626,2 ô vuông xanh dương xếp dọc,B,approximate,provisional,Dịch vụ
+33,F4_NHA_BAT_DAN_1,Nhà bát dần 1,F,house,1110,963,133,115,0.582,0.656,Khối lưới đen cạnh ao nhỏ,B,approximate,provisional,Nhà truyền thống
+34,F5_NHA_ONG_NAM_GIAO,Nhà ông Năm Giáo,F,house,1194,1069,144,128,0.627,0.731,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
+35,F6_NHA_CU_SAC,Nhà Cụ Sắc,F,house,1300,1092,157,131,0.685,0.747,Khối lưới đen,B,approximate,provisional,Nhà trong làng; chưa xác minh có phải nhà trưng bày
+36,F7_NHA_CHU_DINH_2,Nhà chữ đinh 2,F,house,1387,1030,168,123,0.732,0.703,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
+37,F8_NHA_BAT_DAN_2,Nhà bát dần 2,F,house,1473,1067,179,128,0.779,0.729,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
+38,F9_NHA_ONG_CA_NHI_NGUU,Nhà ông Cả Nhị Ngưu,F,house,1373,1133,166,136,0.724,0.776,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
+39,F10_NHA_TREN_COC_2,Nhà trên cọc 2,F,house,1538,949,187,113,0.814,0.646,Khối lưới đen,B,approximate,provisional,"Nhà trên cọc (nhãn nhỏ, đọc lại khi có ảnh nét hơn)"
+40,F11_DIEM_DUNG_CHAN,Điểm dừng chân (góc trên phải),F,service,1460,876,177,104,0.772,0.594,Ô vuông xanh dương,B,approximate,provisional,Dịch vụ
+41,F12_WC,WC (phải),F,service,1663,977,202,117,0.882,0.665,Ô vuông đen,B,approximate,provisional,Dịch vụ
+42,F13_KHU_AM_THUC,Khu ẩm thực,F,service,1613,1028,196,123,0.855,0.702,Ô chữ nhật xanh dương lớn,B,approximate,provisional,Dịch vụ
+43,F14_NHA_TREN_COC_1,Nhà trên cọc 1,F,house,1579,1112,192,134,0.836,0.761,Khối lưới đen,B,approximate,provisional,Nhà trên cọc
+44,F15_CAFE_HOA_AN,Cafe Hòa An,F,service,1543,1226,187,148,0.817,0.842,Ô nhỏ đen cạnh Cổng khu ẩm thực,B,approximate,provisional,Dịch vụ
+45,F16_NHA_NOC_NGUA_2,Nhà nọc ngựa 2,F,house,1504,1256,183,152,0.796,0.864,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
+46,F17_KENH,Kênh nước uốn quanh làng,F,water,1111,660,133,77,0.582,0.440,"Dải xanh nhạt uốn cong, chạy từ phía trên xuống rồi vòng quanh cụm nhà",B,approximate,provisional,Trace liên tục; không làm thẳng
+47,G3_CONG_3,Cổng số 3,A,gate,777,521,92,60,0.401,0.342,Chữ nhật cam ở cạnh trên trái của mảng xanh,B,approximate,provisional,Có mũi tên vàng hướng xe khách vào
+48,GX_CONG_KHONG_NHAN,Cổng/cầu chưa có nhãn,F,gate,1069,883,128,105,0.559,0.599,"Chữ nhật cam trên kênh, nối trục ngang sang làng",B,approximate,provisional,Không có nhãn trên sơ đồ; không tự đặt tên
+49,GA_CONG_AM_THUC,Cổng khu ẩm thực,F,gate,1547,1250,188,151,0.819,0.859,Chữ nhật cam nhỏ ở góc phải dưới,B,approximate,provisional,Nhãn xoay chéo; giữ vị trí tương đối
+50,FX_KHOI_CHUA_NHAN,Khối viền trắng chưa có nhãn,F,building,1359,999,164,119,0.717,0.681,"Hình đa giác chỉ có đường viền, không tô đặc",B,approximate,provisional,"Không có nhãn; không tự đặt tên, đánh dấu cần xác minh"
+51,AX_MANG_CHU_NHAT,Mảng chữ nhật dài có đường bao (chưa có nhãn),A,garden,990,580,118,67,0.516,0.384,"Hình chữ nhật dài bên phải khu Mộ cụ, viền kép",B,approximate,provisional,"Không có nhãn; chưa rõ là hồ, sân hay vườn, không tự đặt tên"

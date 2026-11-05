@@ -1,674 +1,1432 @@
 [
  {
-  "id": "GATE_01",
-  "name_vi": "CỔNG SỐ 1",
-  "feature_type": "gate",
-  "source_id": [
-   "MAP_USER_01"
+  "id": "A1_MO_CU",
+  "name_vi": "Mộ cụ",
+  "feature_type": "tomb",
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.3375,
-   "v": 0.82
+   "u": 0.472,
+   "v": 0.387
+  },
+  "tile": {
+   "col": 108,
+   "row": 68,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Trục chính của khu mộ; dùng sprite riêng (vòm mái cánh sen)"
  },
  {
-  "id": "GATE_02",
-  "name_vi": "CỔNG SỐ 2",
-  "feature_type": "gate",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.6512,
-   "v": 0.8967
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
- },
- {
-  "id": "GATE_03",
-  "name_vi": "CỔNG SỐ 3",
-  "feature_type": "gate",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.4012,
-   "v": 0.3267
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
- },
- {
-  "id": "GATE_04",
-  "name_vi": "CỔNG SỐ 4",
-  "feature_type": "gate",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.2062,
-   "v": 0.565
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
- },
- {
-  "id": "GATE_05",
-  "name_vi": "CỔNG VÀO MỘ CỤ",
-  "feature_type": "gate",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.4675,
-   "v": 0.5617
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
- },
- {
-  "id": "GATE_06",
-  "name_vi": "CỔNG KHU ẨM THỰC",
-  "feature_type": "gate",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.8187,
-   "v": 0.84
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
- },
- {
-  "id": "BUILDING_01",
-  "name_vi": "NHÀ TRƯNG BÀY",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "A",
-  "position_norm": {
-   "u": 0.355,
-   "v": 0.55
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Chưa phân biệt nhà về cụ Nguyễn Sinh Sắc và Nhà trưng bày Chủ tịch Hồ Chí Minh – cần xác minh."
- },
- {
-  "id": "WATER_02",
-  "name_vi": "HỒ SEN",
+  "id": "A2_HO_SAO",
+  "name_vi": "Hồ Sao",
   "feature_type": "water",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.4062,
-   "v": 0.6517
+   "u": 0.476,
+   "v": 0.46
+  },
+  "tile": {
+   "col": 109,
+   "row": 81,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Giữ đúng số cánh sao; không đổi thành hồ tròn"
  },
  {
-  "id": "BUILDING_03",
-  "name_vi": "NHÀ SÀN",
+  "id": "A3_DEN_THO",
+  "name_vi": "Đền thờ cụ",
+  "feature_type": "temple",
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.514,
+   "v": 0.554
+  },
+  "tile": {
+   "col": 118,
+   "row": 97,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Mặt bằng bát giác; chỉ dựng đúng hình dạng này"
+ },
+ {
+  "id": "A4_NHA_KIENG",
+  "name_vi": "Nhà kiểng",
   "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
-  "confidence": "A",
+  "appearance_source_id": [],
+  "confidence": "B",
   "position_norm": {
-   "u": 0.485,
-   "v": 0.6833
+   "u": 0.441,
+   "v": 0.543
+  },
+  "tile": {
+   "col": 101,
+   "row": 95,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Chưa có footprint rõ; chỉ ghi nhãn, chờ xác minh"
  },
  {
-  "id": "MONUMENT_04",
-  "name_vi": "MỘ CỤ",
-  "feature_type": "monument",
-  "source_id": [
-   "MAP_USER_01"
+  "id": "A5_CONG_MO",
+  "name_vi": "Cổng vào mộ cụ",
+  "feature_type": "gate",
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
-  "confidence": "A",
+  "appearance_source_id": [],
+  "confidence": "B",
   "position_norm": {
-   "u": 0.47,
-   "v": 0.34
+   "u": 0.476,
+   "v": 0.591
+  },
+  "tile": {
+   "col": 109,
+   "row": 104,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Cửa vào từ trục ngang phía dưới"
  },
  {
-  "id": "WATER_05",
-  "name_vi": "HỒ SAO",
+  "id": "A6_CHUA_HOA_LONG",
+  "name_vi": "Chùa Hòa Long",
+  "feature_type": "building",
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.554,
+   "v": 0.369
+  },
+  "tile": {
+   "col": 127,
+   "row": 65,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Có trên sơ đồ nhưng chưa có trong cẩm nang v1.1; cần xác minh chức năng"
+ },
+ {
+  "id": "A7_WC_DEN",
+  "name_vi": "WC (cạnh Đền thờ)",
+  "feature_type": "service",
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.531,
+   "v": 0.538
+  },
+  "tile": {
+   "col": 122,
+   "row": 94,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ; kiểm tra tình trạng hiện nay"
+ },
+ {
+  "id": "B1_NHA_TRUNG_BAY",
+  "name_vi": "Nhà trưng bày",
+  "feature_type": "building",
+  "zone": "B",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.364,
+   "v": 0.54
+  },
+  "tile": {
+   "col": 83,
+   "row": 95,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Chưa rõ là Nhà trưng bày nào; không gộp với nhà trưng bày HCM"
+ },
+ {
+  "id": "B2_DIEU_KHAC_1",
+  "name_vi": "Điêu khắc Trống đồng & 9 đầu rồng",
+  "feature_type": "sculpture",
+  "zone": "B",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.348,
+   "v": 0.44
+  },
+  "tile": {
+   "col": 80,
+   "row": 77,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Chưa có footprint; đánh dấu điểm"
+ },
+ {
+  "id": "B3_DIEU_KHAC_2",
+  "name_vi": "Điêu khắc Hoa sen & 12 con giáp",
+  "feature_type": "sculpture",
+  "zone": "B",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.283,
+   "v": 0.48
+  },
+  "tile": {
+   "col": 65,
+   "row": 84,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Chưa có footprint; đánh dấu điểm"
+ },
+ {
+  "id": "B4_WC",
+  "name_vi": "WC (góc trên trái)",
+  "feature_type": "service",
+  "zone": "B",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.269,
+   "v": 0.426
+  },
+  "tile": {
+   "col": 61,
+   "row": 75,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
+ },
+ {
+  "id": "B5_NUOC_TRAI",
+  "name_vi": "Mặt nước (nhiều nhánh)",
   "feature_type": "water",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "B",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
-  "confidence": "A/B",
-  "position_norm": {
-   "u": 0.4688,
-   "v": 0.4367
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Nhãn đọc trên sơ đồ; game vẽ dạng ngôi sao lát sân tạm – cần đối chiếu có phải mặt nước không."
- },
- {
-  "id": "BUILDING_06",
-  "name_vi": "ĐỀN THỜ CỤ",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "A",
-  "position_norm": {
-   "u": 0.5075,
-   "v": 0.485
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_07",
-  "name_vi": null,
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "D",
-  "position_norm": {
-   "u": 0.4338,
-   "v": 0.545
-  },
-  "geometry": "point",
-  "status": "needs_verification",
-  "notes": "Chữ trên ảnh nghiêng chưa đọc chắc; chỉ hiện ở ?debug."
- },
- {
-  "id": "BUILDING_08",
-  "name_vi": null,
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "D",
-  "position_norm": {
-   "u": 0.5463,
-   "v": 0.3433
-  },
-  "geometry": "point",
-  "status": "needs_verification",
-  "notes": "Chữ trên ảnh nghiêng chưa đọc chắc; chỉ hiện ở ?debug."
- },
- {
-  "id": "SERVICE_09",
-  "name_vi": "BAN QUẢN LÝ KHU DI TÍCH",
-  "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
-  ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.465,
-   "v": 0.77
+   "u": 0.293,
+   "v": 0.518
+  },
+  "tile": {
+   "col": 67,
+   "row": 91,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Không gộp thành một hồ; trace từng dải"
  },
  {
-  "id": "SERVICE_10",
-  "name_vi": "QUẦY LƯU NIỆM",
-  "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "id": "G4_CONG_4",
+  "name_vi": "Cổng số 4",
+  "feature_type": "gate",
+  "zone": "B",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.265,
-   "v": 0.78
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "SERVICE_11",
-  "name_vi": "ĐIỂM DỪNG CHÂN",
-  "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.2725,
-   "v": 0.7533
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "SERVICE_12",
-  "name_vi": "ĐIỂM DỪNG CHÂN",
-  "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.2587,
-   "v": 0.6333
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "SERVICE_13",
-  "name_vi": "WC",
-  "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.295,
-   "v": 0.73
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "SERVICE_14",
-  "name_vi": "QUẦY LƯU NIỆM",
-  "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.5062,
+   "u": 0.232,
    "v": 0.6
   },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "MONUMENT_15",
-  "name_vi": "TƯỢNG CỤ",
-  "feature_type": "monument",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.5938,
-   "v": 0.56
+  "tile": {
+   "col": 53,
+   "row": 105,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Giữ số 4 ở cạnh trái, gần mép Via hè"
  },
  {
-  "id": "SERVICE_16",
-  "name_vi": "ĐIỂM DỪNG CHÂN",
+  "id": "C1_DIEM_DUNG_CHAN",
+  "name_vi": "Điểm dừng chân (cụm 3 ô)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "C",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.6663,
-   "v": 0.5933
+   "u": 0.326,
+   "v": 0.651
+  },
+  "tile": {
+   "col": 74,
+   "row": 114,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Chưa rõ chức năng chi tiết; giữ đúng 3 ô"
  },
  {
-  "id": "BUILDING_17",
-  "name_vi": "NHÀ NỌC NGỰA 1",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.5837,
-   "v": 0.5033
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_18",
-  "name_vi": "NHÀ BÁT DẦN 1",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.615,
-   "v": 0.63
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_19",
-  "name_vi": "NHÀ ÔNG NĂM GIÁO",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.6188,
-   "v": 0.7317
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_20",
-  "name_vi": "NHÀ CỤ SẮC",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.6687,
-   "v": 0.75
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_21",
-  "name_vi": "NHÀ CHỦ ĐÌNH 2",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.7212,
-   "v": 0.7
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_22",
-  "name_vi": "NHÀ BÁT DẦN 2",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.7688,
-   "v": 0.7267
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_23",
-  "name_vi": "NHÀ ÔNG CẢ NHÌ NGƯU",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.7163,
-   "v": 0.7733
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "BUILDING_24",
-  "name_vi": "NHÀ TRÊN CỌC 2",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.8125,
-   "v": 0.5967
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "SERVICE_25",
-  "name_vi": "KHU ẨM THỰC",
+  "id": "C2_WC",
+  "name_vi": "WC (trái dưới)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "C",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.8475,
-   "v": 0.7017
+   "u": 0.309,
+   "v": 0.741
+  },
+  "tile": {
+   "col": 71,
+   "row": 130,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
  },
  {
-  "id": "SERVICE_26",
-  "name_vi": "WC",
+  "id": "C3_DIEM_DUNG_CHAN",
+  "name_vi": "Điểm dừng chân (ô xanh)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "C",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.865,
-   "v": 0.665
+   "u": 0.324,
+   "v": 0.778
+  },
+  "tile": {
+   "col": 74,
+   "row": 137,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
  },
  {
-  "id": "BUILDING_27",
-  "name_vi": "NHÀ TRÊN CỌC 1",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.835,
-   "v": 0.7633
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "SERVICE_28",
-  "name_vi": "CAFÉ HÒA AN",
+  "id": "C4_QUAY_LUU_NIEM",
+  "name_vi": "Quầy lưu niệm (trái)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "C",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.8,
-   "v": 0.8
+   "u": 0.324,
+   "v": 0.803
+  },
+  "tile": {
+   "col": 74,
+   "row": 141,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
  },
  {
-  "id": "BUILDING_29",
-  "name_vi": "NHÀ NỌC NGỰA 2",
+  "id": "G1_CONG_1",
+  "name_vi": "Cổng số 1",
+  "feature_type": "gate",
+  "zone": "C",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.352,
+   "v": 0.839
+  },
+  "tile": {
+   "col": 81,
+   "row": 147,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Giữ đúng số 1; lối bộ có mũi tên đi lên"
+ },
+ {
+  "id": "D1_HO_SEN",
+  "name_vi": "Hồ Sen",
+  "feature_type": "water",
+  "zone": "D",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.421,
+   "v": 0.689
+  },
+  "tile": {
+   "col": 96,
+   "row": 121,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Giữ đường bờ; cây là lớp phụ"
+ },
+ {
+  "id": "D2_NHA_SAN",
+  "name_vi": "Nhà sàn",
   "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "D",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.7875,
-   "v": 0.8667
+   "u": 0.491,
+   "v": 0.683
+  },
+  "tile": {
+   "col": 112,
+   "row": 120,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Mô hình nhà sàn: sprite riêng (sàn nâng, hàng cột, mái)"
  },
  {
-  "id": "BUILDING_30",
-  "name_vi": "NHÀ CHỦ ĐÌNH 1",
-  "feature_type": "building",
-  "source_id": [
-   "MAP_USER_01"
-  ],
-  "confidence": "B",
-  "position_norm": {
-   "u": 0.7425,
-   "v": 0.8733
-  },
-  "geometry": "point",
-  "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
- },
- {
-  "id": "SERVICE_31",
-  "name_vi": "QUẦY LƯU NIỆM",
+  "id": "D3_QUAY_LUU_NIEM",
+  "name_vi": "Quầy lưu niệm (cạnh Nhà sàn)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "D",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.536,
+   "v": 0.636
+  },
+  "tile": {
+   "col": 123,
+   "row": 111,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
+ },
+ {
+  "id": "D4_BAN_QUAN_LY",
+  "name_vi": "Ban quản lý khu di tích",
+  "feature_type": "building",
+  "zone": "D",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.476,
+   "v": 0.844
+  },
+  "tile": {
+   "col": 109,
+   "row": 148,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Footprint rõ trên sơ đồ"
+ },
+ {
+  "id": "D5_LOI_BO",
+  "name_vi": "Lối bộ xanh (mũi tên đi lên)",
+  "feature_type": "path",
+  "zone": "D",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.351,
+   "v": 0.691
+  },
+  "tile": {
+   "col": 80,
+   "row": 121,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Trục từ Cổng số 1 đi lên"
+ },
+ {
+  "id": "G2_CONG_2",
+  "name_vi": "Cổng số 2",
+  "feature_type": "gate",
+  "zone": "E",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [
+   "PANO_GATE2_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.66,
+   "v": 0.914
+  },
+  "tile": {
+   "col": 151,
+   "row": 160,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Đã có ảnh thực địa"
+ },
+ {
+  "id": "E1_BAI_XE",
+  "name_vi": "Bãi xe",
+  "feature_type": "service",
+  "zone": "E",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.616,
+   "v": 0.868
+  },
+  "tile": {
+   "col": 141,
+   "row": 152,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Chưa có footprint rõ"
+ },
+ {
+  "id": "E2_DIEM_DUNG_CHAN",
+  "name_vi": "Điểm dừng chân (cạnh bãi xe)",
+  "feature_type": "service",
+  "zone": "E",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.579,
+   "v": 0.833
+  },
+  "tile": {
+   "col": 133,
+   "row": 146,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
+ },
+ {
+  "id": "E3_QUAY_LUU_NIEM",
+  "name_vi": "Quầy lưu niệm (gần Cổng 2)",
+  "feature_type": "service",
+  "zone": "E",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
    "u": 0.69,
-   "v": 0.8433
+   "v": 0.849
+  },
+  "tile": {
+   "col": 158,
+   "row": 149,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Khớp với dãy ki-ốt trong ảnh thực địa (cần xác minh)"
  },
  {
-  "id": "SERVICE_32",
-  "name_vi": "WC",
+  "id": "E4_NHA_CHU_DINH_1",
+  "name_vi": "Nhà chữ đinh 1",
+  "feature_type": "house",
+  "zone": "E",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.751,
+   "v": 0.866
+  },
+  "tile": {
+   "col": 172,
+   "row": 152,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống gần Cổng số 2"
+ },
+ {
+  "id": "E5_WC",
+  "name_vi": "WC (gần Cổng 2)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "E",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.6987,
-   "v": 0.9017
+   "u": 0.705,
+   "v": 0.902
+  },
+  "tile": {
+   "col": 162,
+   "row": 158,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
  },
  {
-  "id": "SERVICE_33",
-  "name_vi": "BÃI XE",
+  "id": "F1_NHA_NOC_NGUA_1",
+  "name_vi": "Nhà nọc ngựa 1",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.59,
+   "v": 0.552
+  },
+  "tile": {
+   "col": 135,
+   "row": 97,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống"
+ },
+ {
+  "id": "F2_TUONG_CU",
+  "name_vi": "Tượng cụ",
+  "feature_type": "statue",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.612,
+   "v": 0.587
+  },
+  "tile": {
+   "col": 140,
+   "row": 103,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Điểm nhấn trục; giữ nguyên dạng tròn"
+ },
+ {
+  "id": "F3_DIEM_DUNG_CHAN",
+  "name_vi": "Điểm dừng chân (2 ô xanh)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.5837,
-   "v": 0.8483
+   "u": 0.723,
+   "v": 0.626
+  },
+  "tile": {
+   "col": 166,
+   "row": 110,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
  },
  {
-  "id": "SERVICE_34",
-  "name_vi": "ĐIỂM DỪNG CHÂN",
+  "id": "F4_NHA_BAT_DAN_1",
+  "name_vi": "Nhà bát dần 1",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.582,
+   "v": 0.656
+  },
+  "tile": {
+   "col": 133,
+   "row": 115,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống"
+ },
+ {
+  "id": "F5_NHA_ONG_NAM_GIAO",
+  "name_vi": "Nhà ông Năm Giáo",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.627,
+   "v": 0.731
+  },
+  "tile": {
+   "col": 144,
+   "row": 128,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống"
+ },
+ {
+  "id": "F6_NHA_CU_SAC",
+  "name_vi": "Nhà Cụ Sắc",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.685,
+   "v": 0.747
+  },
+  "tile": {
+   "col": 157,
+   "row": 131,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà trong làng; chưa xác minh có phải nhà trưng bày"
+ },
+ {
+  "id": "F7_NHA_CHU_DINH_2",
+  "name_vi": "Nhà chữ đinh 2",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.732,
+   "v": 0.703
+  },
+  "tile": {
+   "col": 168,
+   "row": 123,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống"
+ },
+ {
+  "id": "F8_NHA_BAT_DAN_2",
+  "name_vi": "Nhà bát dần 2",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.779,
+   "v": 0.729
+  },
+  "tile": {
+   "col": 179,
+   "row": 128,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống"
+ },
+ {
+  "id": "F9_NHA_ONG_CA_NHI_NGUU",
+  "name_vi": "Nhà ông Cả Nhị Ngưu",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.724,
+   "v": 0.776
+  },
+  "tile": {
+   "col": 166,
+   "row": 136,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống"
+ },
+ {
+  "id": "F10_NHA_TREN_COC_2",
+  "name_vi": "Nhà trên cọc 2",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.814,
+   "v": 0.646
+  },
+  "tile": {
+   "col": 187,
+   "row": 113,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà trên cọc (nhãn nhỏ, đọc lại khi có ảnh nét hơn)"
+ },
+ {
+  "id": "F11_DIEM_DUNG_CHAN",
+  "name_vi": "Điểm dừng chân (góc trên phải)",
   "feature_type": "service",
-  "source_id": [
-   "MAP_USER_01"
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.5687,
-   "v": 0.8217
+   "u": 0.772,
+   "v": 0.594
+  },
+  "tile": {
+   "col": 177,
+   "row": 104,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
  },
  {
-  "id": "ROAD_35",
-  "name_vi": "PHẠM HỮU LẦU",
-  "feature_type": "road",
-  "source_id": [
-   "MAP_USER_01"
+  "id": "F12_WC",
+  "name_vi": "WC (phải)",
+  "feature_type": "service",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.2812,
-   "v": 0.17
+   "u": 0.882,
+   "v": 0.665
+  },
+  "tile": {
+   "col": 202,
+   "row": 117,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
  },
  {
-  "id": "ROAD_36",
-  "name_vi": "VỈA HÈ",
-  "feature_type": "road",
-  "source_id": [
-   "MAP_USER_01"
+  "id": "F13_KHU_AM_THUC",
+  "name_vi": "Khu ẩm thực",
+  "feature_type": "service",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
   ],
+  "appearance_source_id": [],
   "confidence": "B",
   "position_norm": {
-   "u": 0.2,
-   "v": 0.5417
+   "u": 0.855,
+   "v": 0.702
+  },
+  "tile": {
+   "col": 196,
+   "row": 123,
+   "tile_px": 8
   },
   "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
   "status": "provisional",
-  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
+ },
+ {
+  "id": "F14_NHA_TREN_COC_1",
+  "name_vi": "Nhà trên cọc 1",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.836,
+   "v": 0.761
+  },
+  "tile": {
+   "col": 192,
+   "row": 134,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà trên cọc"
+ },
+ {
+  "id": "F15_CAFE_HOA_AN",
+  "name_vi": "Cafe Hòa An",
+  "feature_type": "service",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.817,
+   "v": 0.842
+  },
+  "tile": {
+   "col": 187,
+   "row": 148,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Dịch vụ"
+ },
+ {
+  "id": "F16_NHA_NOC_NGUA_2",
+  "name_vi": "Nhà nọc ngựa 2",
+  "feature_type": "house",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.796,
+   "v": 0.864
+  },
+  "tile": {
+   "col": 183,
+   "row": 152,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhà truyền thống"
+ },
+ {
+  "id": "F17_KENH",
+  "name_vi": "Kênh nước uốn quanh làng",
+  "feature_type": "water",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.582,
+   "v": 0.44
+  },
+  "tile": {
+   "col": 133,
+   "row": 77,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Trace liên tục; không làm thẳng"
+ },
+ {
+  "id": "G3_CONG_3",
+  "name_vi": "Cổng số 3",
+  "feature_type": "gate",
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.401,
+   "v": 0.342
+  },
+  "tile": {
+   "col": 92,
+   "row": 60,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Có mũi tên vàng hướng xe khách vào"
+ },
+ {
+  "id": "GX_CONG_KHONG_NHAN",
+  "name_vi": null,
+  "feature_type": "gate",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.559,
+   "v": 0.599
+  },
+  "tile": {
+   "col": 128,
+   "row": 105,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Không có nhãn trên sơ đồ; không tự đặt tên"
+ },
+ {
+  "id": "GA_CONG_AM_THUC",
+  "name_vi": "Cổng khu ẩm thực",
+  "feature_type": "gate",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.819,
+   "v": 0.859
+  },
+  "tile": {
+   "col": 188,
+   "row": 151,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": false,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Nhãn xoay chéo; giữ vị trí tương đối"
+ },
+ {
+  "id": "FX_KHOI_CHUA_NHAN",
+  "name_vi": null,
+  "feature_type": "building",
+  "zone": "F",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.717,
+   "v": 0.681
+  },
+  "tile": {
+   "col": 164,
+   "row": 119,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Không có nhãn; không tự đặt tên, đánh dấu cần xác minh"
+ },
+ {
+  "id": "AX_MANG_CHU_NHAT",
+  "name_vi": null,
+  "feature_type": "garden",
+  "zone": "A",
+  "geometry_source_id": [
+   "MAP_USER_02"
+  ],
+  "appearance_source_id": [],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.516,
+   "v": 0.384
+  },
+  "tile": {
+   "col": 118,
+   "row": 67,
+   "tile_px": 8
+  },
+  "geometry": "point",
+  "view_type": "plan",
+  "spatial_status": "approximate",
+  "status": "provisional",
+  "needs_verification": true,
+  "source_capture_date": "2026-11-05",
+  "conflict_note": null,
+  "notes": "Không có nhãn; chưa rõ là hồ, sân hay vườn, không tự đặt tên"
  }
 ]

@@ -1,2 +1,2 @@
-/* Tên khu vực theo toạ độ sơ đồ [tên,x1,y1,x2,y2] */
-const ZN=[['Khu mộ cụ Nguyễn Sinh Sắc',337,134,425,334],['Dải cỏ phía đông khu mộ',428,152,462,266],['Nhà trưng bày',255,277,315,345],['Cụm mặt nước tây bắc',200,262,272,334],['Hồ sen · Nhà sàn',299,354,386,428],['Khu Tượng Cụ',466,326,536,362],['Làng Hòa An xưa',425,267,700,545],['Sảnh đón · Cổng số 1',180,440,330,505]];
+/* Tên khu vực theo px sơ đồ chuẩn [tên,x1,y1,x2,y2] (ô x 8) */
+const ZN=[["Cổng số 2 · Bãi xe", 1008, 1128, 1360, 1296], ["Khu mộ cụ · Hồ Sao · Đền thờ", 768, 352, 1016, 848], ["Dải Chùa Hòa Long", 992, 368, 1112, 688], ["Khu trưng bày · Điêu khắc", 400, 528, 736, 848], ["Điểm dừng chân · Cổng số 1", 432, 856, 712, 1208], ["Hồ Sen · Nhà sàn · Ban quản lý", 712, 856, 1000, 1216], ["Làng Hòa An · Kênh nước", 1000, 672, 1640, 1216]];
