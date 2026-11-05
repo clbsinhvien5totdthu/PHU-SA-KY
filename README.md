@@ -15,6 +15,7 @@ Offline: đặt `phaser.min.js` (3.80.1) vào `vendor/`. Chia sẻ 1 file: `pyth
 | `js/scene.js` | Phaser scene: sprite sinh bằng code, đối tượng, camera |
 | `js/cutscene.js`, `js/hud.js`, `js/ui.js`, `js/portraits.js` | Hệ thống tương ứng |
 | `js/plugins/` | Tính năng gắn thêm qua `PSK.on(...)` (xem `_template.js`) |
+| `js/plugins/music.js` | Nhạc nền khu di tích (`assets/audio/sang_mekong_delta.mp3`), phím **U** bật/tắt, tự nhỏ lại khi có hội thoại |
 | `data/` | Dữ liệu ngoài code: `sources.example.json` (cấu trúc tư liệu, mục 11.1); khung 8 chương nay ở `js/data/chapters.js` |
 | `assets/` | Chỗ đặt `audio/`, `img/`, `fonts/` khi thay đồ họa/âm thanh thủ tục bằng tài nguyên thật |
 | `docs/` | `INTEGRATION.md` và tài liệu thiết kế gốc |
