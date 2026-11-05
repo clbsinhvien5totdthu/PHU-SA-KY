@@ -1,0 +1,674 @@
+[
+ {
+  "id": "GATE_01",
+  "name_vi": "CỔNG SỐ 1",
+  "feature_type": "gate",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.3375,
+   "v": 0.82
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
+ },
+ {
+  "id": "GATE_02",
+  "name_vi": "CỔNG SỐ 2",
+  "feature_type": "gate",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.6512,
+   "v": 0.8967
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
+ },
+ {
+  "id": "GATE_03",
+  "name_vi": "CỔNG SỐ 3",
+  "feature_type": "gate",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.4012,
+   "v": 0.3267
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
+ },
+ {
+  "id": "GATE_04",
+  "name_vi": "CỔNG SỐ 4",
+  "feature_type": "gate",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.2062,
+   "v": 0.565
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
+ },
+ {
+  "id": "GATE_05",
+  "name_vi": "CỔNG VÀO MỘ CỤ",
+  "feature_type": "gate",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.4675,
+   "v": 0.5617
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
+ },
+ {
+  "id": "GATE_06",
+  "name_vi": "CỔNG KHU ẨM THỰC",
+  "feature_type": "gate",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.8187,
+   "v": 0.84
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn; không phải toạ độ địa lý."
+ },
+ {
+  "id": "BUILDING_01",
+  "name_vi": "NHÀ TRƯNG BÀY",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "A",
+  "position_norm": {
+   "u": 0.355,
+   "v": 0.55
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Chưa phân biệt nhà về cụ Nguyễn Sinh Sắc và Nhà trưng bày Chủ tịch Hồ Chí Minh – cần xác minh."
+ },
+ {
+  "id": "WATER_02",
+  "name_vi": "HỒ SEN",
+  "feature_type": "water",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.4062,
+   "v": 0.6517
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_03",
+  "name_vi": "NHÀ SÀN",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "A",
+  "position_norm": {
+   "u": 0.485,
+   "v": 0.6833
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "MONUMENT_04",
+  "name_vi": "MỘ CỤ",
+  "feature_type": "monument",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "A",
+  "position_norm": {
+   "u": 0.47,
+   "v": 0.34
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "WATER_05",
+  "name_vi": "HỒ SAO",
+  "feature_type": "water",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "A/B",
+  "position_norm": {
+   "u": 0.4688,
+   "v": 0.4367
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Nhãn đọc trên sơ đồ; game vẽ dạng ngôi sao lát sân tạm – cần đối chiếu có phải mặt nước không."
+ },
+ {
+  "id": "BUILDING_06",
+  "name_vi": "ĐỀN THỜ CỤ",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "A",
+  "position_norm": {
+   "u": 0.5075,
+   "v": 0.485
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_07",
+  "name_vi": null,
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "D",
+  "position_norm": {
+   "u": 0.4338,
+   "v": 0.545
+  },
+  "geometry": "point",
+  "status": "needs_verification",
+  "notes": "Chữ trên ảnh nghiêng chưa đọc chắc; chỉ hiện ở ?debug."
+ },
+ {
+  "id": "BUILDING_08",
+  "name_vi": null,
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "D",
+  "position_norm": {
+   "u": 0.5463,
+   "v": 0.3433
+  },
+  "geometry": "point",
+  "status": "needs_verification",
+  "notes": "Chữ trên ảnh nghiêng chưa đọc chắc; chỉ hiện ở ?debug."
+ },
+ {
+  "id": "SERVICE_09",
+  "name_vi": "BAN QUẢN LÝ KHU DI TÍCH",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.465,
+   "v": 0.77
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_10",
+  "name_vi": "QUẦY LƯU NIỆM",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.265,
+   "v": 0.78
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_11",
+  "name_vi": "ĐIỂM DỪNG CHÂN",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.2725,
+   "v": 0.7533
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_12",
+  "name_vi": "ĐIỂM DỪNG CHÂN",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.2587,
+   "v": 0.6333
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_13",
+  "name_vi": "WC",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.295,
+   "v": 0.73
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_14",
+  "name_vi": "QUẦY LƯU NIỆM",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.5062,
+   "v": 0.6
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "MONUMENT_15",
+  "name_vi": "TƯỢNG CỤ",
+  "feature_type": "monument",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.5938,
+   "v": 0.56
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_16",
+  "name_vi": "ĐIỂM DỪNG CHÂN",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.6663,
+   "v": 0.5933
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_17",
+  "name_vi": "NHÀ NỌC NGỰA 1",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.5837,
+   "v": 0.5033
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_18",
+  "name_vi": "NHÀ BÁT DẦN 1",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.615,
+   "v": 0.63
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_19",
+  "name_vi": "NHÀ ÔNG NĂM GIÁO",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.6188,
+   "v": 0.7317
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_20",
+  "name_vi": "NHÀ CỤ SẮC",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.6687,
+   "v": 0.75
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_21",
+  "name_vi": "NHÀ CHỦ ĐÌNH 2",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.7212,
+   "v": 0.7
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_22",
+  "name_vi": "NHÀ BÁT DẦN 2",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.7688,
+   "v": 0.7267
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_23",
+  "name_vi": "NHÀ ÔNG CẢ NHÌ NGƯU",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.7163,
+   "v": 0.7733
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_24",
+  "name_vi": "NHÀ TRÊN CỌC 2",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.8125,
+   "v": 0.5967
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_25",
+  "name_vi": "KHU ẨM THỰC",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.8475,
+   "v": 0.7017
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_26",
+  "name_vi": "WC",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.865,
+   "v": 0.665
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_27",
+  "name_vi": "NHÀ TRÊN CỌC 1",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.835,
+   "v": 0.7633
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_28",
+  "name_vi": "CAFÉ HÒA AN",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.8,
+   "v": 0.8
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_29",
+  "name_vi": "NHÀ NỌC NGỰA 2",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.7875,
+   "v": 0.8667
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "BUILDING_30",
+  "name_vi": "NHÀ CHỦ ĐÌNH 1",
+  "feature_type": "building",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.7425,
+   "v": 0.8733
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_31",
+  "name_vi": "QUẦY LƯU NIỆM",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.69,
+   "v": 0.8433
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_32",
+  "name_vi": "WC",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.6987,
+   "v": 0.9017
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_33",
+  "name_vi": "BÃI XE",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.5837,
+   "v": 0.8483
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "SERVICE_34",
+  "name_vi": "ĐIỂM DỪNG CHÂN",
+  "feature_type": "service",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.5687,
+   "v": 0.8217
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "ROAD_35",
+  "name_vi": "PHẠM HỮU LẦU",
+  "feature_type": "road",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.2812,
+   "v": 0.17
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ },
+ {
+  "id": "ROAD_36",
+  "name_vi": "VỈA HÈ",
+  "feature_type": "road",
+  "source_id": [
+   "MAP_USER_01"
+  ],
+  "confidence": "B",
+  "position_norm": {
+   "u": 0.2,
+   "v": 0.5417
+  },
+  "geometry": "point",
+  "status": "provisional",
+  "notes": "Toạ độ đo trên ảnh chụp nghiêng chưa nắn."
+ }
+]
