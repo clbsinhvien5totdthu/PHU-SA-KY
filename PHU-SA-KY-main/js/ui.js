@@ -1,0 +1,14 @@
+/* HUD mục tiêu, Sổ nghe, màn kết, phím tắt */
+const hud=()=>{const S=STEPS[st.step];$('obt').textContent=S?S.o:'Hoàn tất bản đồ!';$('oh').textContent='MỤC TIÊU '+Math.min(st.step+1,STEPS.length)+'/'+STEPS.length;$('pips').innerHTML=STEPS.map((_,i)=>'<i class="'+(i<st.step?'on':i==st.step?'cur':'')+'"></i>').join('')};
+const TG=(k,t)=>/hư cấu|tái dựng/i.test(t)?'hư cấu tái dựng':/giả thuyết/i.test(t)?'giả thuyết':k=='known'?'đã đối chiếu':k=='told'?'lời kể':'cần xác minh';
+const li=(a,k)=>'<ul>'+(a.length?a.map(x=>{const m=KM[x];return'<li>'+x+' <span class=tg>'+TG(k,x)+'</span>'+(m?'<small>Nguồn: '+m.src+' · Độ chắc chắn: '+m.cf+'</small>':'')+'</li>'}).join(''):'<li><i>(chưa có)</i></li>')+'</ul>';
+function nbook(){const o=$('nb');nbOpen=!nbOpen;o.style.display=nbOpen?'flex':'none';if(!nbOpen)return;
+$('nbc').innerHTML='<h3>📖 Sổ tay hiện trường</h3><p><i>Bìa trong: Ai đang kể? · Ai cho phép kể? · Ai sẽ kể tiếp?</i></p><div class=cols><div><b>Dấu vết</b><small>mốc, bảng, vật thể, ảnh, nguồn</small>'+li(K.known,'known')+'</div><div><b>Lời kể</b><small>kèm người kể và sự đồng ý</small>'+li(K.told,'told')+'</div><div><b>An suy nghĩ</b><small>câu hỏi, giả thuyết, điều còn thiếu</small>'+li(K.open,'open')+'</div></div>'+(st.boat?'<p>✏️ Nét chì ở lề: chiếc xuồng ba lá.</p>':'')+'<b>Từ vựng</b><ul>'+(V.length?V.map(w=>'<li>'+w.replace('|',' – ')+'</li>').join(''):'<li><i>(chưa có)</i></li>')+'</ul><button class=bt onclick="nbook()">Đóng</button>'}
+$('nbb').onclick=nbook;
+function fin(){PSK.emit('end',st);ended=true;$('act').style.display='none';const n=st.c.name?'Một cái tên được điền tạm vào chỗ trống, gắn nhãn “giả thuyết”; cần gỡ lại khi có nguồn.':'Chỗ trống bên cạnh “Người lái đò” được giữ nguyên dấu hỏi.',r=st.c.rush?' Có lúc nhóm hỏi vội; bác Tư dè dặt hơn.':' Nhóm hỏi nguồn mà không làm người kể thấy bị chất vấn.';
+const hu=st.c.hurry?' Ở thư viện, An từng chụp vội; cô Hạnh nhắc rằng sách do người ta hiến tặng.':'';$('end').style.display='flex';$('endc').innerHTML='<h3>Hết Chương 1 – Dấu mực bên lề</h3><p><b>Chú giải của nhóm:</b> '+n+r+hu+'</p><p>Sổ nghe: '+K.known.length+' dấu vết đã đối chiếu · '+K.told.length+' lời kể · '+K.open.length+' điều còn bỏ ngỏ.</p><p>Mở khóa: tuyến tư liệu về làng Hòa An xưa.</p><p><i>Chương 2: '+CHAP[1][1]+' – '+CHAP[1][2]+' (sắp tới)</i></p><button class=bt onclick="nbook()">Xem Sổ nghe</button> <button class=bt onclick="location.reload()">Chơi lại</button>'}
+
+const kd={};addEventListener('keydown',e=>{const k=e.key.toLowerCase();kd[k]=1;if(k.startsWith('arrow')||k==' ')e.preventDefault();
+ if('e enter'.split(' ').includes(k)||k==' ')act();if(k=='n')nbook();if(k=='c')cbook();if(k=='j')jbook()});addEventListener('keyup',e=>delete kd[e.key.toLowerCase()]);
+const act=()=>{if(adv)return adv();if(near&&!busy&&!nbOpen&&!ended&&!STEPS[st.step].zone)STEPS[st.step].run()};$('act').onclick=act;
+

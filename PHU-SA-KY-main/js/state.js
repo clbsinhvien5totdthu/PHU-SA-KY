@@ -1,5 +1,6 @@
 /* Trạng thái, toast, hộp thoại seq() */
 const V=[],K={known:[],told:[],open:[]},st={step:0,tr:0,tp:0,boat:0,c:{}};
+const KM={},rec=(k,t,s,c)=>{K[k].push(t);KM[t]={src:s,cf:c}};
 let busy=false,adv=null,ended=false,near=false,qt=0,nbOpen=false;
 const toast=m=>{const t=$('toast');t.textContent=m;t.style.opacity=1;clearTimeout(t.h);t.h=setTimeout(()=>t.style.opacity=0,3200)};
 const vocab=(...a)=>a.forEach(w=>{if(!V.includes(w)){V.push(w);toast('Từ mới: '+w.replace('|',' = '))}});
