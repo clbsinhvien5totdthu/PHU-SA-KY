@@ -106,55 +106,113 @@ scene("road",{w:320,h:180,layers:true},
    for(let i=0;i<10;i++){const x=Math.floor(r()*320);c.circ(x,172-Math.floor(r()*8),2,"T")}}))
 
 /* ===================================================================
-   CỔNG KHU DI TÍCH – hồ sen lúc chạng vạng
+   CỔNG KHU DI TÍCH CỤ PHÓ BẢNG NGUYỄN SINH SẮC – vẽ theo ảnh thực, ở độ phân giải GẤP ĐÔI (640x360) để có chỗ cho ô hoa, đấu củng, tán lá.
+   (cutscene tự co ảnh về toạ độ thế giới 320x180 nên các cảnh khác không bị ảnh hưởng)
+   Hai tầng mái ngói âm dương màu cam, đầu đao cuộn trắng ngà; dải ô hoa; bảng đỏ chữ vàng (chữ vẽ bằng canvas trong cutscene để đủ dấu);
+   bốn trụ tròn màu kem; hai cánh cổng sắt; hàng rào; bồn cây đá; bậc thềm; phía sau: sân, nhà mái cam, cột đèn, hàng cây cao.
+   GX/GY: đổi toạ độ ảnh gốc (600x419) sang toạ độ cảnh 640x360 (tỉ lệ .68).
    =================================================================== */
-sprite("_cong",{w:140,h:72},
- /* nóc + hai lớp mái ngói, đầu đao cong */
- rect(44,3,52,4,"T"),px(42,2,"T"),px(41,1,"T"),px(98,2,"T"),px(99,1,"T"),rect(66,0,8,4,"T"),
- poly([26,22,44,6,96,6,114,22],"T"),
- poly([10,32,28,17,112,17,130,32],"T"),line(10,32,3,27,"T"),line(130,32,137,27,"T"),px(2,26,"T"),px(138,26,"T"),
- hline(38,10,64,"R"),hline(24,20,92,"R"),hline(12,30,116,"R"),
- rect(26,32,88,3,"K"),rect(26,35,88,1,"R"),
- /* trụ + cổng giữa */
- rect(26,34,9,38,"T"),rect(105,34,9,38,"T"),rect(24,32,13,3,"T"),rect(103,32,13,3,"T"),
- rect(35,35,70,37,"K"),
- rect(48,37,44,7,"R"),hline(50,39,40,"O"),hline(54,41,32,"o"),
- /* hai đèn lồng treo dưới mái hiên, ngoài hai trụ */
- vline(19,33,3,"T"),circ(19,39,3,"O"),px(19,39,"Y"),vline(121,33,3,"T"),circ(121,39,3,"O"),px(121,39,"Y"),
- /* ánh sáng ấm hắt ra từ cổng */
- rect(44,62,52,6,"R"),hline(44,62,52,"o"),
- /* cánh phụ + hàng rào */
- rect(0,44,22,28,"T"),rect(118,44,22,28,"T"),hline(0,44,22,"R"),hline(118,44,22,"R"),
- rect(34,68,72,4,"b"),hline(34,68,72,"B"),
- glow("Oy",{r:4,strength:.25,bands:3}))
+pal({z:"#d65c2c",Z:"#9c3b1f",H:"#f5944f",q:"#e9d9a9",Q:"#b8a678",X:"#867654",x:"#f8efcf",j:"#7a1e25",J:"#e8bb4b",i:"#b1bbc7",I:"#5d6a7a",e:"#7f828a",E:"#4b4e58",F:"#262a36",v:"#2f6c3d",V:"#1b4629",W:"#fffbea"})
+const GX=(ix)=>Math.round(150+(ix-50)*.68),GY=(iy)=>Math.round(72+(iy-28)*.68)
+/* mái ngói: nền cam, hàng ngói lệch mạch như xây gạch, mép ngói đầu tròn, chấm sáng */
+const tiled=(c,pts,yTop,yBot)=>{c.poly(pts,"z");const[p0x,p0y,,,,,,,p4x,p4y,p5x,p5y]=pts;
+ const ext=(y)=>{let xl;if(y<=p5y){const t=(y-p0y)/Math.max(1,p5y-p0y);xl=p0x+(p5x-p0x)*t}else{const t=(y-p5y)/Math.max(1,p4y-p5y);xl=p5x+(p4x-p5x)*t}return[Math.round(xl),Math.round(640-xl)]};
+ let row=0;for(let y=yTop+2;y<=yBot;y+=3,row++){const[a,b]=ext(y);c.hline(a,y,b-a,"Z");for(let x=a+(row%2)*3;x<b;x+=6)c.vline(x,y-2,2,"Z");for(let x=a+1+(row%2)*3;x<b;x+=6)c.px(x,y-1,"H")}
+ const[a0,b0]=ext(yTop);c.hline(a0,yTop,b0-a0,"H");c.hline(a0,yTop+1,b0-a0,"H");
+ const[a1,b1]=ext(yBot);c.hline(a1,yBot,b1-a1,"Z");for(let x=a1;x<b1;x+=3){c.px(x,yBot+1,"Z");c.px(x+1,yBot+1,"z");c.px(x+1,yBot+2,"Z")}}
+/* đầu đao cuộn: thân cong lên rồi cuộn tròn ở đầu, trắng ngà có bóng */
+const curl=(c,x,y,d)=>{c.line(x,y,x+d*3,y-5,"x",2);c.line(x+d*3,y-5,x+d*9,y-9,"x",2);c.line(x+d*9,y-9,x+d*14,y-6,"x",2);c.ring(x+d*12,y-3,3,"x");c.px(x+d*12,y-3,"Q");
+ c.line(x+d*1,y+1,x+d*4,y-3,"Q");c.line(x+d*4,y-3,x+d*9,y-7,"Q");c.px(x+d*15,y-6,"x");c.px(x+d*16,y-5,"q")}
+/* ô hoa: tấm lưới trắng ngà có hoa văn chữ thập/ô vuông */
+const lattice=(c,x,y)=>{c.rect(x-4,y,9,9,"x");c.box(x-4,y,9,9,"Q");c.px(x,y+4,"Q");c.px(x-2,y+2,"Q");c.px(x+2,y+2,"Q");c.px(x-2,y+6,"Q");c.px(x+2,y+6,"Q");c.hline(x-3,y+4,7,"q");c.vline(x,y+1,7,"q");c.px(x,y+4,"X")}
+/* đấu củng: củng cong chìa ra hai bên + đấu vuông kê trên đầu cột */
+const dou=(c,cx,yT,yB)=>{c.poly([cx-12,yT,cx+12,yT,cx+7,yB,cx-7,yB],"q");c.line(cx-12,yT,cx-7,yB,"X");c.line(cx+12,yT,cx+7,yB,"X");
+ c.rect(cx-9,yT+1,18,2,"x");c.rect(cx-5,yT+4,10,3,"Q");c.rect(cx-3,yT+7,6,yB-yT-7,"X");
+ c.line(cx-12,yT+1,cx-3,yB,"Q");c.line(cx+12,yT+1,cx+3,yB,"Q");c.rect(cx-2,yB-1,4,2,"x")}
+const blob=(c,x,y,r,d)=>{c.circ(x,y+1,r,"T");c.circ(x,y,r,"t");c.circ(x+d*Math.round(r*.3),y-Math.round(r*.25),Math.max(2,Math.round(r*.62)),"G");if(r>5)c.circ(x+d*Math.round(r*.4),y-Math.round(r*.4),Math.round(r*.28),"g")}
+const person=(c,x,fy,h,hat)=>{const u=h/26;c.circ(x,fy-h+3*u,3*u,"T");if(hat)c.poly([x-4*u,fy-h+3*u,x,fy-h-2*u,x+4*u,fy-h+3*u],"T");c.poly([x-4*u,fy-h+7*u,x+4*u,fy-h+7*u,x+5*u,fy-4*u,x-5*u,fy-4*u],"T");c.rect(x-4*u,fy-4*u,3*u,4*u,"T");c.rect(x+1*u,fy-4*u,3*u,4*u,"T")}
 
-sprite("_nguoi",{w:9,h:26},circ(4,3,3,"T"),poly([1,7,8,7,9,22,0,22],"T"),rect(1,22,3,4,"T"),rect(5,22,3,4,"T"))
-sprite("_nguoi2",{w:11,h:26},poly([0,5,5,0,10,5],"T"),circ(5,6,2,"T"),poly([1,9,9,9,10,24,0,24],"T"),rect(1,24,4,2,"T"),rect(6,24,4,2,"T"))
-sprite("_la",{w:22,h:7},ellipse(11,3,10,3,"G"),ellipse(11,3,10,3,"g",true),hline(4,3,14,"t"),px(14,2,"h"))
-sprite("_sen",{w:9,h:12},line(4,11,4,5,"G"),poly([4,0,7,4,6,7,2,7,1,4],"L"),poly([4,1,5,4,4,6,3,4],"l"))
-
-scene("gate",{w:320,h:180,layers:true},
- layer("sky",SKY(112),stars,clouds(41,14),
-   light([160,92,26],1,.6),...sunAt(160,92)),
- layer("trees",rect(0,92,320,26,"T"),
-   (c)=>{const r=c.rng(9);for(let x=-6;x<330;x+=5){const rr=7+Math.floor(r()*7);c.circ(x,84-Math.floor(r()*12),rr,"t");c.circ(x-2,83-Math.floor(r()*10),rr-3,"G");c.circ(x+2,92,rr,"T")}},
-   (c)=>{[[18,100,52],[290,100,56],[64,100,40],[246,100,44]].forEach(([x,b,h],i)=>palm(c,x,b,h,"T",i%2?4:-4))},
-   light([90,70,230,70,230,96,90,96],1,.4)),
- layer("gate",stamp("_cong",90,48),rect(0,117,320,3,"b"),rect(0,116,320,1,"B"),
-   rect(0,118,320,2,"K"),
-   /* lối đi gạch dẫn tới cổng */
-   poly([132,118,188,118,214,126,106,126],"d"),hline(132,118,56,"c")),
- layer("water",grad(0,120,320,60,"nnNnkkKk","v"),
-   stamp("_cong",90,119,{flip:"y"}),
-   shade([0,120,320,60],1,.45),
-   (c)=>{const r=c.rng(6);for(let y=122;y<178;y+=2){const k=(y-120)/58;for(let i=0;i<4;i++)c.hline(Math.floor(r()*330)-10,y,Math.round(8+r()*30),r()<.25?"M":"N")}},
-   light([112,121,208,121,260,178,60,178],1,.3),
-   stamp("_la",30,142),stamp("_la",242,148),stamp("_la",276,166),stamp("_la",70,170),stamp("_la",214,134),
-   stamp("_sen",34,134),stamp("_sen",250,140),stamp("_sen",284,158)),
- layer("people",stamp("_nguoi",58,100),stamp("_nguoi2",70,99),stamp("_nguoi",262,101,{flip:"x"}),stamp("_nguoi2",116,101)),
- layer("fore",(c)=>{const r=c.rng(12);for(let i=0;i<26;i++){const x=Math.floor(r()*330)-5,h=14+Math.floor(r()*40),l=(r()-.5)*10;c.line(x,184,x+Math.round(l),184-h,"T",1)}
-   [[14,172,16],[300,168,18],[40,160,10],[264,176,12]].forEach(([x,y,rad])=>{c.ellipse(x,y,rad,Math.round(rad*.3),"T");c.ellipse(x,y-1,rad-3,Math.round(rad*.2),"t")});
-   c.line(22,190,24,150,"T",1);c.circ(24,148,3,"T");c.line(296,190,294,140,"T",1);c.circ(294,138,3,"T")}))
+scene("gate",{w:640,h:360,layers:true},
+ layer("sky",grad(0,0,640,232,"kknNNpPmMMrroOOyY","v",.75),
+   (c)=>{const r=c.rng(2);for(let i=0;i<90;i++)c.px(Math.floor(r()*640),Math.floor(r()*60),r()<.25?"Y":"P")},
+   (c)=>{const r=c.rng(41);for(let i=0;i<16;i++){const cy=20+Math.floor(r()*130),k=cy/150,cx=Math.floor(r()*700)-30,rx=34+Math.floor(r()*110),ry=4+Math.floor(r()*6);
+     const body=k<.3?"p":k<.55?"P":"m",lit=k<.3?"m":k<.55?"M":"r",edge=k<.55?"o":"O";
+     c.ellipse(cx,cy,rx,ry,body);c.ellipse(cx+Math.floor(rx*.12),cy+2,Math.floor(rx*.82),Math.max(2,ry-2),lit);c.hline(cx-Math.floor(rx*.55),cy+ry-2,Math.floor(rx*1.05),edge)}},
+   light([320,208,56],1,.6)),
+ layer("trees",
+   rect(0,248,640,48,"E"),rect(0,248,640,3,"e"),
+   (c)=>{const r=c.rng(19);
+     /* hàng cây thấp ở hậu cảnh, thấy qua cổng */
+     for(let i=0;i<70;i++)blob(c,170+Math.floor(r()*300),214+Math.floor(r()*28),4+Math.floor(r()*4),r()<.5?1:-1);
+     /* hai khối cây cao hai bên: thân thẳng + nhiều cụm lá ba tông, viền sáng phía mặt trời */
+     [[26,0],[118,0],[430,0],[560,0]].forEach(([x],k)=>{c.line(x,290,x+(k%2?6:-6),40,"T",9);c.line(x+(k%2?-2:2),180,x+(k%2?-34:34),120,"T",4);c.line(x+(k%2?2:-2),130,x+(k%2?36:-36),80,"T",3)});
+     const L=[],R=[];for(let i=0;i<330;i++)L.push([Math.floor(r()*(215-r()*40)),Math.floor(r()*250),5+Math.floor(r()*7)]);for(let i=0;i<330;i++)R.push([410+Math.floor(r()*(235)),Math.floor(r()*250),5+Math.floor(r()*7)]);
+     L.sort((a,b)=>a[1]-b[1]).forEach(([x,y,rr])=>blob(c,x,y,rr,1));R.sort((a,b)=>a[1]-b[1]).forEach(([x,y,rr])=>blob(c,x,y,rr,-1));
+     c.noise(0,0,230,260,"T",.04,4,"t");c.noise(400,0,240,260,"T",.04,6,"t")},
+   /* nhà mái cam phía sau + hai cột đèn đôi */
+   rect(216,238,60,14,"q"),rect(220,242,52,6,"Q"),poly([210,238,224,226,268,226,282,238],"z"),hline(224,226,44,"H"),hline(212,236,70,"Z"),
+   (c)=>{for(let x=214;x<282;x+=4)c.px(x,237,"Z")},
+   rect(0,220,32,4,"z"),poly([0,222,28,222,36,236,0,236],"Z"),
+   vline(300,208,44,"I"),vline(301,208,44,"i"),circ(296,208,4,"O"),circ(304,208,4,"O"),circ(296,208,2,"W"),circ(304,208,2,"W"),
+   vline(344,212,40,"I"),vline(345,212,40,"i"),circ(340,212,4,"O"),circ(348,212,4,"O"),circ(340,212,2,"W"),circ(348,212,2,"W")),
+ layer("gate",(c)=>{
+   const R=GX,Y=GY;
+   /* --- bồn cây đá (mạch đá, bụi cây nhiều tầng) + hàng rào giáo nhọn --- */
+   [[0,R(58)],[R(540),640]].forEach(([x0,x1])=>{c.rect(x0,Y(298),x1-x0,Y(350)-Y(298),"e");c.hline(x0,Y(298),x1-x0,"i");c.hline(x0,Y(298)+1,x1-x0,"i");
+     for(let y=Y(298)+7;y<Y(350);y+=9){c.hline(x0,y,x1-x0,"E");for(let x=x0+((y/9|0)%2)*10;x<x1;x+=20)c.vline(x,y-9,9,"E")}
+     const rr=c.rng(x0+3);for(let i=0;i<26;i++)blob(c,x0+Math.floor(rr()*(x1-x0)),Y(292)+Math.floor(rr()*6)-3,4+Math.floor(rr()*4),(i%2)?1:-1);
+     c.noise(x0,Y(274),x1-x0,Y(298)-Y(274),"v",.14,3,"V")});
+   [[0,R(106)],[R(494),640]].forEach(([x0,x1])=>{const yT=Y(274),yB=Y(298);c.hline(x0,yT+4,x1-x0,"I");c.hline(x0,yB-5,x1-x0,"I");c.hline(x0,yT+5,x1-x0,"i");
+     for(let x=x0;x<x1;x+=5){c.vline(x,yT+2,yB-yT-2,"i");c.px(x,yT,"J");c.px(x,yT+1,"J");c.px(x-1,yT+2,"J");c.px(x+1,yT+2,"J")}
+     for(let x=x0+2;x<x1;x+=40){c.rect(x-2,yT,5,yB-yT+1,"q");c.vline(x+2,yT,yB-yT+1,"Q");c.rect(x-3,yT-2,7,3,"Q")}});
+   /* --- hai cánh cổng sắt khép: khung, song, hoa văn vàng; hai cánh mở nghiêng --- */
+   [[125,182],[418,478]].forEach(([a,b])=>{const x0=R(a),x1=R(b),yT=Y(262),yB=Y(330),w=x1-x0,mx=(x0+x1)>>1;
+     c.rect(x0,yT,w,yB-yT,"I");c.box(x0,yT,w,yB-yT,"E");c.vline(mx,yT,yB-yT,"E");
+     for(let x=x0+3;x<x1-2;x+=3)c.vline(x,yT+10,Y(296)-yT-10,"i");
+     for(let x=x0+2;x<x1-1;x+=4){c.px(x,yT+7,"J");c.px(x,yT+8,"J");c.px(x-1,yT+9,"J");c.px(x+1,yT+9,"J")}
+     c.hline(x0,yT+10,w,"J");c.rect(x0,Y(296),w,3,"J");c.rect(x0+2,Y(298)+4,w-4,yB-Y(298)-8,"i");
+     [x0+(w>>2),x1-(w>>2)].forEach(cx=>{c.ring(cx,Y(312),4,"J");c.px(cx,Y(312),"J")});c.line(x0+2,yB-5,x1-2,yB-5,"J");c.vline(x0+1,yT,yB-yT,"i")});
+   c.poly([R(205),Y(262),R(222),Y(256),R(222),Y(330),R(205),Y(330)],"I");c.poly([R(205),Y(262),R(210),Y(260),R(210),Y(330),R(205),Y(330)],"E");
+   c.poly([R(374),Y(256),R(390),Y(262),R(390),Y(330),R(374),Y(330)],"I");c.poly([R(385),Y(260),R(390),Y(262),R(390),Y(330),R(385),Y(330)],"E");
+   /* --- trụ sau (nhỏ, tối) --- */
+   [[130,10],[385,9],[464,10]].forEach(([cx,w])=>{const x0=R(cx-w/2),ww=Math.max(4,Math.round(w*.68));c.rect(x0,Y(206),ww,Y(330)-Y(206),"Q");c.vline(x0+ww-1,Y(206),Y(330)-Y(206),"X");c.vline(x0+1,Y(206),Y(330)-Y(206),"q")});
+   /* --- tầng mái trên: tường kem + dải ô hoa + mái ngói + đầu đao --- */
+   c.rect(R(178),Y(82),R(422)-R(178),Y(114)-Y(82),"q");c.hline(R(178),Y(82),R(422)-R(178),"Q");c.hline(R(178),Y(82)+1,R(422)-R(178),"X");
+   for(let i=0;i<11;i++)lattice(c,R(206)+Math.round(i*(R(378)-R(206))/10),Y(90));
+   c.rect(R(178),Y(86),R(422)-R(178),2,"Q");c.rect(R(178),Y(104),R(422)-R(178),2,"Q");
+   tiled(c,[R(190),Y(60),R(410),Y(60),R(421),Y(71),R(432),Y(82),R(168),Y(82),R(179),Y(71)],Y(60),Y(82));
+   c.rect(R(184),Y(54),R(416)-R(184),4,"q");c.hline(R(184),Y(54),R(416)-R(184),"W");c.hline(R(184),Y(58),R(416)-R(184),"Q");
+   for(let x=R(192);x<R(410);x+=9)c.rect(x,Y(54)-2,5,3,"x");
+   curl(c,R(190),Y(54),-1);curl(c,R(410),Y(54),1);curl(c,R(214),Y(54),-1);curl(c,R(386),Y(54),1);
+   /* --- tầng mái dưới: ngói + bờ nóc + đầu đao lớn hai đầu --- */
+   tiled(c,[R(130),Y(112),R(470),Y(112),R(546),Y(130),R(540),Y(148),R(60),Y(148),R(54),Y(130)],Y(112),Y(148));
+   c.rect(R(124),Y(106),R(476)-R(124),5,"q");c.hline(R(124),Y(106),R(476)-R(124),"W");c.hline(R(124),Y(106)+4,R(476)-R(124),"Q");
+   for(let x=R(132);x<R(470);x+=9)c.rect(x,Y(106)-2,5,3,"x");
+   curl(c,R(56),Y(112),-1);curl(c,R(124),Y(106),-1);curl(c,R(476),Y(106),1);curl(c,R(544),Y(112),1);
+   /* --- xà ngang, hàng đấu củng trên đầu cột, xà dưới --- */
+   c.rect(R(78),Y(148)+3,R(522)-R(78),Y(154)-Y(148),"q");c.hline(R(78),Y(148)+3,R(522)-R(78),"X");
+   c.rect(R(92),Y(154)+3,R(508)-R(92),Y(170)-Y(154)-3,"X");
+   for(let x=R(100);x<R(500);x+=9){c.rect(x,Y(154)+4,5,5,"q");c.px(x+2,Y(154)+6,"Q")}
+   [112,195,400,486].forEach(cx=>dou(c,R(cx),Y(154)+2,Y(172)));
+   c.rect(R(88),Y(168)+4,R(512)-R(88),Y(178)-Y(168),"q");c.hline(R(88),Y(168)+4,R(512)-R(88),"x");c.hline(R(88),Y(178)+3,R(512)-R(88),"X");
+   /* --- bảng đỏ viền vàng kép (chữ vẽ trong cutscene) --- */
+   c.rect(R(222),Y(171),R(378)-R(222),Y(200)-Y(171),"j");c.box(R(222),Y(171),R(378)-R(222),Y(200)-Y(171),"J");c.box(R(222)+2,Y(171)+2,R(378)-R(222)-4,Y(200)-Y(171)-4,"J");
+   /* --- bốn trụ tròn màu kem: thân có bóng trụ, đầu cột nhiều lớp, chân đá --- */
+   [[112,16],[195,20],[400,18],[486,16]].forEach(([cx,w])=>{const x0=R(cx-w/2),ww=Math.max(7,Math.round(w*.68)),yT=Y(182),yB=Y(324);
+     c.rect(x0,yT,ww,yB-yT,"q");c.vline(x0+1,yT,yB-yT,"x");c.vline(x0+2,yT,yB-yT,"x");c.vline(x0+ww-1,yT,yB-yT,"X");c.vline(x0+ww-2,yT,yB-yT,"Q");c.vline(x0+ww-3,yT,yB-yT,"Q");
+     c.rect(x0-2,Y(178),ww+4,3,"x");c.rect(x0-1,Y(178)+3,ww+2,2,"Q");c.rect(x0-2,yB-5,ww+4,2,"Q");c.rect(x0-3,yB-3,ww+6,3,"q");
+     c.rect(x0-4,Y(322),ww+8,Y(336)-Y(322),"e");c.hline(x0-4,Y(322),ww+8,"i");c.hline(x0-4,Y(322)+1,ww+8,"i");c.vline(x0+ww+3,Y(322),Y(336)-Y(322),"E")});
+   /* --- bậc thềm: ba bậc có mép sáng + khối đá hai bên --- */
+   c.rect(R(82),Y(318),R(106)-R(82),Y(336)-Y(318),"e");c.rect(R(494),Y(318),R(518)-R(494),Y(336)-Y(318),"e");
+   c.hline(R(82),Y(318),R(106)-R(82),"i");c.hline(R(494),Y(318),R(518)-R(494),"i");c.vline(R(106)-1,Y(318),Y(336)-Y(318),"E");c.vline(R(494),Y(318),Y(336)-Y(318),"E");
+   c.rect(R(85),Y(336),R(515)-R(85),Y(350)-Y(336),"E");for(let y=Y(336);y<Y(350);y+=3){c.hline(R(85),y,R(515)-R(85),"e");c.hline(R(85),y+1,R(515)-R(85),"F")}}),
+ layer("ground",rect(0,294,640,66,"F"),grad(0,294,640,66,"FFEFFKk","v"),
+   (c)=>{const r=c.rng(23);for(let i=0;i<420;i++)c.px(Math.floor(r()*640),296+Math.floor(r()*62),r()<.5?"E":"K");for(let y=306;y<360;y+=16)for(let x=-20+((y/16|0)%2)*30;x<660;x+=60)c.hline(x,y,34,"E")},
+   light([220,296,420,296,520,360,120,360],1,.35)),
+ layer("people",(c)=>{person(c,204,298,52,1);person(c,226,296,54,0);person(c,430,300,52,1)}),
+ layer("fore",(c)=>{const r=c.rng(12);for(let i=0;i<60;i++){const x=Math.floor(r()*660)-10,h=20+Math.floor(r()*52),l=(r()-.5)*16;c.line(x,368,x+Math.round(l),368-h,"T",2)}
+   [[-8,356,24],[18,364,18],[648,356,24],[622,364,18]].forEach(([x,y,rr])=>{c.circ(x,y,rr,"T");c.circ(x,y-3,rr-4,"t")})}),
+ glow("O",{where:[284,200,80,24],r:12,strength:.5,bands:3}))
 
 /* chi tiết cận cảnh: cánh sen ép khô rơi ra từ sách (đặc tả 28x16, dùng cho cú máy insert) */
 sprite("petal",{w:30,h:18,outline:"d"},poly([2,10,6,3,15,0,24,3,28,10,22,16,10,17],"L"),poly([8,9,13,3,17,3,21,9,15,14],"l"),line(15,2,15,15,"M"),line(9,9,20,9,"m"),noise(0,0,30,18,"M",.05,2,"L"))

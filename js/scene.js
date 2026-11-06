@@ -43,7 +43,7 @@ for(let d=0;d<4;d++)for(let f=0;f<2;f++)chr('a'+d+f,AN,d,f);
 chr('emma',{ha:0x6b4423,sk:0xf3d0b0,sh:0xf2d27a,pa:0x3a5a8c,hp:1,rec:1,long:1});chr('khoa',{ha:0x222222,sk:0xe8bd90,sh:0x2a6f6a,pa:0x444444,strap:1,ph:1});chr('tu',{ha:0xcfcfcf,sk:0xc99b70,sh:0x6f7d5a,pa:0x3a3a2a,scarf:1,wr:1});
 mk('eng',14,10,P=>{P(0,1,9,12,1,.3);P(0x4a5a4a,1,3,10,6);P(0x6a7a6a,1,3,10,2);P(0xb33,3,1,3,2);P(0x222,10,5,3,3)});
 const ob=(k,cx,cy,m=1)=>{const f=sc.textures.get(k).getSourceImage(),w=f.width/T*SS*m,h=f.height/T*SS*m,x0=cx*Q-w/2,y0=cy*Q-h/2;sc.add.image(x0*T,(y0+h)*T,k).setOrigin(0,1).setScale(SS*m).setDepth((y0+h)*T);for(let i=0;i<Math.ceil(w);i++)for(let j=0;j<Math.ceil(h);j++){const X=Math.floor(x0)+i,Y=Math.floor(y0)+j;if(B[Y]?.[X]===0)B[Y][X]=1}};
-const lab=(x,y,t,c='#fff')=>sc.add.text(x*Q*T,y*Q*T,t,{fontFamily:"'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-serif",fontSize:'6px',color:c,stroke:'#3b2412',strokeThickness:2,align:'center'}).setOrigin(.5).setResolution(4).setDepth(9998);
+const lab=(x,y,t,c='#fff')=>sc.add.text(x*Q*T,y*Q*T,t,{fontFamily:"'VT323','Be Vietnam Pro',monospace",fontSize:'8px',color:c,stroke:'#3b2412',strokeThickness:2,align:'center'}).setOrigin(.5).setResolution(4).setDepth(9998);
 /* Công trình: đặt theo 51 hạng mục của sơ đồ chuẩn (features.js), toạ độ px sơ đồ đã cắt khung — chỉ vẽ hình dáng, không thêm công trình ngoài sơ đồ */
 FT.forEach(f=>{const id=f[1],x=f[7],y=f[8],S=SPR[id],MU=MULTI[id];if(S)ob(S[0],x,y,S[1]);if(MU)MU[1].forEach(([dx,dy])=>ob(MU[0],x+dx,y+dy));
  if(['A4_NHA_KIENG','B2_DIEU_KHAC_1','B3_DIEU_KHAC_2'].includes(id))sc.add.star(x*Q*T,y*Q*T,4,2.2,5.5,0xffd27a).setStrokeStyle(1,0x3b2412).setDepth(5)});

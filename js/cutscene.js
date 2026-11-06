@@ -168,14 +168,20 @@ function title(u){if(u<=6.5)return;x.fillStyle=`rgba(5,5,12,${.62*ez(cl((u-6.5)/
  [...T1].forEach((ch,i)=>{x.globalAlpha=ez(cl((u-7-i*.2)/1.1));x.fillStyle='#f3e6bd';x.fillText(ch,px,ty);px+=ws[i]+sp});
  x.globalAlpha=ez(cl((u-9.2)/1.4));x.fillStyle='#e0b25a';x.fillRect(W/2-tw*.25*x.globalAlpha,ty+sz*.62,tw*.5*x.globalAlpha,1.5);
  x.textAlign='center';x.globalAlpha=ez(cl((u-9.6)/1.6));x.fillStyle='#f3e6bd';x.font=`italic 400 ${sz*.2}px "Playfair Display","Noto Serif",Georgia,serif`;x.fillText('Những điều dòng nước không cuốn đi',W/2,ty+sz*.95);
- x.globalAlpha=ez(cl((u-11.6)/1.4));x.font=`${Math.max(13,sz*.13)}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillStyle='#e0b25a';x.fillText('Chương 1 — Dấu mực bên lề',W/2,ty+sz*1.45);x.globalAlpha=1;x.textAlign='left'}
+ x.globalAlpha=ez(cl((u-11.6)/1.4));x.font=`${Math.max(20,sz*.2)}px "VT323","Be Vietnam Pro",monospace`;x.fillStyle='#e0b25a';x.fillText('Chương 1 — Dấu mực bên lề',W/2,ty+sz*1.45);x.globalAlpha=1;x.textAlign='left'}
 function dGate(sh,cam,u,T){x.fillStyle='#0b0f22';x.fillRect(0,0,W,H);
- blit(CA.img('gate_sky'),.7,cam);{const[a,b,s]=wpos(.7,cam,160,92);glowS(a,b,s*95,'255,205,130',.3)}
- blit(CA.img('gate_trees'),.82,cam);blit(CA.img('gate_gate'),1,cam);blit(CA.img('gate_people'),1,cam,1,Math.sin(T*.7)*.12,0);blit(CA.img('gate_water'),1.04,cam);
+ blit(CA.img('gate_sky'),.7,cam);{const[a,b,s]=wpos(.7,cam,160,104);glowS(a,b,s*90,'255,205,130',.3)}
+ blit(CA.img('gate_trees'),.82,cam);
+ {const[a,b,s]=wpos(.82,cam,150,106);glowS(a,b,s*14,'255,214,150',.3);const[a2,b2,s2]=wpos(.82,cam,172,108);glowS(a2,b2,s2*12,'255,214,150',.28)}   /* đèn sân phát sáng lúc chạng vạng */
+ blit(CA.img('gate_gate'),1,cam);
+ /* bảng tên: chữ vẽ bằng canvas để đủ dấu tiếng Việt (ễ, ắ, Ỉ…), vàng trên nền đỏ */
+ {const[px,py,s]=wpos(1,cam,160,89.2);x.save();x.textAlign='center';x.textBaseline='middle';x.fillStyle='#ecc65c';x.shadowColor='rgba(0,0,0,.45)';x.shadowBlur=s*.6;
+  x.font=`500 ${s*1.9}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillText('KHU DI TÍCH CỤ PHÓ BẢNG',px,py-s*1.95);
+  x.font=`700 ${s*3.9}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillText('NGUYỄN SINH SẮC',px,py+s*2.0);x.restore()}
+ blit(CA.img('gate_ground'),1,cam);blit(CA.img('gate_people'),1,cam,1,Math.sin(T*.7)*.12,0);
+ /* ánh sáng ấm hắt lên sân + đom đóm */
  place(1.04,cam);x.globalCompositeOperation='lighter';
- for(let i=0;i<70;i++){const y=122+hh(i)*58,xx=hh(i+4)*360-20+Math.sin(T*.4+i)*3,len=6+hh(i+2)*28,a=(.05+.16*hh(i+6))*(.5+.5*Math.sin(T*(.8+hh(i)*1.2)+i*4));x.fillStyle=`rgba(255,205,150,${a})`;x.fillRect(xx,y,len,.55+hh(i+8)*.8)}
- /* đom đóm */
- for(let i=0;i<34;i++){const px=hh(i)*330-5+Math.sin(T*.4+i*2)*9,py=96+hh(i+3)*84+Math.cos(T*.5+i)*5,a=Math.pow(.5+.5*Math.sin(T*(1+hh(i+9))+i*3),3);x.fillStyle=`rgba(255,238,170,${.16*a})`;x.beginPath();x.arc(px,py,2.8,0,7);x.fill();x.fillStyle=`rgba(255,244,190,${.9*a})`;x.beginPath();x.arc(px,py,.75,0,7);x.fill()}
+ for(let i=0;i<34;i++){const px=hh(i)*330-5+Math.sin(T*.4+i*2)*9,py=100+hh(i+3)*70+Math.cos(T*.5+i)*5,a=Math.pow(.5+.5*Math.sin(T*(1+hh(i+9))+i*3),3);x.fillStyle=`rgba(255,238,170,${.16*a})`;x.beginPath();x.arc(px,py,2.8,0,7);x.fill();x.fillStyle=`rgba(255,244,190,${.9*a})`;x.beginPath();x.arc(px,py,.75,0,7);x.fill()}
  x.globalCompositeOperation='source-over';idt();
  blit(CA.img('gate_fore'),1.6,cam,1,Math.sin(T*.6)*.8,0);
  title(u)}
@@ -237,7 +243,7 @@ const SH={
  rdB:{w:dRoad,act:3,bloom:.7,bclose:1,flare:()=>.3,cam:u=>({x:lin(140,190,u,curD),y:118,z:1.8})},
  rd3:{w:dRoad,act:3,bloom:.85,sun:u=>Math.pow(cl(u/curD),2),flare:u=>.3+.7*Math.pow(cl(u/curD),2),white:u=>Math.pow(cl((u-(curD-1.4))/1.1),2),
   cam:u=>{const e=Math.pow(cl(u/curD),1.6);return{x:mix(190,208,e),y:mix(102,92,e),z:mix(1.35,2.3,e)}}},
- gate:{w:dGate,act:4,bloom:.6,cam:u=>{const k=cl(u/curD);return{x:160,y:mix(116,98,ez(cl(u/9))),z:mix(1.3,1.12,k)}}}
+ gate:{w:dGate,act:4,bloom:.55,cam:u=>{const k=cl(u/curD);return{x:160,y:mix(108,100,ez(cl(u/9))),z:mix(1.12,1.0,k)}}}
 };
 
 /* ---------- Dựng theo lời thoại: mỗi câu = một cú máy ---------- */
@@ -304,7 +310,7 @@ function frame(now){if(!run)return;requestAnimationFrame(frame);
 /* Phông: chữ tiếng Việt có dấu chồng (ế, ợ, ữ…) nằm trong các tệp unicode-range "vietnamese". document.fonts.load() mà không đưa chữ mẫu chỉ nạp phần latin,
    nên trước đây canvas vẽ "Dấu mực bên lề"/phụ đề bằng phông dự phòng -> lẫn phông, vỡ dấu. Nay nạp kèm chữ mẫu có dấu và chờ xong (tối đa 3,5 s) rồi mới chiếu. */
 const VN='ÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ';
-const FONTS=['400 24px "Playfair Display"','italic 400 24px "Playfair Display"','700 60px "Playfair Display"','400 28px "Patrick Hand"','400 16px "Be Vietnam Pro"','500 16px "Be Vietnam Pro"','700 16px "Be Vietnam Pro"'];
+const FONTS=['400 24px "Playfair Display"','italic 400 24px "Playfair Display"','700 60px "Playfair Display"','400 28px "Patrick Hand"','400 22px "VT323"','400 16px "Be Vietnam Pro"','500 16px "Be Vietnam Pro"','700 16px "Be Vietnam Pro"'];
 const loadFonts=()=>document.fonts?Promise.race([Promise.all(FONTS.map(f=>document.fonts.load(f,VN).catch(()=>0))),new Promise(r=>setTimeout(r,3500))]):Promise.resolve();
 loadFonts();
 $('go').onclick=()=>{const b=$('go');b.disabled=true;b.textContent='Đang chuẩn bị…';aud();SFX.init();CA.lib;CA.door;

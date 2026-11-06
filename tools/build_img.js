@@ -2,7 +2,7 @@
    Dùng:  node <pxl>/bin/pxl.js build assets/art/art.px.js --out assets/art/out && node tools/build_img.js */
 const fs=require('fs'),path=require('path');
 const root=path.join(__dirname,'..'),out=path.join(root,'assets/art/out');
-const LAYERS={river:['sky','far','water','boats','fore'],road:['sky','far','mid','ground','fore'],gate:['sky','trees','gate','water','people','fore']};
+const LAYERS={river:['sky','far','water','boats','fore'],road:['sky','far','mid','ground','fore'],gate:['sky','trees','gate','ground','people','fore']};
 const files={};
 for(const [scene,ls] of Object.entries(LAYERS)){const dir=scene==='river'?'intro_river':scene;for(const l of ls)files[scene+'_'+l]=path.join(out,'scenes',dir,l+'.png')}
 files.rower=path.join(out,'anims/rower.png');files.petal=path.join(out,'sprites/petal.png');
