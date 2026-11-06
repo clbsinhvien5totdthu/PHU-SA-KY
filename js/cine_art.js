@@ -133,9 +133,13 @@ function buildDoor(){
 
 /* ---------- Lớp từ ảnh pixel có sẵn (img.js) ---------- */
 const imgCache={};
-function img(key,y0=0,y1=90){const id=key+y0+'_'+y1;if(imgCache[id])return imgCache[id];const im=IM[key];if(!im||!im.complete||!im.width)return null;
+function img(key,y0=0,y1){const im=IM[key];if(!im||!im.complete||!im.width)return null;if(y1==null)y1=im.height;const id=key+y0+'_'+y1;if(imgCache[id])return imgCache[id];
  const sc=VW/im.width,h=(y1-y0)*sc,cv=mkc(VW*K,h*K),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,y0,im.width,y1-y0,0,0,cv.width,cv.height);
  return imgCache[id]={cv,ox:0,oy:y0*sc,w:VW,h}}
 
+/* Dải khung hoạt hoạ pxl (anims/*.png xếp ngang): phóng K lần (nearest) một lần, vẽ từng khung bằng drawImage cắt */
+const stripC={};
+function strip(key,n){if(stripC[key])return stripC[key];const im=IM[key];if(!im||!im.complete||!im.width)return null;const fw=im.width/n,cv=mkc(im.width*K,im.height*K),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,0,cv.width,cv.height);return stripC[key]={cv,fw,fh:im.height,n}}
+
 let LIB,DOOR;
-return{VW,VH,K,FILT,get lib(){return LIB||(LIB=buildLib())},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();
+return{VW,VH,K,FILT,strip,get lib(){return LIB||(LIB=buildLib())},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();

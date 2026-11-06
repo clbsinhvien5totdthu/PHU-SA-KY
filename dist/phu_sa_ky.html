@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="vi"><head><meta charset="utf-8"><title>Phù Sa Ký – Map 01: Khu di tích Nguyễn Sinh Sắc</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>:root{--ink:#3b2412;--pa:#f6e7bd;--br:#7a4b24;--bg:#14200f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root{--bg:#0b120a}}
-html,body{height:100%;margin:0;background:var(--bg);overflow:hidden;font-family:'Pixelify Sans','Trebuchet MS',sans-serif;color:var(--ink);user-select:none;-webkit-user-select:none}
+html,body{height:100%;margin:0;background:var(--bg);overflow:hidden;font-family:'Be Vietnam Pro','Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:var(--ink);user-select:none;-webkit-user-select:none}
 body{position:relative}#g{position:absolute;inset:0}
 #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(40,30,0,.4));mix-blend-mode:multiply;transition:background 2s}
 #vig.q{background:radial-gradient(ellipse at center,rgba(0,0,30,.12) 30%,rgba(0,0,20,.6))}
@@ -12,7 +13,7 @@ body{position:relative}#g{position:absolute;inset:0}
 #hud{position:absolute;left:10px;top:calc(10px + env(safe-area-inset-top,0px));padding:6px 10px;font-size:15px;max-width:62%;transition:opacity 1.5s}
 #nbb{position:absolute;right:10px;top:calc(10px + env(safe-area-inset-top,0px));padding:6px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink);transition:opacity 1.5s}
 #act{position:absolute;right:14px;bottom:calc(18px + env(safe-area-inset-bottom,0px));padding:12px 18px;font:inherit;font-size:18px;font-weight:700;cursor:pointer;display:none;color:var(--ink)}
-#dlg{position:absolute;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(680px,94%);padding:14px 16px 12px;display:none;font-size:17px;line-height:1.35;box-sizing:border-box}
+#dlg{position:absolute;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(680px,94%);padding:14px 16px 12px;display:none;font-size:16.5px;line-height:1.55;box-sizing:border-box;min-height:96px}
 #who{position:absolute;top:-17px;left:14px;background:#d9b26b;border:3px solid var(--br);padding:0 10px;font-weight:700;border-radius:4px;font-size:15px}
 #ch button{display:block;width:100%;margin-top:6px;font:inherit;font-size:16px;color:var(--ink);background:#fff6d8;border:3px solid var(--br);border-radius:4px;padding:6px 8px;text-align:left;cursor:pointer}
 #ch button:hover{background:#ffe08a}#more{float:right;animation:bl 1s infinite}@keyframes bl{50%{opacity:.2}}
@@ -32,21 +33,22 @@ body.cine #ui{display:none}#ui{position:absolute;inset:0;pointer-events:none;tra
 #stat{position:absolute;left:10px;bottom:calc(12px + env(safe-area-inset-bottom,0px));padding:6px 10px;font-size:13px;display:flex;flex-direction:column;gap:4px;transition:opacity .3s}
 #pt{display:flex;gap:4px}#pt b{width:26px;height:26px;border-radius:50%;border:3px solid var(--br);display:grid;place-items:center;font-size:10px;color:#fff;opacity:.7}#pt b:nth-child(1){background:#2c3e6b;opacity:1;box-shadow:0 0 0 2px #f5c542}#pt b:nth-child(2){background:#c9962e}#pt b:nth-child(3){background:#2a6f6a}
 #keys{font-size:11px;opacity:.7}@media(pointer:coarse){#keys{display:none}}
-#cine{position:fixed;inset:0;z-index:50;background:#000;font-family:'Playfair Display',Georgia,serif;color:#f3e6bd}#cin{position:absolute;inset:0;width:100%;height:100%}
+#cine{position:fixed;inset:0;z-index:50;background:#000;font-family:'Playfair Display','Noto Serif','Times New Roman',Georgia,serif;color:#f3e6bd}#cin{position:absolute;inset:0;width:100%;height:100%}
 #lb1,#lb2{position:absolute;left:0;right:0;background:#000;height:50vh;transition:height 2.4s cubic-bezier(.2,.7,.2,1)}#lb1{top:0}#lb2{bottom:0}#cine.on #lb1,#cine.on #lb2{height:var(--bar,11vh)}
-#sub{position:absolute;left:50%;bottom:2vh;transform:translateX(-50%);width:min(900px,92vw);text-align:center;font-size:clamp(14px,2.2vw,21px);font-style:italic;line-height:1.35;opacity:0;transition:opacity .5s;text-shadow:0 1px 6px #000}#sub.in{opacity:1}
-#sub b{display:block;font:700 11px/1.5 'Pixelify Sans',sans-serif;letter-spacing:.2em;color:#e0b25a;font-style:normal}
-#skp{position:absolute;right:14px;top:calc(12px + env(safe-area-inset-top,0px));z-index:3;background:none;border:1px solid #f3e6bd88;color:#f3e6bd;font:13px 'Pixelify Sans',sans-serif;padding:5px 12px;cursor:pointer;opacity:.7}
+#sub{position:absolute;left:50%;bottom:2vh;transform:translateX(-50%);width:min(900px,92vw);text-align:center;font-size:clamp(15px,2.3vw,23px);font-style:italic;line-height:1.5;letter-spacing:.01em;text-shadow:0 1px 3px #000,0 0 14px #000}
+#sub span{opacity:0;transition:opacity .7s ease}#sub.in span{opacity:1}#sub:not(.in) span{transition:opacity .4s ease!important;transition-delay:0s!important}
+#sub b{display:block;font:700 12px/1.6 'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-serif;letter-spacing:.2em;color:#e0b25a;font-style:normal}
+#skp{position:absolute;right:14px;top:calc(12px + env(safe-area-inset-top,0px));z-index:3;background:none;border:1px solid #f3e6bd88;color:#f3e6bd;font:13px 'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-serif;padding:5px 12px;cursor:pointer;opacity:.7}
 #cs{position:absolute;inset:0;z-index:4;background:#0a0705;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:20px}
-#cs h1{font-size:clamp(38px,9vw,92px);margin:0;letter-spacing:.14em}#cs p{margin:0;font-style:italic;opacity:.8}#cs small{opacity:.5;font:12px 'Pixelify Sans',sans-serif}
-#cs button{font:16px 'Pixelify Sans',sans-serif;color:#f3e6bd;background:none;border:1px solid #e0b25a;padding:9px 26px;cursor:pointer}#sk2{border:none!important;opacity:.5;font-size:12px!important}
+#cs h1{font-size:clamp(38px,9vw,92px);margin:0;letter-spacing:.14em}#cs p{margin:0;font-style:italic;opacity:.8}#cs small{opacity:.5;font:12px 'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-serif}
+#cs button{font:16px 'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-serif;color:#f3e6bd;background:none;border:1px solid #e0b25a;padding:9px 26px;cursor:pointer}#sk2{border:none!important;opacity:.5;font-size:12px!important}
 #pp{position:absolute;right:14px;top:-72px;width:64px;height:64px;image-rendering:pixelated;background:#d9b26b;border:3px solid var(--br);border-radius:4px;display:none}
 #cbb{padding:6px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
 #cp{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(10,15,5,.65);padding:10px;box-sizing:border-box;z-index:5}#cpc{max-width:900px;max-height:92%;overflow:auto;padding:12px 16px;font-size:13px;line-height:1.35}
 .cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px}.cd{background:#fff6d8;border:2px dashed var(--br);padding:8px;border-radius:4px;display:grid;grid-template-columns:56px 1fr;gap:8px}.cd canvas{width:56px;height:56px;image-rendering:pixelated;border:3px solid var(--br);background:#d9b26b}.cd small{display:block;margin-top:3px}
 
 body.pro #ui{position:fixed;inset:0;z-index:60;pointer-events:none}body.pro #dlg{pointer-events:auto}body.pro #hud,body.pro #loc,body.pro #side,body.pro #stat{display:none!important}
-.tg{font:700 10px 'Pixelify Sans',sans-serif;background:#8a5a2b;color:#fff6d8;padding:1px 5px;border-radius:3px;margin-left:4px;white-space:nowrap}#nbc li small,.cd small{display:block}#jbb{position:static}
+.tg{font:700 10px 'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-serif;background:#8a5a2b;color:#fff6d8;padding:1px 5px;border-radius:3px;margin-left:4px;white-space:nowrap}#nbc li small,.cd small{display:block}#jbb{position:static}
 
 #mbb{padding:6px 12px;font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
 
@@ -531,9 +533,17 @@ const KM={},rec=(k,t,s,c)=>{K[k].push(t);KM[t]={src:s,cf:c}};
 let busy=false,adv=null,ended=false,near=false,qt=0,nbOpen=false;
 const toast=m=>{window.SFX&&SFX.chime();const t=$('toast');t.textContent=m;t.style.opacity=1;clearTimeout(t.h);t.h=setTimeout(()=>t.style.opacity=0,3200)};
 const vocab=(...a)=>a.forEach(w=>{if(!V.includes(w)){V.push(w);toast('Từ mới: '+w.replace('|',' = '))}});
-function seq(items,done){busy=true;$('dlg').style.display='block';let i=0;const step=()=>{window.SFX&&SFX.blip();if(i>=items.length){$('dlg').style.display='none';busy=false;adv=null;done&&done();return}
- const[sp,tx,ch]=items[i++];window.onSeqLine&&onSeqLine(sp,tx);$('who').textContent=sp;portrait(sp);$('txt').textContent=tx;const c=$('ch');c.innerHTML='';$('more').style.display=ch?'none':'block';
- if(ch){adv=null;ch.forEach(o=>{const b=document.createElement('button');b.textContent=o[0];b.onclick=()=>{const r=o[1]&&o[1]();if(r)items.splice(i,0,...r);step()};c.appendChild(b)})}else adv=step};step()}
+/* Hộp thoại: chữ hiện dần theo nhịp đọc (~24 ký tự/giây, nghỉ nhẹ ở dấu câu); bấm/E/Enter một lần để hiện hết dòng, lần nữa để sang dòng sau.
+   Phần chữ chưa hiện vẫn chiếm chỗ (ẩn) nên hộp thoại không nhảy dòng khi gõ. */
+const TYPE={cps:24,gap:{'.':280,'?':320,'!':320,'…':360,',':150,';':180,':':180,'—':180,'”':200}};
+let typeT=null,typeEnd=null;
+function typeLine(el,text,onEnd){clearTimeout(typeT);const ch=[...text],a=document.createElement('span'),b=document.createElement('span');b.style.visibility='hidden';el.textContent='';el.append(a,b);let n=0;
+ const fin=()=>{clearTimeout(typeT);typeT=null;typeEnd=null;a.textContent=text;b.textContent='';onEnd&&onEnd()};typeEnd=fin;
+ const tick=()=>{if(n>=ch.length)return fin();const c=ch[n++];a.textContent=ch.slice(0,n).join('');b.textContent=ch.slice(n).join('');
+  const nx=ch[n];typeT=setTimeout(tick,1000/TYPE.cps+((!nx||nx===' ')&&TYPE.gap[c]||0))};tick()}
+function seq(items,done){busy=true;$('dlg').style.display='block';let i=0;const step=()=>{window.SFX&&SFX.blip();if(i>=items.length){clearTimeout(typeT);typeEnd=null;$('dlg').style.display='none';busy=false;adv=null;done&&done();return}
+ const[sp,tx,ch,hint]=items[i++];window.onSeqLine&&onSeqLine(sp,tx,hint);$('who').textContent=sp;portrait(sp);const c=$('ch');c.innerHTML='';$('more').style.display='none';adv=()=>typeEnd&&typeEnd();
+ typeLine($('txt'),tx,()=>{if(ch){adv=null;ch.forEach(o=>{const b=document.createElement('button');b.textContent=o[0];b.onclick=()=>{const r=o[1]&&o[1]();if(r)items.splice(i,0,...r);step()};c.appendChild(b)})}else{$('more').style.display='block';adv=step}})};step()}
 document.addEventListener('pointerdown',()=>{if(adv)adv()});
 </script>
 <script>/* Chương 1 – “Dấu mực bên lề”: nhiệm vụ bám §5.2–5.4 tài liệu thiết kế.
@@ -582,23 +592,24 @@ K.known.some(x=>/1927/.test(x))?['An – hỏi thêm (mở nhờ mốc 1927–19
 <script>/* Mở đầu chơi được (§4 Cảnh 01–03): thư viện → ghi chú bên lề → rủ bạn. Chạy trước đoạn đường đi/cổng của cutscene. */
 const OB=[['known','Tờ giấy gấp tư chia ba cột: “Điều có tư liệu” · “Điều người ta nhớ” · “Điều còn phải hỏi”.','quan sát trực tiếp','chắc chắn'],['open','Ghi chú bên lề: “Hòa An – 1927 đến 1929” khoanh mực nâu, chưa rõ căn cứ (ghi chú không phải chứng cứ độc lập).','ghi chú viết tay','chưa kiểm chứng'],['open','Cụm “Người lái đò” ở nhiều trang không liền nhau (đưa thư, chở người qua rạch); chưa biết một hay nhiều người.','ghi chú viết tay','chưa kiểm chứng']];
 const en=(k,t,s,c)=>K[k].includes(t)||rec(k,t,s,c);
+/* Phần thứ 4 của mỗi mục tường thuật = tên cú máy (xem SH trong js/cutscene.js); không ghi thì cutscene tự chọn theo người nói. */
 const PRO=done=>seq([
-['','Tiếng quạt trần quay đều. Thư viện đang chuyển một phần kho tư liệu cũ sang phòng đọc mới. An gõ “lịch sử địa phương – Cao Lãnh – Hòa An”; kết quả không đầy đủ.'],
-['An','Kỳ lạ thật. Danh mục ghi còn một bản mà tìm ba vòng vẫn không thấy.'],
-['Cô Hạnh','Em thử kiểm tra mấy thùng sách mới chuyển vào chưa? Có vài cuốn cũ chưa kịp nhập lại danh mục. Nhẹ tay thôi, gáy sách mục nhiều lắm.'],
-['An – chọn cách nói','Nói với cô Hạnh thế nào về việc cần tư liệu?',[['“Em không muốn chỉ lấy thông tin trên mạng rồi ghép lại.”',()=>[['Cô Hạnh','Vậy càng phải xem kỹ. Có tài liệu đọc một lần là biết, có tài liệu phải biết nó đến từ đâu mới dùng được.']]],['“Cho em lấy nhanh, mai em phải nộp giáo án.”',()=>{st.c.hurry=1;return[['Cô Hạnh','Nộp giáo án thì cũng phải nộp đúng nguồn. Nhẹ tay đã, rồi hẵng tính chuyện nhanh.']]}]]],
-['','Dưới đáy thùng là quyển bìa cứng xanh sẫm, chữ ép nhũ đã phai: “Lịch sử Đồng Bằng Sông Cửu Long”. Một cánh sen ép khô rơi ra cùng tờ giấy gấp tư dùng làm dấu trang.'],
-['An – quan sát','Nhiều trang có ghi chú cùng một nét chữ: bút chì, mực nâu, vài câu gạch bỏ rồi viết lại; không ký tên. Xem gì trước?',[['Tờ giấy gấp tư (ba cột).',()=>{en(...OB[0]);return[['An','Ba cột. Người viết cũng tự phân loại điều mình biết.']]}],['Mốc “Hòa An – 1927 đến 1929” khoanh mực nâu.',()=>{en(...OB[1]);return[['An','Một mốc được khoanh. Mình chưa biết vì sao.']]}],['Cụm “Người lái đò” ở nhiều trang.',()=>{en(...OB[2]);return[['An','Khi thì cạnh chuyện đưa thư, khi thì chở người qua rạch. Chưa dám nói đó là một người.']]}]]],
-['An – xin phép','Cậu muốn chụp lại bìa và các trang có ghi chú để tra cứu.',[['Hỏi cô Hạnh trước rồi mới chụp.',()=>[['An','Em xin phép chụp lại bìa và trang có ghi chú để tra cứu, chưa đăng gì lên mạng đâu ạ.'],['Cô Hạnh','Được. Em ghi nhận tình trạng sách trước, rồi chụp theo đúng quy định của thư viện.']]],['Chụp luôn cho nhanh, lát hỏi sau.',()=>{st.c.hurry=1;return[['Cô Hạnh','An, hỏi trước rồi mới chụp. Sách do người ta hiến tặng, không phải của riêng em.'],['An','Dạ, em xin lỗi cô. Em xóa ảnh này, chụp lại khi cô đồng ý.']]}]]],
-['Cô Hạnh','Em xem thử phiếu tiếp nhận lô sách. Nếu là tài liệu hiến tặng, có thể còn thông tin người gửi.'],
-['','Thùng sách thuộc lô tư liệu do gia đình thầy Nguyễn Văn Lâm, giáo viên Lịch sử đã nghỉ hưu, hiến tặng. Quyển sách chưa có mã riêng vì nằm trong lô chờ kiểm kê.'],
-['Cô Hạnh','Cô chưa thể xác nhận mọi ghi chú đều do thầy Lâm viết. Điều đó cần hỏi lại, không suy ra được từ một dòng trong sổ.'],
-['','Emma đến thư viện cùng Khoa, người mang theo máy ghi âm cầm tay.'],
-['Emma','Cậu nhắn “có chuyện này lạ lắm” làm tớ tưởng cậu tìm được kho báu. Hóa ra là một cuốn sách cũ với mấy dòng ghi chú bên lề.'],
-['An','Tớ cũng chưa hiểu những ghi chú này nói về chuyện gì. Có một dòng nhắc đến Hòa An, có chỗ ghi giai đoạn cụ Nguyễn Sinh Sắc sống ở Cao Lãnh.'],
-['Khoa','Có bản đồ không? Có tọa độ không? Có cái gì để số hóa không?'],['Emma','Cậu hỏi như chuẩn bị đi săn vật phẩm vậy.'],
-['An – chọn','Chuyến đi đầu tiên này là gì?',[['Một buổi khảo sát học tập ở Khu di tích Nguyễn Sinh Sắc: xem trưng bày, kiểm tra mốc thời gian.',()=>[['Khoa','Khảo sát thì phải có hệ thống. Tớ lo bản đồ, hai cậu lo hỏi chuyện.']]],['Một cuộc săn tìm bí mật sau cuốn sách.',()=>[['Khoa','Săn bí mật á? Nghe vui, nhưng tờ giấy mới chỉ là sơ đồ, chưa phải mật mã.'],['An','Ừ. Có sơ đồ không có nghĩa là có mật mã. Mình đi khảo sát đã.']]]]],
-['','Cả ba báo với cô Hạnh, lưu bản chụp theo đúng quy định và ghi rõ nguồn gốc tài liệu. Chiều nay họ lên đường.']],
+['','Quạt trần quay đều. Thư viện đang chuyển bớt kho tư liệu cũ sang phòng đọc mới. An gõ “lịch sử địa phương – Cao Lãnh – Hòa An” vào máy, nhưng kết quả cứ thiếu thiếu.',null,'libA'],
+['An','Lạ thật. Danh mục ghi còn một bản, mà tìm ba vòng rồi vẫn không thấy.'],
+['Cô Hạnh','Em thử coi mấy thùng sách mới chuyển vô chưa? Có vài cuốn cũ chưa kịp nhập danh mục. Nhớ nhẹ tay nghen, gáy sách mục lắm.'],
+['An – chọn cách nói','Nói với cô Hạnh sao đây để cô hiểu mình cần tư liệu để làm gì?',[['“Em không muốn chỉ lượm thông tin trên mạng rồi ghép lại ạ.”',()=>[['Cô Hạnh','Vậy thì càng phải coi kỹ. Có tài liệu đọc một lần là hiểu, có tài liệu phải biết nó từ đâu ra mới dùng được.']]],['“Cô cho em lấy nhanh nha, mai em phải nộp giáo án rồi.”',()=>{st.c.hurry=1;return[['Cô Hạnh','Nộp giáo án thì cũng phải nộp cho đúng nguồn chứ. Thong thả đã, rồi hẵng tính chuyện nhanh.']]}]]],
+['','Dưới đáy thùng là một quyển bìa cứng xanh sẫm, chữ nhũ đã phai: “Lịch sử Đồng Bằng Sông Cửu Long”. Một cánh sen ép khô rơi ra, cùng tờ giấy gấp tư kẹp làm dấu trang.',null,'book'],
+['An – quan sát','Nhiều trang có ghi chú cùng một nét chữ: khi bút chì, khi mực nâu, có câu gạch đi viết lại, và không ký tên. Xem cái nào trước đây?',[['Tờ giấy gấp tư (ba cột).',()=>{en(...OB[0]);return[['An','Ba cột… Người viết cũng tự phân loại những gì mình biết.']]}],['Mốc “Hòa An – 1927 đến 1929” khoanh mực nâu.',()=>{en(...OB[1]);return[['An','Mốc này được khoanh lại. Mà mình chưa biết vì sao.']]}],['Cụm “Người lái đò” ở nhiều trang.',()=>{en(...OB[2]);return[['An','Khi thì kế chuyện đưa thư, khi thì chở người qua rạch. Chưa dám chắc là một người hay nhiều người.']]}]]],
+['An – xin phép','Mình muốn chụp lại bìa và mấy trang có ghi chú để tra cứu.',[['Hỏi cô Hạnh trước rồi mới chụp.',()=>[['An','Cô ơi, cho em chụp lại bìa với mấy trang có ghi chú để tra cứu nha cô. Em chưa đăng gì lên mạng đâu ạ.'],['Cô Hạnh','Được. Em ghi lại tình trạng cuốn sách trước, rồi chụp theo đúng quy định của thư viện.']]],['Chụp luôn cho nhanh, lát hỏi sau.',()=>{st.c.hurry=1;return[['Cô Hạnh','An, hỏi trước rồi mới chụp. Sách này người ta hiến tặng, đâu phải của riêng mình em.'],['An','Dạ, em xin lỗi cô. Em xóa ảnh liền, khi nào cô đồng ý em chụp lại.']]}]]],
+['Cô Hạnh','Em coi thử phiếu tiếp nhận lô sách đi. Nếu là tài liệu hiến tặng thì có thể còn thông tin người gửi.'],
+['','Thùng sách thuộc lô tư liệu do gia đình thầy Nguyễn Văn Lâm, giáo viên Lịch sử đã nghỉ hưu, hiến tặng. Quyển này chưa có mã riêng vì còn nằm trong lô chờ kiểm kê.',null,'box'],
+['Cô Hạnh','Cô chưa dám chắc mấy dòng ghi chú này đều do thầy Lâm viết. Chuyện đó phải hỏi lại, không thể đoán từ một dòng trong sổ.'],
+['','Emma bước vào thư viện cùng Khoa, tay cậu cầm theo chiếc máy ghi âm nhỏ.',null,'door'],
+['Emma','Cậu nhắn “có chuyện này lạ lắm”, tớ tưởng cậu tìm ra kho báu. Ai dè chỉ là cuốn sách cũ với mấy dòng ghi chú bên lề.'],
+['An','Tớ cũng chưa hiểu mấy dòng này nói gì. Có chỗ nhắc Hòa An, có chỗ ghi giai đoạn cụ Nguyễn Sinh Sắc sống ở Cao Lãnh.'],
+['Khoa','Có bản đồ không? Có tọa độ không? Có gì để số hóa được không?'],['Emma','Cậu hỏi nghe như sắp đi săn vật phẩm vậy.'],
+['An – chọn','Chuyến đi đầu tiên này là gì?',[['Một buổi khảo sát học tập ở Khu di tích Nguyễn Sinh Sắc: xem trưng bày, đối chiếu các mốc thời gian.',()=>[['Khoa','Khảo sát thì phải có hệ thống. Tớ lo bản đồ, hai cậu lo hỏi chuyện.']]],['Một cuộc săn tìm bí mật phía sau cuốn sách.',()=>[['Khoa','Săn bí mật hả? Nghe vui đó, nhưng tờ giấy này mới chỉ là sơ đồ, chưa phải mật mã.'],['An','Ừ. Có sơ đồ chưa chắc có mật mã. Mình cứ đi khảo sát trước đã.']]]]],
+['','Cả ba báo với cô Hạnh, lưu bản chụp đúng quy định và ghi rõ nguồn gốc tài liệu. Chiều nay, họ lên đường.',null,'libEnd']],
 ()=>{OB.forEach(o=>en(...o));en('known','Phiếu tiếp nhận: sách thuộc lô do gia đình thầy Nguyễn Văn Lâm hiến tặng (hồ sơ thư viện – hư cấu).','hồ sơ tiếp nhận của thư viện','đã đối chiếu');en('open','Chưa xác nhận mọi ghi chú đều do thầy Lâm viết – cần hỏi lại.','cô Hạnh','cần xác minh');done&&done()});
 </script>
 <script>/* Chân dung thoại + hồ sơ nhân vật [C] */
@@ -689,7 +700,7 @@ for(let d=0;d<4;d++)for(let f=0;f<2;f++)chr('a'+d+f,AN,d,f);
 chr('emma',{ha:0x6b4423,sk:0xf3d0b0,sh:0xf2d27a,pa:0x3a5a8c,hp:1,rec:1,long:1});chr('khoa',{ha:0x222222,sk:0xe8bd90,sh:0x2a6f6a,pa:0x444444,strap:1,ph:1});chr('tu',{ha:0xcfcfcf,sk:0xc99b70,sh:0x6f7d5a,pa:0x3a3a2a,scarf:1,wr:1});
 mk('eng',14,10,P=>{P(0,1,9,12,1,.3);P(0x4a5a4a,1,3,10,6);P(0x6a7a6a,1,3,10,2);P(0xb33,3,1,3,2);P(0x222,10,5,3,3)});
 const ob=(k,cx,cy,m=1)=>{const f=sc.textures.get(k).getSourceImage(),w=f.width/T*SS*m,h=f.height/T*SS*m,x0=cx*Q-w/2,y0=cy*Q-h/2;sc.add.image(x0*T,(y0+h)*T,k).setOrigin(0,1).setScale(SS*m).setDepth((y0+h)*T);for(let i=0;i<Math.ceil(w);i++)for(let j=0;j<Math.ceil(h);j++){const X=Math.floor(x0)+i,Y=Math.floor(y0)+j;if(B[Y]?.[X]===0)B[Y][X]=1}};
-const lab=(x,y,t,c='#fff')=>sc.add.text(x*Q*T,y*Q*T,t,{fontFamily:'Pixelify Sans,sans-serif',fontSize:'6px',color:c,stroke:'#3b2412',strokeThickness:2,align:'center'}).setOrigin(.5).setResolution(4).setDepth(9998);
+const lab=(x,y,t,c='#fff')=>sc.add.text(x*Q*T,y*Q*T,t,{fontFamily:"'Be Vietnam Pro','Segoe UI',Roboto,Arial,sans-serif",fontSize:'6px',color:c,stroke:'#3b2412',strokeThickness:2,align:'center'}).setOrigin(.5).setResolution(4).setDepth(9998);
 /* Công trình: đặt theo 51 hạng mục của sơ đồ chuẩn (features.js), toạ độ px sơ đồ đã cắt khung — chỉ vẽ hình dáng, không thêm công trình ngoài sơ đồ */
 FT.forEach(f=>{const id=f[1],x=f[7],y=f[8],S=SPR[id],MU=MULTI[id];if(S)ob(S[0],x,y,S[1]);if(MU)MU[1].forEach(([dx,dy])=>ob(MU[0],x+dx,y+dy));
  if(['A4_NHA_KIENG','B2_DIEU_KHAC_1','B3_DIEU_KHAC_2'].includes(id))sc.add.star(x*Q*T,y*Q*T,4,2.2,5.5,0xffd27a).setStrokeStyle(1,0x3b2412).setDepth(5)});
@@ -741,8 +752,8 @@ const q=$('mm').getContext('2d'),S=STEPS[st.step];q.drawImage(mm0,0,0);if(S){q.f
 q.fillStyle='#fff';q.strokeStyle='#d0342c';q.lineWidth=1.5;q.beginPath();q.arc(pl.x/T,pl.y/T,2.4,0,7);q.fill();q.stroke();$('stat').style.opacity=busy?0:1}
 
 </script>
-<script>/* Tranh pixel art cho cinematic (vẽ bằng pxl, nguồn: assets/art/art.px.js) */
-const IMG={river_sky:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABaCAMAAAAIGK1gAAAAG1BMVEULDyIbI0eKS2Y7NVjJYF//8c/zqGf/2YoAAABBv6HjAAAACXRSTlP//////////wBTT3gSAAAA70lEQVR42u3VUQ6CMBBF0cfQgvtfsdFogkakDLRM4N5J/aL1pGqUiA6uCz7xhV3wAAI8EdDKWnmG+m7HWcpxhkr2WHFdv/eoD14zYPmncBAw9g2uvDVucFeg9bFHbd/vx7dv4Xk9X5uuyU+n4Hk1961csuABPD8wmVmjNftH+G+frKHQs5Qs9ii4LykFDyDACwDzIz9wSHUnv3PuVyufV6ihanma64SLA3PeLAR4fuA4VJwvoOcMDe2ErhM0Vu0T6KkycNzqqw4cN/rqA19E927dggcQIECAAAECBAgQIECAAAECBAgQIECAAAECnOkOLrEmvy7cZNAAAAAASUVORK5CYII=',river_far:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABaCAMAAAAIGK1gAAAADFBMVEUAAAALDyI7NVgbI0d5GZtEAAAAAXRSTlMAQObYZgAAATRJREFUeNrtldGugzAMQznt///z1bZeSEq7LhVUm+TzgiBYdgCLbRNCCCGEEEIIIcQH8MVewEP0PNyeLeqFYUG4eS+2RSlnvXhuuO4TDHtRXsK6jrS9GBXr4ogEvN73h4V9ZaY/LOwrM/1hYV+Z6Q8L+8pMf1jYV8alCm11QYm9H8HWLwgYfoK/F/CmP0i4j2wppagodTS3BEwdN97nCycsEo7TrpedvfK17BjkC0YsEtxZ08vNEl03hvkOzTDtrqC5ovPK2TiYgCm/6Gy1T5OjuFXaijKt/P71OWesdL/XBcwW97E8IlTTCjvspitSmlqs1ttwjlci0rQ4RzxNj5fYkNKUYrXeh4ZDEXXSuYzhKc0pdr+zoBMw3wHDq98f8Md+xUIIIYQQQgghhBBCCCGEEFfxB1ZKCoGB+6yHAAAAAElFTkSuQmCC',river_water:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABaCAMAAAAIGK1gAAAAFVBMVEUAAADzqGfJilr/2YqKWj5KMygdGiKZBvYkAAAAAXRSTlMAQObYZgAAASBJREFUeNrtmNEOgyAMRe+w8P+fvGRzZjB0Flvswz2EZEHbnFzgwQGEEEIIIYQQQgghhBBCCCGEEEIIGeARHKTguAouPaIILouF3ktQUuQZ/wxKch/b/o5UI8mUMeonEBeWA3SdkETEc+45nq13SvA4R1WCc/X0XTA9PqWl6xbLlegmJyijIfomaACC35E5CV45hsgycaymmhq4W61OzV6frvdIsPqm+Kx+Ld2fYGvXNT6doCOdjzR1D1fBfemwgvoocYOVKkJ4H7yr7eCa26554EsS6Bb/+VforGDJObvNWmj7oemByQHqt7hky/GtYtMR2dawNInV6wP9UKyovX4fDLZFKbl4zrfbeL1dgk4YC3bu7c5bNwnWkq1zgATteQLM2mX6HL5VLAAAAABJRU5ErkJggg==',river_boats:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABaCAMAAAAIGK1gAAAABlBMVEUAAAALDyL7ygsFAAAAAXRSTlMAQObYZgAAAHNJREFUeNrt1kEKwCAMRcHk/pcuFFwUirvK186c4FmqSRUAAAAAAAAArNb/CWyBoYFDXGA/JRxxVhhx1O9egvA+2HMHCL9O8Rde4PH/4A6BdSfmTch+lVuW9AHT+2aFFV5o8ntoDXuBthHbiG3ENmIb4WQXlFcBm1wzIi0AAAAASUVORK5CYII=',library:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABaCAMAAAAIGK1gAAAA5FBMVEU6IhALDyI7IxENECMPEiQRFCUSFSU/JxM/JxQ9JRIQEyUVFycZGikaHClFLRdCKRU+JhN/UCmDVSyHWTAmJi8jIy4cHSqNYDWRZTk1MjcvLTN6SiT/89T/2YrNrniJWzFGLhgdNVgvWjro1qbDoGqKS2aLKhzJqHLHpW/EomxKMyjDoWv1s3PFo231tXWCVCuBUyv0sHD/8tL/8tH0rGx9TSd8TCbzqmn/8dB7SyX/8c/zqGfzqWjEoWt9Tif/8tD0rWzzq2rGpW/JilrHpnD0r2/MrHbKqXNfj0p+Tif0rW3JYF8XxVSXAAAFRElEQVR42u2aj3faNhDHBW2XsHb5AevIJkhqcxLFDllK05DgdN3K0qXt////7J3kH/L5B7IhkL5n3bu8HFjWh69O4mzD2IZbiz3x1gA2gFtv7bS1SLwLjYz27PmLn/b2S63T3iHgs59fvvql3A4Oj9q7m92j427v19fl9tvL56bmWwXsHHZ7/ZNS+/2P169ePAIg5zZH7R30+oNh2k5JfHL2Zr9wjh2n7PRO/LbrrgYcjUYjOsP7b85Oh8PhwPQTEvd7B3u5wwMA1AMUQogyQCmrKHiapyCOrAGllNIlAgFkAfXwiBYBSt0455oMj0A0/ddQkBBS4v6YKiiEyAOU8XlrADqOkwPI9g7GFgq+NRXknOcBCiEUIOfcdRWglJICqq6WgC5+atscnKiB9elLAdXbCOh53iYArRX0dwTY3n9rlYMTBjtScKIVPDf9lMTj7rQDO1MQc/BiODC9T+KzP/f9neWgUvA8bWMaX04Y6DneOiB0pt3xu1naujTGGQYOOwAE5h9NL99fpW1K4w8+Cwm3ryBrX0/m8/mN6dc0vmXA2FoK8poNlC2CtAGNeWLV2zqA4aiEZ0GJ1+Lja9WMoHJrcbcITAcac2CRbaklVQdjtx/n8/nC9L9IfMsVmXLP8zDFzZPhK6tbXI+lO9MiMQWoNGlPjj/9/ekf0z+TeHIdrWJgS8/T50kKQAVoTiYuRo9iu67eeBmuLyd+qQxQz9nH43/vZ/fvTe+R+HJ65Id84C0NQGTyPIVs5lwJIPZFQPX2KkA8EfP3Pve+nHw5K/NxvFOjgkt7QPMaoxxQ/Ze856kNCvdF6Bx2/7sYXgxMPyFxWA8C5yoHg00C4lYqhCgEjKoZi3oQFZQSFQy2COjrejBVXQ36NNb1IHCQ0ls2ChIF7a9JAL/df5AcDLadg1bXJEkOBgKevILwxHPwR1DwoQpg3UqQ+1+tcvBywiFjj1mwJqNMLq0U/OrXJqxbqWqvkINJTWh4tUEBkoJUpu9lcmHUiWBYhRzMmjFi7t3BlYBRkoaXYyJLWGEfTBnuhIowXgae58TXmBokgx+/4LoFgDojROAtvSUDJiXY3VnQ9aBpuI6VgjiCurOeC2hOG0AaMFrvBBAAAuF5S48xkDLMwYt3A8Nn3XsSHx/5Ud6pPZCxQOA0acDw3n9dQNwN04BaQRGIRMHZueFX0ysSf/CNuQ20giIIAeOnE3aAesMuBQzEUn+jShndm/k2M/zm+obEfjifmkxR6s8HMDKenyhAxAScHEtA1bNEQX1v5ubK8Lk/JzGHmFApqPiCjQCGXXNyUGgF9b2ZuxvDF/yOxOq6OFQQc1BgzboRBeO+hQri1Rp+S5gO2fiRFDQ6F+UgA25hj5WD+YBUQVvLV5Cu4jUBIZODzNYLcpDug09PQfJNshEFUzlYiS+bg6MRxkKUAxbVYskqpnXgZqxFWvWClXaEPB+RJklc1I/bA674+URuJZjYKsDCWW9lWv0fn5TwrVQwOdJ9cMN8VHE5YPr5flSOJqW0k+mK5wxHiMZjwPTjiTJAx9E9lSXrZZWC1QGRUT0bifY2fJKjll26ycwreLz74Lrug8tCBVkeX4qwIqDeWXMVXA1oKAhaQTxPLmByV1c9NpJpQLz2z8tARaj2PT1HoSlaSwVB87m49QGo8xQASvXASYgMoFrUavcEPIZ2DUIFY7NQ8HueggqwSEFZHzBU0A1zCfOvTg5GCrq5fK2WNWC2aw0FnTIFNw4Y5mBs6+agPSA88Vb7Yey2WgPYADaADWAD2AA2gDsGZLyxtaxpTdt1+x+qO7fOZZ6PzAAAAABJRU5ErkJggg==',road:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABaCAYAAAA/xl1SAAANC0lEQVR42u2deXRU5RnG5/9aRXEXtUICJCFBIAvZIDFiQkggEAMJCZAFkpCdGNagKEqDBkJY3NDa2uUcUdxqq21P6+nBc9pjxL3WyuLaeto/e0jA/572eSc33kzuhDuTmbkzwzvnPHy59373/d757m+e7+64fnDFVKhUTsmlnaBSAFUKoErlCIA3TcuXP7TU0onSpZ2gpZOlOKBK5ZQUQJUCqFIAVSoFUKUAqrzokSX1YatI7g9XZkq5BNTSfum0oqk/XOH2ZcLZaTxdR3+MEy9d4fCLVl26UgDDXJEyIiiAKnVAVfS4ngKoUgdUqYIOoGG3oS55O44T7WoZXqXLqcYJoG4E/8tA7us5mb/LqZ1cA0BVcA4YjBEm3E/pKIBhot6ihtEqtpBHnWjoX1coQPNFlyR4Algj9i21L9Y3oFQAJ+iAlyKEhovtGwZv/7KN2F/ShL7lFxfrsb7A6AVEBXACQ3A0O6On4xEkQnVgRTMOlLag/26qFQct1C9qkXqsz/WuvGY6Jk2OxeVXxeCHV8bgsknTcNmkyBlhImYfMNKHbG+OR5D6S1twsKwVh1a24XB5Ow6Xd+BwhYU4v7xd6t0wJRHX3ZiAa66Pw+RrZ46AKI74/3YIYkQ44NvV6+SPUJcGPIGIMx6cTn0/c0kgBmqrBbyB9bXiXO/UrxcnO9lYj0Or2vFuSxMerezEe+0teHzNPXi/oxWPr+3C9JmpI4qdkYKY6cmYGjMPSxbVoeCOGuTnVGPRgnXIy16D3Mwq5GRUYsH81bj8yhhkpVb4fAkw1NvP5dRG4RcIJMye0Ply4BMq+N5ZXyeOR+eig910SxJu/tFs3BYzV+CKi5+PhMQMJM7ORNLsLNFTddvw4eZNI+WTtVvwQWe7QPpeWzOOVHTg3aZGcdCTDRskPtuhG7Jdth+s/vXsZ3/iiwM6ISNhf9f1FbBAxrMrDoN0IsJw1bUzcM0N8bhhyiwBho5HgOh4729qwwddm/Dh1nvw0fbN+Lh7i1dxOeuxPkGkUzIO4zEuHfWd+g3S3kBdrUD4dk21o/07niISQLuxg9VptlVTjYG6GnEkQnFyYwPebd4owBAcAvRBV4c420fbu/Dxzq34264d+OSBbnzywE4Ldcty1vMKYvNGaYews1227yuAoezfqAbQ8xcd0u9I+GprZJ+P+3t0phH4rBzv3m0C2d/37MKnex/AP/buHiPO53LWswKRcQ0I6bRsl+0zj0BCGMj+vSQAdAREw/021Mm+GYdHAz5vjvdpz/34rPchnDrQg1P9D4/VgR5Zbg1il8Q1IJxya5K0y/YD7YKB7F+XU+A4AWDIQPR0Pw69LU3uYbdrGD4PxysuWiFwnT74CM4+1oezT/SP1WN9stwKRMZjXHHCjlbcetscaTcYLhjI/nXZ3Rkdb/yPNABDuu9ncj/uq3G4TE+/E7m5hShcXDLieBXlleJydTV1aG9pwebODnz17BOj9MUzR6xB7LnfDeHOre7huLNdTtXIQUkQXDCQ/es695z7MJ2lP0c/5vV9KSe6/nglYwcjrr2yUdzm3PPuc32DL7bJqRaev+MpluSUHGQvyEd+/lIsL1mJytVrBLqG9RtGRNjw3/fHiPO/O/kTAfG7vz4qIF54q18gPP/HPTIcD72+U1yQp3XoumyfeTAfyeu5xrDqX5c/0AQCymBCEky4L1rWVOPc8xvFdQaPt4oLDb7cKftmQ69tkwOO839wH1BcOLFfIKLjES66HmU4oFlmEAmhwDhw1A3hif0Sj3HpgkO/3SHnFAdf6XS3f7xV8mFekl8Y9a84oF0Z0JinPef5GyuQCmbs8dWIc8c2ituce6FF3Gfw5U0YfLVL4Bt6vRtDv9sloJx/cy8unOgTJ/MEzAo6KxFErk8XPP/nXnHBod/fLy44KylD2pX2X2yTfCQv5sc8w6R/XYFo2B8QoxLAYwaAzeI6gy+1iwsN/nqLuNLQG/e54ftTjwDjDUC7IAqAA0dx4S9HxAXPv9kj8dnO7XOzpV1pn3kcb5W8JL9jUQagPyBGNYAvGAB2YPAVut9WcSW6E11K4HurX8AZD0A7IHpzQe5rsl22L3kQwBeiHEB1wEbZz3ID2IbBl0zD7xv3Dg+9PeJWAt/AUQHIznDrqwumpt0h7cowzDyOt7kBfF4BvDQANO///Wa7CcDv9/0Ij+Fw/gI4ygVP9El8tpM2/w5pd/R+YIQAyFtzfG3YfFuPk5D4GtfzlqRIArB/72FR74P92L3jYWzr2B10BwzUdht5LhifPSIzWFrdI2ZezsbN01Yb0Go9q9L4Iher50vp+TSYnfr+5m9ZHmsETu2TDY3TBwRAnD0iAOKLpwQMfPNLARDfvjQKQAMmyi58BG/Pvb0C386uPehq2YXm9dtH7QOyfe4DMh/Ji/kxTz/7ORDbbdSD6XY2hrExzY3bucFxvCSsYPa3vNjjiHZ/NJ7f1/d8esVhcGq/OCDOHBIHwudPiAPiq5+KA+Kfz4kD4j+vjQBIkChCNR6Inq5H8Oh8hK+1vhsN67agumKTHAXj7GNyFIzT/XIQwrx4ECJ5+tnfdk3I7o/eZRcmqw1rF0IrGV9kogpUnr7k7l294jDc0HQcnDkoDoTPHxcHJID4+hcCIL49Dvz7VYHPDBNLTxDNsnK99oad4nyEr2Z1JyrvbpPzgNL2mUMCIE71uXNjjhPob8/tFrJ3w0xkw0YqgL5DOB6AR4EvnwG+fhb45lfAv44JRLz0ZoaJbmYG0VPeXK+uqkucj/CtLGnGjLg0FN+1Hjh90J0LcwowgCF9OdFEN6yvvyR/4AsGgBfLxVyPz2DweQw3gH1u5zlzWIZCfP4k8OXTwy748xHYeBOCGSa6mbFsR+eDY2TU9XS9qrJ2VKxoRdmyJqxY0ig3IxTm1eKunGoP9+sdt//sAhjyt2MFYsP6+kV8hS9YAFrlYlWHAGanrZYHg2SjC4CHPFzwaYGG8BAi3oZlwEQA7cDnzfVKixpRsrhBnI83QBC+vOy1yM2ocv8wPutFVurEfnCB7t+QAuhvPJfpE+o8fVFWSjmy0yqwML1SnlDj02oujw9hITSEp37dFrktq34YSMJlZ/g1jnYZg85nuF5x/oaRp+V4R7TAl1kl+TAvX5+Sc1l8LkkAwyGubQiHh2G6YF7WGnEhDoWEg5AQFg6VBGftqg45YUwA6YJ0OEI23gGIcb6P9bkeY9D96HyFd9aNPKZ59fVx4nxu+Fb7DJ8niMHqX5fdj/zfrgH8BDpesOMG60MAreZbnYLxJS4fVI+q/lUAg/PhFYtgxOWjoBHRv4XzZkIVeC1JjkNRSjyWpiVgWXoilmfMRmnWHJQtmItVuSmoys9AbfFCNJYuQntlEbbWluK+5tX4cWcN9m1vQF930xhxPpezHutzPa7POIzHuKXZc1CSnoTi1ATJIdz7SQG0KfNd375CSBiWzp8lYKzIuh0rc5JRuWg+qguzUV+Sh5ZVi9G5dhm2bygTuHa3r8VDm6rHiPO5nPVYn+txfcZhPMZlfAKvAEYpfP5BGIei1HiBcHnmbHHBirxUrCnIRG1xjrhYa3mhQEVn21G/Et0Nq8aI87mc9Vjf7X45EofxGJfx2Q7BjwgAnbl1PbJkBeDE7hUcvlv65U4Mvrr5+9v137jPfdMq75rxIrnlnvVYX+522eyOY9z1HKBbrkIl/e9abcgKQF9jTIkpwC3TF+O2mUsQk1CMmbOXYdbcFZiTVoaUzHJkLKzEgry1yL2rGnkFNbizoHaMOJ/LWY/Xenm5jVc8GIfxGJfx2Q7b0/8vOEoh9Gf9KTH5uDm2ALfOKMTUuCWInUUISwSe21PLMC99FdKyKpC+sBKZOVXIzLVQTpUs5xNvfOySb9XiFQ+edGY8xmV8tsP2IgJAzw51atrbBg6n6YnmR1fi27LcEBYJNIQnYc5yJCWXCoh8fpgwJme4xfcCGn9zvvF+QL75gK/f4Pp8ERHjMS7jm90vnPszbBwwEEOcE3n654QFuCV28YgTcticnrhU3DB+znJxxMR5pUhMttC8UlnO9woab0jlFQ++io3xGDdSht4xDuhk6U1O53Wx/PzN1+yEvGIxNb5IXrVLEK+/KQEzkpaJs3G/zlxyPpeznvnVvGbnC6d+s1O6wnUjh1tedqd9gZAvFecBA69a8OCBTkYYJ183E9Pii3C1R8n5XM56rG9+OXkkwidXVYL1dlCVnTeout+iSoAI0hVXxeKKybEC1qSrp4/VZPdy1rP7VvxwlwIYRiC6YXQD6V3TRupGMngKYERAOVrR+D0VQJUCqFIAVSoFUKUAqlQKoEoBVKkUQJUCqFIFF8C3ftYEb/Il0Hhx/Ilnjmu3nUDnq3GDH1cdUKVDsEoBVKkUQJUCqFI5A+DNN45eoNM6HYppl3aCTjs57eI/hoyZOq3ToZp2mcnUUstQl6McUKUKtRRAlQKoUgBVKkf0P2LT9ITzeAk7AAAAAElFTkSuQmCC',gate:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAABaCAMAAAAIGK1gAAAAGFBMVEULDyIbI0eKS2Y7NVjJYF8WMCovWjpKMyi43Y99AAAC5UlEQVR42u2bi5KDIAxF4+Oy///HOwpCEh4r1iLbEmenjJCb0ys+prhEI0Y8HFPnW/+EU+cxAAfgBwHO56JSg5bpxu2vuKBBZ3Lm0zEtd2+0dB7NAM8fhYcA+3aw0rXh4K2A83Jhu/boeaXSQu34NsLE7Ctu80xzfVx/fJfnw7liLfnoSrWWeFcQqTFfNSG15qslpOZ8lYS0zjXbHXzxjbBY0X3Cxl+EtxhY5QmtWwBmiw1x3VtrOnAH4HoudsNWC2jxdkTfEoPdHuuyLQMltYkBvnno+7BZh27o3RrOHS1oq3n7dITCnt5qOUAEqZxXATcAMmEg4DFE2EoHIDJ8xn8xxrd/iuJ7hRxgmDcckJeX1QFXjwOaDCBiYLfLAdo9zNMMoFMLe+AY/CGJ6nJ4MkgyIeeo8aX89xUZh7AW4ICcQxVAmEu2j9ghTLhl1PyzpZaFyHgfZIbkAwPcs2IOE+UJiQAIw1AjaqbFADkfuIHqC+LIgpxoRkxw3nFIIAUIXjjadZSSBrJzaidQh10DsqFG5DE0Bcj8LgMiAQgFiCwg64aqkwUUx0YmJnblAREBBukAiAKgU6kDxDlA+JkDoeRVGCAXhQA8ZjC7GlEYnkhMaglAiEtvaPIDkAE0AhDs6sezyUTCskI44TQgYkB1g+CCElB5YiAIeTf5YYE/lhB3JQZYIBTXnDRgZEUqnZAP5iuX9ddBCIuzJZACRHpmxP0lwEzoUu/M+peA4VGK0oK3A1JJjRKj3Xj92PcuwFydATgAB+CHAP6o2Ier1nujXGcAvgwYLSDv76rIlh6xzabqhelsVq7O56643+3g972zMBwcDg4Hh4N3AW6/yBtjenWQ/UDapYPiJ9xHHSSHqf84n+hzXuTyMn/ewdq88hw0HczBCy8OOwcbZE3U/3Xw2pJ0u6wnHLSLqSfnd/t385NreB05GC1SDgdfMrHJHDxvxjNn8Ztv2V/gYI93krb/0zQcfC1+AT5kg5kXVD1hAAAAAElFTkSuQmCC'};
+<script>/* Tranh pixel art cho cinematic (vẽ bằng pxl, nguồn: assets/art/art.px.js · sinh bởi tools/build_img.js, đừng sửa tay) */
+const IMG={river_sky:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAKlBMVEUGCRRcQHD/6rUWHUI9N2OKTXPynV4jLVy2WmzZcmD5vHD/2Yz/994AAABxhNHJAAAADnRSTlP/////////////////AEXA3MgAAAU1SURBVHja7ZzpkqsgEIVbs2kg7/+6UyYuqOyrMOd08WNuCDafh01Tl2ivjrIq8+UaVt/QVZw91LVmqB6GzomkS1S37GQJE2H9AnfISjeUoCL81WW/+j2uSlHMEvdSSt0zcumn1xWMXXzEVnjmnUvtr9xuqodUyJ4xpMV5i6JO9QEde2d1b+MkdUvkwASY1BIdqHWEQPFWRJ17nS5DWnT0RIbhEKL+djHR64YICYu9WFP97WO3aLmZfUEKkctuCiSP6jQANTwzJqiTdSfLOFDLMQOeRYpJxYPkJQB+EbpScSPmqaQDNR5AXZN+HR98lROhBqDt6dJlPKr6+jpXcT736nDG8bjb6CKT1xznMxfHRHXg0JURxV0w3cZc5CEcq2FD4/uKFHnPIRuU+5yGVIpHzwbpCvD+0oX7BHJXzYFDLuW6UYsDp02JWNJMFUNOpb7e1KFleE0OvG8lSt8vgDCfSD1qXfcZZ5DSmWCI8hRf0pVnNElJKWY5w9MYL+tYPd8Jd6bphBdkLPt3qTFfIdqfZNsRpeHm/GzgvwJ0WCsapUjdPSB8ZpwZYStBUfh57HNaIUhFdsldO6IS54wOACUMbTenxbsc9Cul0+pJ2Q691+flJXp0DYdaY7hmgN2j9ZBQe3tKgpEe/1PxHBjnF6DJf3V6Wf1XByYD6GxhkzubB+g38v00SCO8hZJBgezcvmBkZ9XUpQiSJz0f1w7DYxCLR3srweEqhTz4+S/6Cn7ODaXmoprXJXXJdg8ZvIX6dnsnzwbPDUWUeRY+vpU7fM3GhV78dOm68ctDT9N/CUD3izideyxaHO3aSvqK1+52HghS4PXcXadtL1JTyXp0HgKU45467fTK6kvQZRBQbACRVRCj3SignLj8d+wX/m2MFbfghz4B7V0cISV7XBZxK1SZA8fU0m2CCq2/AQDHYY0jxHeIghAP9QRpP41gyqHxoBEKEgACIAACYGlNi/6vAKAHvUMAoMvxUP5MPs95oDKAju84sx2uqEp0v4fiwtx3LpIv/kuA6sccb0NIW0kC8Dletygd9Nb7T3YYX9qImyON1RDUrr0mD84E4+c4/Z8J47WLhKCF/84efCTJjy7Pby4P8X0q28f6S/bdvwoeTJgXPSvUb783++zwmeDBLLlUCfBKouk+1VaYUGQSP0+dCzVBb36NUIIgvZ+1BVtjR2/HcKuTOhtqi19+gvSuTIyxuQj42E8Cwq1e4nyqA7ju8zZ+bJNIcA4APBhw8dYKkLEDwWVPPdcFQJn/Dvz6SSeCOTxY7Rwo8usXiQRXrwKg0oFHfitBONC4Bj83gBM4PmkmuI7hLOtwrQ7cG5DzhaBgQThQzm9bg1cDcr4juI3hDOtw/Q5UAszkQPauKTjjv2IBcK2bNCP63tV6ykSDWzpwqZs0J2JViTPOv8XOgb+6STOi7WxURVnGpc0qvNRNmlNtDpw9xS32gWvd1A6sbQz/wngSWWumTYima1ZVOP8W41l4rtfztPlQXfQYX4rxacxWN2lO1LOqgq/F8DxQqJs0iPWVhuGJdK48qK9W2nci2bKoGGCveSuXLwn6VCzle+GMOVQN8KP4ZcIHAF0J7vQBwCCCHwAMQZj78vUDFBkWuHYTAEsKAAEQAAEQACEABEAABEAIAAEQAAEQAkAABEAAhAAQAAEQACEABEAABEAIAAEQAAEQAkAABEAAhAAQAAEQACEABEAABEAIAAEQAAEQACEABEAABEAIAAEQAAEQAkAABEAAhAAQAAEQACEABEAABEAIAJPqD6+/6P6ohcJDAAAAAElFTkSuQmCC',river_far:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAFVBMVEUAAAAJFhkOIybynV75vHC2WmwLECDWY3nCAAAAAXRSTlMAQObYZgAABFBJREFUeNrtmoly2zAMBfXY4/8/uWNbEkESvCQfcrqbTpOpZBBcEBTtdFkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Cmo+AHm/G3iJBTO69Nj5cVvMKdvNbj9mVmE/33vr7K0qltFiN6fX0D3r83CmA1636wd3YlLSS/u/Z+1CO/uFB2+vvd/YhNv+saW36ne/0pJaoswW9roSjra+994TrGLpObPChzRcLD3Jyt8HX3myOH7WxIHelHvT1b4Ct2rnc78phbRmd4fr/ClFC69DA+9AznQ+4cr/MGn7JrbwAo84G+y949X+JOnlIE3C/4eNLK/n3+AjFX4s2/Vuircp/TQ/t682hl2osLXMDmjYXR/bwjsVWCmwl8ncHh/r+sZf8Lq0Ix07RU4vL9L589QVz876kgLj+7v1WlMnKGufnbUoRYe3N/bO9zYE3buEPr+s+O8wIn9XTr/hNXkbN59djzSwidfOveE1fRk3nt2/IDAOTcH3ke+9ex4xoKuJfAzZ8cPCtTy5BV44iUIRODzbLz3Xd+ABASeFPgS+Qg8f475GQK7w31a4MHPYxCIwCWEcEGB4cbyvFuCOje3HKg3hFQPPvrbAE3MaywrG6cMWtxSC3G75TbHTl5WYH6reolK1eCtytnfyW+D9OY14i8kk3eDFre0Qjzm2ElMqldPUsijewLdMlcHNp/pRSGVaZlW2n6aEOgE7QjM3MnOw1vJUWAZ+PZ6pQrz2twvlyk/vsm7YOytr74LyQI7JTWjdtTtSS3Bm1SZeDXK4za5xuM/yZlAiPoeCoOTUXTg412Qx2KuZjlU4hbrs17UYE3ZJEKLrMilQn+AOHy5UAqBmheoCtnK6aCiQRv+nJh9faFMML6kaEUTTC0ygensvYyUWewEr0xLxU9eNRv+NOdPtUz9wZISqcOas0qBNsj+XanX227SWoExVqW6e5TaqrF2lC7AfJXU26STZVmIbYQBgVpiSrXFs/djKIrTaGHZfJRUacsuVsrvUDNA4k+j/jTQhHIWcvzb9ntFoExKa0g7931VPwRmizsJ/Ot3uclIe3zZcqzXbdUzwWn8/XUhLUqIhVIwBdbeIEHNPpHZRdLdKymfegJln/EKNvx2NQqUtq4wKhRzSDMOJpTV8qeB5AncI+/aFbeRsFc+xAx7HWiWv0Kye6VTSOKkC2Wx08wExhxszFRgVsdQEahSYG9i6Z3BZGJjpv9ky10hmX6cV7OcIStHcASWycuTsAu0E8w3xkr6IZUwJzB9WVCx1K3G2ixCdazeaUXOPLMTLxxjEZxi0V++znwtf+EUtPDZFrYfR418dFzZCIoYflA/gfKW9vh+yORqdYBq+CIvN8lK2FF9FYOjc+3mcfBXRHrNfw9urIHnxD0l4VWzfr7CL44PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwlH/j/ilv4KcSngAAAABJRU5ErkJggg==',river_water:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAANlBMVEUAAAD5vHD/6rXynV62WmwGCRTZcmD3yNTliqg/dEgfSjoOIyb/2YwjLVyKTXNcQHAWHUILECAHh2lZAAAAAXRSTlMAQObYZgAABGFJREFUeNrtnNt2qjAQQKeKqD2m6v//7Fm1VlByJ1e7dxYvBcKwM5kgthUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACjIB6yib4EbPUUFbj96bkt3pSOQt/JXIQbZ3hmMbBvnVWIcsfcrRe6x39HJLbAZHY8ELD1M4pcvKQxnm7Rp5nDWDJwkNDf7Fv4KlwrpuwJtavtzCGys7L+GsWlgLnecga8jW6UE9j6FjWnYoMDdnUwPhP7lwXh2In87PbdLLBWUyUBDTLucWcgU9rCmS77CVbD/Glgy03UCEz+mPPelqSJDxlmbfR5rCq9st+M2eBt8WZ5rThLPa2s1RdxDok28bWcbyMwZmblKyDiO25qbPnGd54Ucm3WT7dhZ23ji3eMjmaLikdehvzMEMZbDdNlB/0jzbTKYfUAoMjZEwJAFOnquW8Yd972HgJibEhjKxpug0TqGzKs8ArUPKuWkrej+89+dz/fLwLSy9MP7OaOKQNcCE5OayQqhVwYG+osTuG8nLU8uci9tUQIPK/OwkMZHxkeu934ZOIzfbZpOg7sdLfusAcU3nR7vCMacTQKPn1apYZ83spV+T6dTkWtL2EeO+Sp1GBKglFK2d+gvzP0oK0MhxOfqsz2Tv2P12I1qb+mnDd9FhMCoaGcTuQFO3uTIwCh/M4ZGqKNvGORr+Gn6lP7d+9Jm/r4KNXPZ08vS9KGds4FxLDqQZHeoWwey+dT48nDiWQeDIpGv3DjC9ehBl2FPO9xS8t2e1NK3os+lSf0RsWMaNBz5M7ACJdNQ7JfuyptlAfbwa+z2UdD1As9fDbSgCfR9htHUbAUz20wZu2iir+JQu4i3OoZqOk/ONyIq6bk83p84LH0sh2ldTHKuQ1zsLjsVkPNbE5CaNQSaJrSmnKmMs1cbUKkKJOqcpaXA/2o/f3l6VhWalLN2fssmqi+0f/S8vlvTby3ulFJ765nSgyi3QhtrzR5uGo0CL0qp383GJfMW5/dxfpDRoNiO9v2S3UzK7cWautitxBmbjej01YUtA1trOaZlXCTzry5Mx4hqz+Alzf/TSBCJ299FLl3wtDI61ZWMrBOBbn7dLSRqBJueWd5N4IrkKpeg0lmGeZoJLJdvL9B9rznSy2uiv00NrIX0OF89D2UVdpayFjLwemm2rXmKXiUlJEqJuLO0EaRuNqsZrvc0ha9/gn3S3uTbmnNbNR88+rdt3rPW99jDPRtv/QfO7GV80nSy3J+8kvZ5TBuiXP8S0/u9kLPsq/DuWrHtjXuy/MPY+fu9j0T3IK8/CX9HMTvbvEffDu4ILTXP97zpp5O/ZDkgu6ocfQ7SvoMyPXqXvgOXwNBP2v5M9cjLX/rPIGUEpnz3+BT3vB7Fhx9SAetkYEqeRc6+b3D5Dsgfm7sscivXQP9US/9iYtX86k5g2Ixec0TPGZijfOUuj++VgRX4D78ZSG1c9SxFAAAAAElFTkSuQmCC',river_boats:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAElBMVEUAAAD/2YwJFhm2WmwLECDynV4rML4tAAAAAXRSTlMAQObYZgAAANdJREFUeNrt2FEOwiAQQEFY7f2v7I8xxmArEsKSzBzhhW0XSgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA5qm1iiCggBsLCTpiPQnYW+yTgFdupwT89+Q1jqCAXwPemwTsDHi8vAcMAa8n+DRgCCjg2oAh4NU/WMC5AWNFwDhbT/cI2NoVs2yo6bboH/fqLCv+yheVY0CUHAUz39wSDU7O+d0oYMn5/dun37bvLwJOKqjcYEHhxgrKNlhQtbGCmgEAAAAAAAAAAAAAAAAAAADDHmrBC8KeFyoIAAAAAElFTkSuQmCC',river_fore:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAACVBMVEUAAAAJFhkOIyYA5x2pAAAAAXRSTlMAQObYZgAABUZJREFUeNrtnet2GjEMhCW9/0P3sGtZMoHCXmCx/c2PluY0Ocmgy2gsb0QAAAAAAAAAAAAAAOgDqgoJkAg6jj2iDxpBr7AboOEwiyTx8RoIB4daB/wdY3EhkCQ+kL9wtzf0yhgHf0eqoNZhmEDcbyNQAXcq6BSC8LeDRW/BoqK04p0JrNGJ4W4rgbIyePvToG9j80399/bCmEe2lsCl/K0RuPCnmVjwRiCaWhUyC50wtzmBbX2hJgKBG+ffJXsb/oQk3joKFy9GTZMvA95TMEGfmGc0BL43xJklI0a8BYtyxr6hjUQSN52FKvj2COINpHTjlUrk9KsEliby/EUdSqx8DKqeJ69ZOAerkg5JY9j7W2rg7dUScoXHRVdHPYSo//KXlbRGBdQ4K4Gp5zPcXcP1v0yFLvxGEVyLXtC3CmlVQ8a8HoGlibQye9iavGUgsZjywIMITCLQFctCoFdA45zpMXE+xOUs1UxgJpYsfipePI/FK+GqsMXVdXQVKHtEodQ5xPXzSmDNZ2v0IKTFCFcm4GglpYNkR7+Yq2qhDuFwcbBuFMZBnOdwJdCkiUhr1mZgUKRYpnUNIbNVGPPqaO7ws7aVxJ8vH0j1YB4QuB5vWimDtJIH4k9ikUPkPwS6t6XCvkxSxbkAVi5zCi9i2iIATRjrGvaq+ms6iHcNaQlcPmLkcFUurmHkPn8bAr2dOHuxyD97GMaMIbETUy84NARWn1/Kf59VDpolbzTlsMQAkllOBLqi8al4Zgmt1UZo8/fppwTFi/bOBM4Zhr4A6LpYX95M8pq5Di9VYU8aiPn0Q8J9ef1ZtwCM87v55EzIvmrgb1l90SUArbquNl/4lfonib5tRczcJCwD8owmdc6+zctrZYuhrG9NWQSr5LtzT98OQW2PQqerf+kag26/FGzSeKxTScL2zCgp6O0xvGZwtXQmqoNNB3EfdQ+B686W6Szrl+UaYT37CF9Z9/DnpJnOtPdmVl2/ZF3t5a/YMsnDHj8QcwHU3QRKE4Cz7L1l8zQNb3t/6mKsSj2gm2EmCfs+NvL3MuhGdXUYxn5Iyt1p7vFVydRGKoGjX4dIiXv89ozmiaQsVQ+uZqp9JfLcft44kqRAtrH7iLmAicTVo492svxF7Igs6qL+qdR7XHlj/DiBmgdkGbsAptg7PjyY5KrnBI565J4OjiQtEp30vmgqhoOWwb/Gy0kENu/JiNFXHYS6fyVNFJ4Q2PHlbMwyaNY2jRPDRJtubul0eahAzI7dqWfhcTu7NhIdUE//UdCn3uGPs3WTtJk+LIGntpD2C9WH/g6z+6athaB/a9eZBFoNyKGMmSwtNLrKidGdZpH6tKiB9HSsv/jQanb2U0wSURq+zIgjyL38PUkmpe0EbUJxDP7+nv3quY/Yzg/00LOssl8pfg/5OpdAu59vBhrpUunTuw/KRwnMs3HPM9ztQYDt0ZHqR5JLHxgXAzSSZ5un+sF6kepf/30k3d76LIP6zGHolsH0IDb5NoF6NwV17sF845eC6IN/mXbfR2L+veAHsP59Gb3099K4tun3qXkXu8LW3FUcqgN/i790xbPnGe5SAtUf8tFhI1H5Vgt+NUj2msR6XQeu30G/BP6Eir3+LTz6/l9P4NVF5JwSNHEVPiWDLiWw4yP2H3nv+31K1G8Q2KUlmG4wTF9Hem0gP1ZH+k2dbnXgT2UOBJ7nbnTlJPxOU+vQ0ILAY+nyY/z1VwYVAkfrezA4WSNWvqGxAH8QCIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADMhn9UCQi5MWDXZgAAAABJRU5ErkJggg==',road_sky:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAKlBMVEUGCRRcQHD/6rU9N2MWHUKKTXPynV4jLVy2WmzZcmD5vHD/2Yz/994AAADSr4YCAAAADnRSTlP/////////////////AEXA3MgAAAVASURBVHja7ZzrlqMgEITbOF4A9/1fd4+JEm8gYKNAqvrwY3eINJ8FiGSGaK2KbtXNzRWsV0GteHuoKs1QLxj6TiRVpLrPTpYwEdYvcC9SdbBMV/wrvdR8Orp+3uasgr3WuOvEjH9pRMV6tavMHGjObSVD0BqMw5CNos7uYVWrf9VPyRvhnPHjAD2xNQ3vSAxqYZk7pUyviStju+1XNnZJO/AhdEeN23On7i+lOOpIy6gVP8sC4Z4x/XUZBLczpwsd4218+HWjA7sfLYdsfa9Dxp9V3Q+zdS1VR92oqitYcTtH+cFLK+G0AFYLzcuGx0cOPu14lfBbRqm4oLLJr7bHdTgcmMT4+/ax32rb9QMu/ZkCKLreE0pp6NoAHHSs95eZYKCnYwCsQgnaOr7vaR+mLb8zQGfXIxYfG+du96n8nexu6zVlaQZ+vntbddelg343hC57+IKOuOwy9LqnYTfuyqxAHDb2nYQ85/Q4N8u+jDm/nqC6m8LA7PILEAtN3bYhrt/TPcfaMdznQIerMDrQNf+afSQsxnnHGFSnqUiziNNS53feXudAkHcSrn8C4AYiFz72HJMGuOV4af2KlBxVdWbhtwpHz4fqCnEl6H1PUy7GA8k08kvZgeeHa0k4ME2tQIm99M+eTpROs/c82uflJ+xKgCA5EvMSFz9xrscJkpWEcBcvSPfWH3fgBWZuNKugcHdg9WwQAzqfwe1JUchjafs9HhSGr7lVjydgkbcDr8+XTVHazYHSKuYZs0SAHmOHfb3JEmDfhMSCofTQjl6ffVBzjWDAglAAtUWQ23u1iGOgz1vU92MXjMX/ASN04rPnkWwhX98JfmXtRfIZuiKe7sbHNsd4z4Hv7spQHcJLEJo7TLqWTKDfHhhqbO+amADmqDW4oBHD58ASYLIMmV8FeNcqzDlFFwow+LdCw5e23wHI8ebTtAEpBiDLTizk870oIohhCxa28SiDnyCWjazDYxXnu1WRkIhhKyb6sTj0rD8qFyfdXjxb6Nn7x3AyZXhIuM2BKWDz2F4lN+rpeXZMZ6Pj95r09/aO/0BFoQ7U/+12kmp8PDef2hQ3hC1QXQf7WlKO9HelxCF89WnzyKNqG0LqKHMRuQTzwH7SXADwVPIkYgNshRBZFylPStz2qXD/RfcgtSLrkI4lWpBoy4mv7muTWuiSABAAAZBP09bkVoCyzTWUjhW9FcNvnVhZUJn87iM4OlDmWFSr1Kcs8KmPFgjVt16cPChTfrJVI0O55Ke+WphwrhcpD5KZaqT0LhqgUhuCkwWneipOHrkC1O/+1vxeozYEdV0AXBlw8tWS32vWkqD2KgAaHbjlpwnCgRZ+H1+1X4AjuGHURHAxhiN6MHcHrg04DDPBhQXhwLM1WBtwGFYE5zE81wVAqwONAOHAsznwzIGYA5N2oJI5xqCGT3EAqOtGyYRkpgSncFmF57pRMiGVpQY1DO/i8Byo60bJJFOAI8FPnO5EdE0FgEuAs69O98JR/VeIA61vY2I78KUyjWEqJ+8Ddb0hTh6kxhuWZxne5eSNtK4XKY98Hah9ZT0Tiey/jwNzD8upXPzW6VWAjOfCN7RdBMCX4ZsJdzRN/4rQ4bcubmm5EID/nuJXDMAdwruaLQfgkuGNbRYF8AkBIAACIAACIASAAAiAAAgBIAACIABCAAiAAAiAEAACIAACIASAAAiAAAgBIAACIABCAAiAAAiAEAACIAACIASAAAiAAAgBIAACIAACIASAAAiAAAgBIAACIABCAAiAAAiAEAACIAACIASAAAiAxes/tr3AmE2fF4AAAAAASUVORK5CYII=',road_far:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAElBMVEUAAAAJFhkOIybynV75vHALECABtJSMAAAAAXRSTlMAQObYZgAAA4VJREFUeNrtmoly4yAQBXlk8/+/vOXoMBLXjIQsO+n21lYSI5hpYETkhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPABCAW/TKAQiEACQiAC31taFQSa7NXjvUvhXVMq37SVIlLb74v01QO6VKLW0QyjVJrI3PI1O6IS0BUhPfrUNKLai7AVgDy2r9dXzWP4hpYWg8u/YvfdYdWyfnhj2C4tNpO3CJ2pGprVzcPKOGXTzw3F2h/uekV34qpjGu84o24eSic8CV7GwGVWEtwty5lW889ntDX06bt0uoyWb9udltPxnDLc76pwRPGdA3uXHD7uLKEFW2wndkz3uNas0/aK2AjIoMh7eCzmoAOF98JD1qIvOW6d+E3Es9JkID/OVJa/jsWbtZF/iyTR6rTAoccZlc6DyRuO2ZJ9JR1WGDxr0FOUgwb4m269fnPGeA9uxLXnOcthK3AT1phfmdMbyfCHH0c34mZTuAzKrC+dVf/zh1GPLDRiIxaKZPqcw1VD5agN5VmV/DeR6wQaNmK7SGr0jB4vr5aHQRds4c5G7BXJKwQeLK83COxvxG6RvEDg0fJ6xwo0NOtsp/ECD5dX35PSVwnsbSddE9DI36JuFdjdTgg0+WtsJyHQVZheJ3DYcxAEIhCBCETgzQINN2oEIhCBCETgnxSo8IYCx30gi8BfKjA+CFGP/+151MaaejsjMOvhAoHbrtYRjQLX9nG5+IGegVdTWD8KikFZm5iSRV7rM/153sPmqkxgLMeQ97lzM+eQjjG1kmFylYS4CVhr3JmD/dDL+JtGMZYNKnu3pitWKQrMhypctXEzfblJYXPRc3WVpmD+siewuIqmlrsPHLuZLwKjhRC6DX6e6VcG7Q4yh5vlsBPYmILFQnVQlR0sDUsf2m5WbOHqn6CiTaBBsRTifp9YUSOHuoLCMD6Ba5va597GyMegE33JkoOiK59gzrT1pwOfItCSg6LLYHBk+idWoOIbChzo7yMFFmrg1z+XQHe5f4XAcg5DBD471PqdCtHLkI+e5t9B4NSB6l2qM4Iygfkt6JntfpVXBUqV6fMWy/79SNshPcslOcbUBi2Gqs2bzRUIXh4PEHideBn/RhSqfz37DacI+uZ15sUWPruFAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgLfkPok0rhMhIz2UAAAAASUVORK5CYII=',road_mid:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAADFBMVEUAAAAOIyYJFhkLECC++HOQAAAAAXRSTlMAQObYZgAAA0xJREFUeNrtmttywyAMBUH9/3/uZJrGF8CIIxw7k92nzjSSpQ0BbJMSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADA+8h/fGPXE/V9j0J7kKe1nfN3GSz0Bfuel+lz9JUCs/zr1zI9y4i3cpHAnCMGlxgxky3IE7ecIbYQWlNgdiXfxooCzVSD6yvPNeitv+0vO5Lvg9NoptLfUP95W8lEg976DwZgO67pTxNophrMpwl0N6AI3BV9C4H6IPb4OxhLgsADf5JAM9VgniVwX6S3heXCikC7o0BlD1aWOS5woO98Y4HSJqwM8vbQ1OASaCcKdArYC5S2sZWgWrqeQJsl0OJryDNHfy+btwa1G4FKjNV6a0ba4K1IMW2fJTAn/3r2KEe7larEFIUcCax/OCLQgtvokW9zMwQnCWwVcriEVOtuzOXlxmEn0EI3ctp8kpUboKrAZiXDAk0WaFF/yp7gEoFHhbd3E5Wt6/7664qcN5NdfzkNGxQENktJLoGvgPZ27PW5Wtj/v5fls9+MS542BC1u8FCg9XANl+04/498RveHg1ufItDGBdZHRk5zBPb8FU/lBgXm2QKjBo8vPSzQuvPVTqBjRlpl6viTBAYNjvx6JH85TxSYFYHp2F/MYGf+HhToWS63AvNnCGyFuh9HzxuAVwi0Y38Og/qPPzwB2kyB0hSYUivO/WwssP6k8Ao8ILBfgybwdftd3gi8X+DR++2rBfqaqOzlzhS4eRvdiREE+t6t+gzKU/nJAlfnIa4SmFrZBt9tXyVwXcZsgWlQQDHmnE8FzhCYLhW4JBsToJ5tCvh7m8CRfWA/WSP58pxcOyMlveGb5G+iwDQucKyUuacc3iWwVlxVYLqRQO0gh51Uda24QmBUwVSB2lEYO0tg7Rxf49XVPQRqh4nsPIGVU4yPv+4lUDouvJuG1O9uZLnc9Frxd4nAwHWXFs4V6Os1JtCuEBjOIfuzqb/BsMCEwOgUGBeY3iowIXCiwJ8/zOxHR4+OXTeWQ4vbRSEQgQhEIAIRiEAEIhCBCFQEGoRAIAIRiEAEAgIR+KkCAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYJBfg31X+IfAqs8AAAAASUVORK5CYII=',road_ground:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAIVBMVEUAAAAfSjoOIyb5vHBrRDAqGyI7JysWHUILECDHmmIJFhmTYoqeAAAAAXRSTlMAQObYZgAAAo9JREFUeNrt2uuO2jAQBtC0DeOh7//AVUW1AnLBjh22254T7R/WIPwxtmPDNAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/5BvdBFgb4Df6SLA3gB/0GWa6SJAAX5ygBe6nBdgHHhG+1UOPev5+pDVbzbj1nyq6+lemxwU40d/ciWdiMv4q6xlOLwCWz+fWIstX0d6n9z+NV/OSHNIgNFSRdlRd4uU4/2JPVR8RuvIuXU/PgLM7ByE2Tlj1tbfwxXV9ZqxMkcMqMEpB8z+I1ac1lziDeM4KmpmqiiqeHd+A6754Oq9OwxzdQ6My6V6GY7tARsd43szgxibWk2qQ1fh2M8iBt0ANs/4J68ou59/NN3G5CfMf71X9NRquRvH2V2BtStT3v217lJej66y0aKszGTzgUqdq2fC3FmFY33xiL7dWnZVX2kZrxkxD9zrNcyB1w/Lf16fxMsWy3j3Wtze7f1/83eLRQ0tXmPR4+v1Oq+2KGuvkVuvsf1On/pya/xnL9xYQ3nu7Deft9sYVoXRcRoTHSN6O78yeI0ob9gdx63Dbz0PfJxbu/uaA3PM9U9nrQNxt3+/BRjtpZSbD0Zr/c09d8pxcA+YXVXYNITPuhUcf2+3m088VGTMdTUbsYzw6aGp8/Rv8PqRc0VuNeesZeCqszs6p6rCy9Pzy72ZbD7hZKF0rSa5d5x12qlWHBi9pfN8oG42mF+0OXyknwPX3s69bxnUruSRZ271LIbcxsT2Y9mxesSLxzLed88d8boCY1SF7Yc78h64/AXfOr37i/X4wtd6gH6c4bcxAvzSAf6kiwAFKEABChABClCAAkSAAhSgABGgAAUoQAQoQAH+D34B1s7dL5wJrkoAAAAASUVORK5CYII=',road_fore:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAABlBMVEUAAAAJFhnSRZ9XAAAAAXRSTlMAQObYZgAAAs5JREFUeNrt2dF6oyAUAGHm/V96L9JExAMiqLHd+S+6/brVxjEqkJQkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSfqf8PTXx8NfIg/P3QpI+4cYcDYgDw/I3QG5ISAn/bz8JWYCMn4M/QF5WECGAvKnAnI0VO0W3AhYbED/iyIdOnddAbkgIHcE5PSADAYkTt9/wX47INMBqQYETgrIbwpIIyA9AZfvf2XA/NZCmg1IT8B8k1bA9eZ/KCCtgJ/G3QGJAnI4IIMBw4svP6uth2pnwOxLHJDdgDw9YO0JdkZAPv/JxQHT0wOSxgO+jpX2aJFlaEzlSAzYCPjzLr0yIM2ABEfXHIQOB2QiYHRgBwKyCsiy+7mAQZq5gDASkGjylD0/xgKyE5DBgHBpQIqB/vK7cHNAUhyQmYD5YZwd8H16woBcHDDtB2QwIOubJ7VNbg6YCAN+7vebgNUT/9pzO2C+g0sDUluR6w2YtgHZCUg4bS0Crl/4NmB2kXYG/DlPewFJm4BpIGB8nQdTNt5vwnLEcDAgxUDseMDy6fV5J+UBORwwGHiwPaq5gISzhGLyEAekKyD5I2sTMFhHjgK+/jktIOcGJLqHzAQMJq3vbNmf7A24bFTu9WDAfO7O6vMCOgNyKCCdAUmUNy/iv/T5Pv3agJwY8L3DbUBSO2BqBkyVgKvPl6oBSe2AqynzdMDVnXk/INtl6iAgUcC0PK+OB0zVgNwTMFtt2gQsPn2YCkg1YP61K2BaB8yndN8KuH4Lsv0ckOXYrg7I1wOu3+jjAYuhUT6Q3wu4DFrKgNGy2E5AKpdwNmPvCki4DNYIGN5LOwKuTnMcMHUHLNY/6gHJlzFqQ9p1wGwYfVtAtkt+DAWkKyDFZLpcUy0D0g7IhQG3d/6ZgP8AB0wHHWrWchkAAAAASUVORK5CYII=',gate_sky:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAKlBMVEUGCRRcQHD/6rU9N2MWHUKKTXPynV4jLVy2WmzZcmD5vHD/2Yz/994AAADSr4YCAAAADnRSTlP/////////////////AEXA3MgAAATZSURBVHja7ZzblqsgEEQbjRqV8/+/exbGC95ApMXWqerVT2Gw2ClJNMkQzaUoqRIf7sXKXnSU4AyptwUqQ6BTIlEXjb13s0SI8Pr1V7jnDgHXAeUefYgIvd9UbChVGj3P3TP2scIre0kfhsrDxXLca+oAQBvjBeyOPnkpKaqAsUURgPAToxBwOyADpndt6yek9h44DPATq9PwbIgR2I4wVOHLonIldnSrtRbFSYJ+dMf389gTypXAz1WKItjNkMVvB4c3hWMAq0/q6q2Xfk3LXcwRvR1MEGNXQ5/qvvIDcP5lLD9DMHoNJoHVI5uBIIeP/QSqO7MZuB8U5SEdyXZYqYoqI1U9X4fyyH9Yeh48WYbpFem78SkjkSkInD67NYFvPP9UuvOKcIKKA6gAELoBYAaA0CmAeYWKKZPAHH2+zec8Ffp8ExjENeUXS62Uv0qUDpxDTwZozPO3Tefr0ojwGh/X97UJNIh27w9bFJ+dwFUxnntmNmcCc/XwIpVIElYbatmXDVMugN8YqT8iYuL1IKK8K6Ik8O6GOBoo47SxpFUCy2jxwlt/MUhMAjtXVKhl8RxpPW9w7UslqS3VS5EqpNam54QEndwmgN1Iie3w3TN0JZTPgxNfl8DH8Rtz6NMOD3tDPciwrutmW1TIleN59w5K5kkyQE8Ca7/8M0Z7pKIwL8cSOuQHKyudz2o35Lxv8lksniM3wZCghiXQry9bxex7h5c+GzEdd/0yMEwSsyIKcHcNu5pPq2lXDlZ/Ep0JCjIWe91zGboNt4ku7ynMFyPB+jol5BcAsOZwlSSB35Sie3zZGJvTWm1oN4iOuEvg42Qqv7eLRLt7gAgIABAAAfAvAzQvFejzTU9yG3HT5DJPVH/FlrnS//6aXWwuiWOWsz+3d2nvbg7b7ZqiYCFIHDfg+PMxZW/o/tqI4YKPV8TIjstT86vtu4q1MMUl0F41g8aZ9rt+OkAXVdb87dYbAXLKmb+uATAmf+IySE/Ln7QMkuT8jV85FJxBEpu/xdc2pWaQhOZv45uvMjNIdV3WQrpppt6S/bgUz10CZThprLbOWyMrg1ML8W3+g2UtsCd6C4bSmszzLa3W/AaC8rxSKVM/au1P8xDKEgnm106SS1AwwLZdEATAcH6ZkWiC1JQyqu3L5pcNmhEcRsrwTcL4tT3AGb+RoM1PCEFqRKg1xEyXE0ADThv1BMcEDmNFOBcC0BDsah5ArQeCVgTHsQBo8esz1c4CqPWM4HAOD2MB0JnAXYBIoG8P9CUQeyASiD0Qr8Jv3gPxPjAigQeuRJDA7U2wz5X3WlhU/oQm0Hk3RloCJz/3lm71rz33A8dxrQzf1Igh2JfnjvQ4TohvaoVIt1r/2vmZiJ7GyRBN72Fv7uncdHwqN47RUnyLSWCrFxnc+lxYXP5EAbRq55sJszFyAJq3CSJa67E3P7+xHhfjuUugHDd67A1+s8fFeCbzRlVkL/BJ9UlS+c0YCvZIGRQlAIwF+A+KEgACIAACIABCAAiAAAiAEAACIAACIASAAAiAAAgBIAACIABCAAiAAAiAEAACIAACIASAAAiAAAgBIAACIABCAAiAAAiAEAACIAACIABCAAiAAAiAEAACIAACIASAAAiAAAgBIAACIABCAAiAAAiAEABeqv/1xsOvp5GhhAAAAABJRU5ErkJggg==',gate_trees:'data:image/png;base64,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',gate_gate:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAAM1BMVEUAAAAJFhl6NioLECAdJCExMyofHyj5vHCFQjKQTzr/7br0qWrynV6UYDxrRDAqGyLHmmKy0A0hAAAAAXRSTlMAQObYZgAAAehJREFUeNrt2g12ojAUgFFCKUJnWrr/1faoM62/iEZMfdy7AGO+kwQEqwoAAAAAAAAAAAAAAAAAAGAG6R8lLnS6OaC04x0uBdTvKNU1VBNQwGfup2BuPwVz+ymY20/BqqrqTNZfJv0ULNtv0QXTneinYNl+yyuYZqGfgmX7LaVgPSPrzxosmi9+wpQU/O39IhdMScHrgpXpd1QwhSiYHipGv3W1Mv12Cj77jk5l+n1nSzEOwrqAIP02eygV8fzb9/QpvjfJl2wjl994d4TNQwI2ce+kXx8S8DV4wJ2EBy3aic4l3B8loNVqNRKwvcJYwP+jhOy3ndvJgG3X9RN1XXs+4PcoMftt5tacDthPNhLwZ5SIAd/OB2zbvl9N1Pd7m/gw4FvcgFbg/GfgnwsWfAZeugp3V1jmVfj4x9xeh7qemq+uR+8Dozh4ONJttmg3diOd+1tk/dnbUdaRn/598eHDkWZj7oDbUZoIb0mOny+tJzZ3wO0oKWbAn0nOGTDMezoBBRRQQAEFFFBAAQUUUEABBRRQQAF/a8C/NxBwJ+Atf6AUUEABBRSweMB3slQfZKleihuGzxsNQ/lvXxWvl6t0wJKGO6kWabgr8UQsXG8pDYfZqachAAAAAAAAAAAAAAAAAAAAAMT2BaMaiMFJ5UJOAAAAAElFTkSuQmCC',gate_water:'data:image/png;base64,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',gate_people:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAABlBMVEUAAAAJFhnSRZ9XAAAAAXRSTlMAQObYZgAAAPBJREFUeNrt2EEOgkAQRUH+/S9twkLBuKCVpKdN1Wp2tM+BUbYNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6BEJ6s2Sj2su93tWO65H7teGDZC8qh3Xi457fTM0BExqBTvGvbwZmi5a7rdUwZ6JTtcsDFDdr38b8P0Urj0DF7yHe7+10gDLBVzkFM7UgO2HSIb/jhkW0CEioIACjg8YAe8JmPp/i2UDpj1gZgbMrIAR8KaAEVBAAQWcGnB/H/D+Sl/A7wLuE2xzA54+i4ATA9bvmE3A3x45AgIAAAAAAAAAAAAAAAAAAAAw1QN4fALvzFVOqAAAAABJRU5ErkJggg==',gate_fore:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0CAMAAADSOgUjAAAACVBMVEUAAAAJFhkOIyYA5x2pAAAAAXRSTlMAQObYZgAAAm5JREFUeNrt2utWm0AAhVFO3v+hu6ptEJghwy2A2ftXVzUSP+fCoF0HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALxPfPP3DpgrXjwCCnjexfMRAZMIuOH6yS4F9wh4dsGs7rdDQQHfETCXDrhhBh8XMN1vD7jXGli8/EcE3GkX/uCAO73tFL7WrQNGwOsGLM16ATfuOwJuvPPZI+DStxIB9w0YAZd99KYB59bA8dHtCgFz9HjecxeeDZhOwPpLbh8w3QUDLpzBrz4j1wy4Zg5fI2Dbui/gxjks4O8OmMd/WRMwvzNg66E1fb6vhNkY8JBtuPF55wkBM+r3t+AFA3ZXDjgegccGPPQ+Zt81sGkkfJ+JB/nWBcyHBnw+V+h1lwyYywYcNly9C9874OMxWMjGY6x5TqQU984Bi0/oRp/xb/F6jDfTvQIO/1kLmAWbSI4KWJ2GqT+TevZ6TDyvee2AjYfhliPQq4Cp5isG7BNmslmcGHDSYq876cUB0xCwv9mb3u1lQcCcHrDlUfhBAVP+2I85Pv7etgV8OYcvFPDFGvg9V4v9vl4wGYW1gClstncKWHnvP08RKebL4FHLJOCk4LqA478hvE3AfmMYBRzeFs+OwI8IODoolBtO9a+uroGNATO7CS/9xdN7A472z8pfUk7S/RgW/SitjdE3B+zeGLA0eioJ6/Mqc4P0lIBZE7Dh55KWfpWCmbtkY77iyeciARuGYDlgcQS2Bhwch5tOIsWA6e4ccLoGtgXMiwcyswemDP7n4ICtvxle+mWXzb3yz/GcgCdtw5UubfnqAf8AJIcITc8Fw7cAAAAASUVORK5CYII=',rower:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAAiCAMAAAAeXZHcAAAADFBMVEUAAAAJFhn5vHC2WmyYzncrAAAAAXRSTlMAQObYZgAAAZpJREFUeNrtmtuOwjAMRHO6///Pq1ZlUbmI1mPtkMR+KAhx7IztJtSitbKysrKysgGN0t93AsX4QOnvOYFifNAdzK7fmkAxPmQ4mF2/MYFifMhxMLt+WwLF+JDlYHb9pgSq8ZfVgPWl9HeYQFmAuAfPrt+ewAwBTn4E/V0XoPhRGkB00Ji7gPIkoucCZvBdF9DdACkFFG9hle+6gAl8QgJQ828b5XzDKNDJt4xRmNoA6ixlvXr1990A8g6qHAL7+sMqbvox6nfv4AlHCCqPnICgiztv02//CZGwhegJQE8gGo9Vv5PPWACyAJATgK+BcBWAb/lDAPoCkAUEpCB2QKL+XgdJTdrD//hwAQ5lR+Lx6vc0QEtyQMIC0AUg8Xj1Wx5D9QaQboHjUzgif/0YeODBqt/RQGr8uwOOo5lTIxqeCyDxavxnnH/VH+FJ1f+a/3lnsF3Y3r/8wnl+/0TkH1xc54nGz9F/nUfkT8QnbsUPwAseih+CD3sofhA+6KH4YfizHhaRP/gR+M2HIX5U/yLkf0mo3+f4ZfPaL5V0EnSSlPY+AAAAAElFTkSuQmCC',petal:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAUCAMAAADbT899AAAAElBMVEUAAAAqGyLliqi2Wmz3yNSKTXOhjau2AAAAAXRSTlMAQObYZgAAAHtJREFUeNp9ktEWgCAIQx2s///ljiKFAe11F8HBGIcAjF4ARKVjpuuqmMdVZwpfRUilP5PrVTiBitgNaAATEPwAvET0F8A9LA6AAaCNtAGoFVxBZxPP4DtDGsJ/4ZGhyDEElZKyjKmln3chqLalYVmj3SeWmovA/0WVugFpPANQgEX6CwAAAABJRU5ErkJggg=='};
 const IM={};for(const k in IMG){IM[k]=new Image();IM[k].src=IMG[k]}
 </script>
 <script>/* Hiệu ứng âm thanh (WAV mono 22 kHz, nhúng base64 để chạy được qua file:// và file đơn). Sinh từ assets/audio/sfx/*.wav */
@@ -905,12 +916,16 @@ function buildDoor(){
 
 /* ---------- Lớp từ ảnh pixel có sẵn (img.js) ---------- */
 const imgCache={};
-function img(key,y0=0,y1=90){const id=key+y0+'_'+y1;if(imgCache[id])return imgCache[id];const im=IM[key];if(!im||!im.complete||!im.width)return null;
+function img(key,y0=0,y1){const im=IM[key];if(!im||!im.complete||!im.width)return null;if(y1==null)y1=im.height;const id=key+y0+'_'+y1;if(imgCache[id])return imgCache[id];
  const sc=VW/im.width,h=(y1-y0)*sc,cv=mkc(VW*K,h*K),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,y0,im.width,y1-y0,0,0,cv.width,cv.height);
  return imgCache[id]={cv,ox:0,oy:y0*sc,w:VW,h}}
 
+/* Dải khung hoạt hoạ pxl (anims/*.png xếp ngang): phóng K lần (nearest) một lần, vẽ từng khung bằng drawImage cắt */
+const stripC={};
+function strip(key,n){if(stripC[key])return stripC[key];const im=IM[key];if(!im||!im.complete||!im.width)return null;const fw=im.width/n,cv=mkc(im.width*K,im.height*K),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,0,cv.width,cv.height);return stripC[key]={cv,fw,fh:im.height,n}}
+
 let LIB,DOOR;
-return{VW,VH,K,FILT,get lib(){return LIB||(LIB=buildLib())},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();
+return{VW,VH,K,FILT,strip,get lib(){return LIB||(LIB=buildLib())},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();
 </script>
 <script>/* ===== CUTSCENE MỞ ĐẦU – dựng như phim điện ảnh =====
    Thay vì một cảnh phóng to từ từ, đây là một chuỗi CÚ MÁY (shot) có góc máy, chuyển động camera và chuyển cảnh riêng:
@@ -930,16 +945,44 @@ const grp=fx.createPattern(gr,'repeat');
 const VW=CA.VW,VH=CA.VH;
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),mix=(a,b,k)=>a+(b-a)*k,ez=v=>v*v*(3-2*v),asym=(u,t)=>1-Math.exp(-u/t),
  hh=n=>{const s=Math.sin(n*127.1+311.7)*43758.5;return s-Math.floor(s)};
-let W=0,H=0,S0=1,bar=0,shY=0,t0=0,run=0,A,ls=-1,si=-1,pro=0,pd=0,cur=null,curN='',curT0=0,TT=0,trans=null,errOnce=0,inLib=0;
+let W=0,H=0,S0=1,bar=0,shY=0,t0=0,run=0,A,ls=-1,si=-1,pro=0,pd=0,cur=null,curN='',curT0=0,curD=8,TT=0,trans=null,errOnce=0,inLib=0;
 const rs=()=>{W=c.width=wk.width=sn.width=Math.max(2,innerWidth);H=c.height=wk.height=sn.height=Math.max(2,innerHeight);S0=Math.max(W/VW,H/VH);
  bar=Math.round(cl((H-W/2.39)/2,H*.07,H*.2));CE.style.setProperty('--bar',bar+'px');
  bl.forEach(b=>{b.e.width=Math.max(2,Math.round(W/b.d));b.e.height=Math.max(2,Math.round(H/b.d))});
  for(const g of[fx,x,sx]){g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high'}};
 rs();addEventListener('resize',rs);
 
-/* ---------- Phụ đề (giữ nguyên nội dung) ---------- */
-const SUB0=[[1,5,'','Tiếng quạt trần quay đều. Ánh nắng cuối ngày nằm nghiêng trên những dãy kệ.'],[5.5,9.5,'AN','“Kỳ lạ thật. Danh mục ghi còn một bản mà tìm ba vòng vẫn không thấy.”'],[9.5,13,'CÔ HẠNH','“Nhẹ tay thôi, gáy sách mục nhiều lắm.”'],[13.3,19,'','Không phải phần nội dung in, mà chính những ghi chú bên lề mới khiến An chú ý.'],[20.5,24.5,'EMMA','“Cậu có nghĩ người ghi những dòng bên lề muốn ai đó đọc được chúng không?”'],[24.5,28.5,'AN','“Có sơ đồ không có nghĩa là có mật mã. Mình đến nơi rồi xem đã.”'],[29.5,33.5,'','Không có ánh sáng kỳ lạ, không có tiếng gọi bí ẩn. Chỉ có hàng cây, mặt nước và một không gian yên tĩnh.'],[33.5,36.5,'','“Hãy bắt đầu bằng sự kính trọng.”']];
-const SUB=[[1.2,4.6,'','Có những dòng sông không chỉ chở nước. Chúng chở phù sa, và cả những điều người ta chưa kịp viết thành chữ.'],[5.2,8.4,'','Ở miền Tây, ký ức đi qua nhiều đời: qua mái chèo, qua lời má kể, qua những cái tên rơi rớt giữa dòng.'],[8.8,11.8,'','Và đôi khi, nó nằm lại bên lề một cuốn sách cũ.'],...SUB0.slice(3).map(q=>[q[0]+12,q[1]+12,q[2],q[3]])];
+/* ---------- Nhịp đọc & dựng phim ----------
+   Phụ đề ở lại trên màn hình đủ lâu để đọc thong thả: ~13,5 ký tự/giây + 0,8 s cho mắt bắt kịp (tối thiểu 2,8 s); từng chữ hiện dần theo đúng nhịp đó.
+   Mỗi "beat": s = cú máy bắt đầu · tr/td = kiểu/thời lượng chuyển cảnh · t = [người nói, câu] · lead = độ trễ trước khi chữ hiện · m = thời lượng tối thiểu · d = thời lượng khi không có chữ.
+   Thời gian các cú máy được tính từ độ dài câu thoại nên sửa lời thoại không làm lệch nhịp dựng. */
+const CPS=13.5,rt=t=>Math.max(2.8,.8+[...t].length/CPS);
+function build(beats,t0){const sh=[],sb=[];let t=t0;
+ for(const b of beats){const lead=b.lead??.5,d=Math.max(b.m||0,b.t?lead+rt(b.t[1])+.5:(b.d||3));
+  if(b.s)sh.push([t,0,b.s,b.tr||'cut',b.td||.7]);
+  if(b.t)sb.push([t+lead,t+lead+rt(b.t[1]),b.t[0],b.t[1]]);
+  t+=d}
+ sh.forEach((q,i)=>q[1]=i+1<sh.length?sh[i+1][0]:t);return{sh,sb,end:t}}
+/* Phần 1 – dòng sông (lời dẫn) */
+const RIV=build([
+ {s:'riv0',d:3.4},
+ {t:['','Có những dòng sông không chỉ chở nước.']},
+ {s:'riv1',tr:'dissolve',td:.9,t:['','Nó còn chở phù sa, và cả những chuyện người ta chưa kịp viết thành chữ.']},
+ {s:'riv2',tr:'dissolve',td:.9,t:['','Ở miền Tây, ký ức đi qua nhiều đời: qua mái chèo, qua lời má kể.']},
+ {s:'riv3',tr:'dissolve',td:.9,t:['','Và đôi khi, nó nằm lại bên lề một cuốn sách cũ.'],m:6.5}],0);
+/* Phần 2 – chơi được trong thư viện (hội thoại, tự dựng theo từng câu: onLine) rồi tới đây */
+const PA=Math.ceil(RIV.end)+2;
+const POST=build([
+ {s:'bk',tr:'dip',td:.9,t:['','Thứ làm An để ý không phải chữ in, mà là những dòng ghi chú ở bên lề.'],m:9.5},
+ {s:'rd1',tr:'dissolve',td:.9,t:['EMMA','“Cậu nghĩ người viết mấy dòng đó có muốn ai đọc được không?”']},
+ {s:'rd2',tr:'cut',t:['AN','“Tớ cũng không biết. Có sơ đồ chưa chắc đã có mật mã. Mình tới nơi rồi tính.”']},
+ {s:'rdB',tr:'cut',d:2.6},
+ {s:'rd3',tr:'dissolve',td:.7,t:['','Không có ánh sáng kỳ lạ, cũng chẳng có tiếng gọi bí ẩn nào. Chỉ có hàng cây, mặt nước và một khoảng lặng.'],m:9},
+ {s:'gate',tr:'dip',td:1.2,lead:1.3,t:['','“Hãy bắt đầu bằng sự kính trọng.”'],m:14.5}],PA);
+const AUTO=[...RIV.sh,...POST.sh],SUB=[...RIV.sb,...POST.sb],PRO_AT=RIV.end,END_AT=POST.end;
+/* Phụ đề hiện từng chữ theo nhịp đọc */
+function showSub(q){const w=q[3].split(' '),tot=q[3].length,rev=(q[1]-q[0])*.72;let acc=0;SB.className='';
+ SB.innerHTML=(q[2]?'<b>'+q[2]+'</b>':'')+w.map(t=>{const d=(acc/tot*rev).toFixed(2);acc+=t.length+1;return'<span style="transition-delay:'+d+'s">'+t+'</span>'}).join(' ');void SB.offsetWidth;SB.className='in'}
 
 /* ---------- Camera & vẽ lớp ---------- */
 const idt=()=>x.setTransform(1,0,0,1,0,0);
@@ -958,26 +1001,29 @@ function flareAt(wx,wy,a){if(a<=0)return;x.save();x.setTransform(1,0,0,1,0,0);x.
 /* ---------- Thế giới: SÔNG ---------- */
 function dRiver(sh,cam,u,T){
  x.fillStyle='#0b1022';x.fillRect(0,0,W,H);
- const sky=CA.img('river_sky'),far=CA.img('river_far'),wat=CA.img('river_water'),bts=CA.img('river_boats'),e=sh.sun?sh.sun(u):0;
- blit(sky,.7,cam);{const[sxp,syp,s]=wpos(.7,cam,200,88);glowS(sxp,syp,s*(70+110*e),'255,205,130',.4+.5*e)}
+ const sky=CA.img('river_sky'),far=CA.img('river_far'),wat=CA.img('river_water'),bts=CA.img('river_boats'),fore=CA.img('river_fore'),rw=CA.strip('rower',8),e=sh.sun?sh.sun(u):0;
+ blit(sky,.7,cam);{const[sxp,syp,s]=wpos(.7,cam,200,94);glowS(sxp,syp,s*(60+100*e),'255,205,130',.2+.5*e)}
  blit(far,.8,cam);
  /* sương mỏng ở chân trời */
- place(.85,cam);{x.globalCompositeOperation='lighter';const g=x.createLinearGradient(0,92,0,118);g.addColorStop(0,'rgba(255,190,130,0)');g.addColorStop(.45,'rgba(255,190,130,.16)');g.addColorStop(1,'rgba(255,190,130,0)');x.fillStyle=g;x.fillRect(-80,92,480,26);x.globalCompositeOperation='source-over'}idt();
+ place(.85,cam);{x.globalCompositeOperation='lighter';const g=x.createLinearGradient(0,92,0,120);g.addColorStop(0,'rgba(255,190,130,0)');g.addColorStop(.45,'rgba(255,190,130,.18)');g.addColorStop(1,'rgba(255,190,130,0)');x.fillStyle=g;x.fillRect(-80,92,480,28);x.globalCompositeOperation='source-over'}idt();
  blit(wat,.9,cam);
  /* ánh nắng lấp lánh trên mặt nước (vị trí liên tục, không làm tròn) */
  place(.9,cam);x.globalCompositeOperation='lighter';
- for(let i=0;i<64;i++){const y=104+hh(i)*74,k=(y-100)/80,xx=200+(hh(i+9)-.5)*(26+k*120)+Math.sin(T*.5+i)*1.6,len=5+hh(i+2)*(10+k*34),a=(.1+.5*hh(i+3))*Math.pow(.5+.5*Math.sin(T*(1.1+hh(i)*1.4)+i*5),2)*(1-k*.4)*(1+e);
+ for(let i=0;i<70;i++){const y=103+hh(i)*74,k=(y-100)/80,xx=200+(hh(i+9)-.5)*(26+k*120)+Math.sin(T*.5+i)*1.6,len=5+hh(i+2)*(10+k*34),a=(.08+.4*hh(i+3))*Math.pow(.5+.5*Math.sin(T*(1.1+hh(i)*1.4)+i*5),2)*(1-k*.4)*(1+e);
   x.fillStyle=`rgba(255,214,150,${a})`;x.fillRect(xx-len/2,y,len,.55+hh(i+8)*.8)}
  x.globalCompositeOperation='source-over';idt();
- blit(bts,1,cam,1,Math.sin(T*.33)*1.8,Math.sin(T*.9)*.12);
- /* chim */
+ blit(bts,1,cam,1,Math.sin(T*.33)*1.4,Math.sin(T*.9)*.12);
+ /* người chèo xuồng (hoạt hoạ pxl, 8 khung) trôi chậm trên sông */
+ if(rw){const[wx,wy,s]=wpos(1,cam,150+Math.sin(T*.3)*3,84+Math.sin(T*.9)*.35),fr=Math.floor(T*6)%rw.n;x.drawImage(rw.cv,fr*rw.fw*CA.K,0,rw.fw*CA.K,rw.fh*CA.K,wx,wy,rw.fw*s,rw.fh*s)}
+ /* cò bay */
  place(.85,cam);x.strokeStyle='#0a0b16';x.lineWidth=.9;x.lineCap='round';
  for(let i=0;i<8;i++){const bx=(((i*53-T*(4+hh(i)*4))%380)+380)%380-30,by=24+hh(i+3)*40+Math.sin(T*.6+i)*2.5,w=Math.sin(T*7+i*2)*2.2;x.beginPath();x.moveTo(bx-4.5,by+w);x.lineTo(bx,by);x.lineTo(bx+4.5,by+w);x.stroke()}idt();
- /* lau sậy tiền cảnh (rất gần, mờ nhẹ) tạo chiều sâu */
+ /* tàu dừa nước ở hai mép khung (vẽ bằng pxl) + lau sậy rất gần, mờ nhẹ tạo chiều sâu */
+ blit(fore,1.45,cam,1,Math.sin(T*.5)*.7,Math.sin(T*.37)*.25);
  place(2.1,cam);x.strokeStyle='#04050b';x.lineCap='round';x.shadowColor='#04050b';x.shadowBlur=14;
- for(let i=0;i<20;i++){const bx=i*17+hh(i)*9-8,h=26+hh(i+4)*40,sw=Math.sin(T*.7+i*1.7)*2.4+Math.sin(T*.31+i)*1.2,lean=(hh(i+2)-.5)*14;x.lineWidth=.9+hh(i+7)*.9;x.beginPath();x.moveTo(bx,196);x.quadraticCurveTo(bx+sw*.3+lean*.3,196-h*.6,bx+lean+sw,196-h);x.stroke()}
+ for(let i=0;i<14;i++){const bx=i*24+hh(i)*9-8,h=22+hh(i+4)*34,sw=Math.sin(T*.7+i*1.7)*2.4+Math.sin(T*.31+i)*1.2,lean=(hh(i+2)-.5)*14;x.lineWidth=.9+hh(i+7)*.9;x.beginPath();x.moveTo(bx,196);x.quadraticCurveTo(bx+sw*.3+lean*.3,196-h*.6,bx+lean+sw,196-h);x.stroke()}
  x.shadowBlur=0;idt();
- if(sh.flare)flareAt(...wpos(.7,cam,200,88).slice(0,2),sh.flare(u));
+ if(sh.flare)flareAt(...wpos(.7,cam,200,94).slice(0,2),sh.flare(u));
 }
 
 /* ---------- Thế giới: THƯ VIỆN ---------- */
@@ -996,11 +1042,13 @@ function dust(cam,T,cone){place(.9,cam);x.globalCompositeOperation='lighter';
  x.globalCompositeOperation='source-over';idt()}
 function dLib(sh,cam,u,T){const A=CA.lib,I=sh.light??1;
  x.fillStyle='#120a05';x.fillRect(0,0,W,H);
- const f=sh.focus??.2;blit(A.wallBlur,.8,cam);blit(A.wall,.8,cam,1-f);
+ const f=typeof sh.focus=='function'?sh.focus(u):(sh.focus??.2);blit(A.wallBlur,.8,cam);blit(A.wall,.8,cam,1-f);
  {const[wx,wy,s]=wpos(.86,cam,160,56);glowS(wx,wy,s*150,'255,205,130',.17*I)}
  shafts(cam,T,I,1);fan(cam,T);
  blit(A.an,1,cam,1,0,Math.sin(T*1.1)*.1);blit(A.hanh,1,cam,1,0,Math.sin(T+1)*.1);
  blit(A.desk,1.08,cam);
+ /* cánh sen ép khô rơi ra khỏi trang sách (cú máy 'book') */
+ if(sh.petal&&u<3.6){const k=cl(u/3.4),e2=k*k*(3-2*k),[wx,wy,s]=wpos(1.08,cam,176+Math.sin(u*2.4)*8*(1-k)+5*k,98+36*e2);x.save();x.translate(wx,wy);x.rotate(Math.sin(u*2.4)*.7*(1-k)+.4*k);x.imageSmoothingEnabled=false;x.drawImage(IM.petal,-5.5*s,-3.5*s,11*s,7*s);x.restore();x.imageSmoothingEnabled=true}
  /* ánh sáng rọi lên mặt bàn và trang sách */
  place(1.08,cam);x.globalCompositeOperation='lighter';
  {const g=x.createLinearGradient(0,132,0,192);g.addColorStop(0,`rgba(255,205,130,${.15*I})`);g.addColorStop(1,'rgba(255,190,110,.04)');x.fillStyle=g;x.beginPath();x.moveTo(112,132);x.lineTo(212,132);x.lineTo(300,192);x.lineTo(30,192);x.fill();
@@ -1030,30 +1078,35 @@ function bike(cx,cy,s,ph){x.save();x.strokeStyle=x.fillStyle='#07080f';x.lineCap
  x.beginPath();x.moveTo(cx-.2*s,cy-.3*s);x.quadraticCurveTo(cx-.15*s,cy-.8*s,cx+.05*s,cy-.76*s);x.lineTo(cx+.3*s,cy-.5*s);x.lineTo(cx+.3*s,cy-.42*s);x.lineTo(cx+.1*s,cy-.6*s);x.lineTo(cx,cy-.3*s);x.fill();x.restore();
  glowS(cx+.7*s,cy-.1*s,s*1.1,'255,230,170',.22)}
 function dRoad(sh,cam,u,T){x.fillStyle='#10111a';x.fillRect(0,0,W,H);
- const sk=CA.img('road',0,62),rd=CA.img('road',52,90),e=sh.sun?sh.sun(u):0;
- blit(sk,.7,cam);const[sxp,syp,s]=wpos(.7,cam,208,88);glowS(sxp,syp,s*(80+70*e),'255,205,130',.4+.45*e);
- blit(rd,1.05,cam);
+ const e=sh.sun?sh.sun(u):0;
+ blit(CA.img('road_sky'),.7,cam);const[sxp,syp,s]=wpos(.7,cam,208,96);glowS(sxp,syp,s*(80+70*e),'255,205,130',.38+.45*e);
+ blit(CA.img('road_far'),.82,cam);blit(CA.img('road_mid'),.92,cam);blit(CA.img('road_ground'),1.05,cam);
  place(1.05,cam);x.globalCompositeOperation='lighter';
- for(let i=0;i<22;i++){const y=120+hh(i)*58,xx=((i*43-T*(160+hh(i)*170))%470+470)%470-70,len=14+hh(i+3)*46;x.fillStyle=`rgba(238,226,196,${.05+.15*hh(i+5)})`;x.fillRect(xx,y,len,.5+hh(i+7)*.8)}
+ for(let i=0;i<22;i++){const y=132+hh(i)*24,xx=((i*43-T*(160+hh(i)*170))%470+470)%470-70,len=14+hh(i+3)*46;x.fillStyle=`rgba(238,226,196,${.05+.15*hh(i+5)})`;x.fillRect(xx,y,len,.5+hh(i+7)*.8)}
  x.globalCompositeOperation='source-over';idt();
  if(sh.bikes)[[.3,.8,.2,1],[.5,.76,.19,2],[.7,.73,.18,3]].forEach(([a,b,sz,k])=>bike(W*a+Math.sin(T*.6+k)*H*.015,H*b+shY+Math.sin(T*1.7+k*2)*H*.003,H*sz,T*16));
+ if(sh.bclose)bike(W*.52+Math.sin(T*.8)*H*.012,H*.94+shY+Math.sin(T*1.7)*H*.004,H*.6,T*15);       /* cận cảnh một người đạp xe, bánh xe quay */
+ blit(CA.img('road_fore'),1.5,cam,1,Math.sin(T*.8)*.5,0);
  if(sh.flare)flareAt(sxp,syp,sh.flare(u));
  if(sh.white){const a=sh.white(u);if(a>0){x.globalCompositeOperation='lighter';x.fillStyle=`rgba(255,226,180,${a})`;x.fillRect(0,0,W,H);x.globalCompositeOperation='source-over'}}}
 
 /* ---------- Thế giới: CỔNG + TIÊU ĐỀ ---------- */
 function title(u){if(u<=6.5)return;x.fillStyle=`rgba(5,5,12,${.62*ez(cl((u-6.5)/2))})`;x.fillRect(0,0,W,H);
- const sz=Math.min(W*.11,130),T1='PHÙ SA KÝ',ty=H*.44+shY;x.font=`700 ${sz}px "Playfair Display",Georgia,serif`;x.textBaseline='middle';x.textAlign='left';
+ const sz=Math.min(W*.11,130),T1='PHÙ SA KÝ',ty=H*.44+shY;x.font=`700 ${sz}px "Playfair Display","Noto Serif",Georgia,serif`;x.textBaseline='middle';x.textAlign='left';
  const sp=sz*.14,ws=[...T1].map(ch=>x.measureText(ch).width),tw=ws.reduce((a,b)=>a+b+sp,0)-sp;let px=(W-tw)/2;
- [...T1].forEach((ch,i)=>{x.globalAlpha=ez(cl((u-7-i*.13)/.9));x.fillStyle='#f3e6bd';x.fillText(ch,px,ty);px+=ws[i]+sp});
- x.globalAlpha=ez(cl((u-8.8)/1.2));x.fillStyle='#e0b25a';x.fillRect(W/2-tw*.25*x.globalAlpha,ty+sz*.62,tw*.5*x.globalAlpha,1.5);
- x.textAlign='center';x.fillStyle='#f3e6bd';x.font=`italic ${sz*.2}px "Playfair Display",serif`;x.fillText('Những điều dòng nước không cuốn đi',W/2,ty+sz*.95);
- x.globalAlpha=ez(cl((u-10.5)/1));x.font=`${Math.max(13,sz*.13)}px "Pixelify Sans",sans-serif`;x.fillStyle='#e0b25a';x.fillText('Chương 1 — Dấu mực bên lề',W/2,ty+sz*1.45);x.globalAlpha=1;x.textAlign='left'}
+ [...T1].forEach((ch,i)=>{x.globalAlpha=ez(cl((u-7-i*.2)/1.1));x.fillStyle='#f3e6bd';x.fillText(ch,px,ty);px+=ws[i]+sp});
+ x.globalAlpha=ez(cl((u-9.2)/1.4));x.fillStyle='#e0b25a';x.fillRect(W/2-tw*.25*x.globalAlpha,ty+sz*.62,tw*.5*x.globalAlpha,1.5);
+ x.textAlign='center';x.globalAlpha=ez(cl((u-9.6)/1.6));x.fillStyle='#f3e6bd';x.font=`italic 400 ${sz*.2}px "Playfair Display","Noto Serif",Georgia,serif`;x.fillText('Những điều dòng nước không cuốn đi',W/2,ty+sz*.95);
+ x.globalAlpha=ez(cl((u-11.6)/1.4));x.font=`${Math.max(13,sz*.13)}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillStyle='#e0b25a';x.fillText('Chương 1 — Dấu mực bên lề',W/2,ty+sz*1.45);x.globalAlpha=1;x.textAlign='left'}
 function dGate(sh,cam,u,T){x.fillStyle='#0b0f22';x.fillRect(0,0,W,H);
- blit(CA.img('gate',0,58),.8,cam);blit(CA.img('gate',50,90),1.05,cam);
- place(1.05,cam);x.globalCompositeOperation='lighter';
- for(let i=0;i<70;i++){const y=122+hh(i)*60,xx=hh(i+4)*360-20+Math.sin(T*.4+i)*3,len=6+hh(i+2)*28,a=(.05+.16*hh(i+6))*(.5+.5*Math.sin(T*(.8+hh(i)*1.2)+i*4));x.fillStyle=`rgba(255,205,150,${a})`;x.fillRect(xx,y,len,.55+hh(i+8)*.8)}
- for(let i=0;i<30;i++){const px=hh(i)*330-5+Math.sin(T*.4+i*2)*9,py=104+hh(i+3)*70+Math.cos(T*.5+i)*5,a=Math.pow(.5+.5*Math.sin(T*(1+hh(i+9))+i*3),3);x.fillStyle=`rgba(255,238,170,${.16*a})`;x.beginPath();x.arc(px,py,2.8,0,7);x.fill();x.fillStyle=`rgba(255,244,190,${.9*a})`;x.beginPath();x.arc(px,py,.75,0,7);x.fill()}
+ blit(CA.img('gate_sky'),.7,cam);{const[a,b,s]=wpos(.7,cam,160,92);glowS(a,b,s*95,'255,205,130',.3)}
+ blit(CA.img('gate_trees'),.82,cam);blit(CA.img('gate_gate'),1,cam);blit(CA.img('gate_people'),1,cam,1,Math.sin(T*.7)*.12,0);blit(CA.img('gate_water'),1.04,cam);
+ place(1.04,cam);x.globalCompositeOperation='lighter';
+ for(let i=0;i<70;i++){const y=122+hh(i)*58,xx=hh(i+4)*360-20+Math.sin(T*.4+i)*3,len=6+hh(i+2)*28,a=(.05+.16*hh(i+6))*(.5+.5*Math.sin(T*(.8+hh(i)*1.2)+i*4));x.fillStyle=`rgba(255,205,150,${a})`;x.fillRect(xx,y,len,.55+hh(i+8)*.8)}
+ /* đom đóm */
+ for(let i=0;i<34;i++){const px=hh(i)*330-5+Math.sin(T*.4+i*2)*9,py=96+hh(i+3)*84+Math.cos(T*.5+i)*5,a=Math.pow(.5+.5*Math.sin(T*(1+hh(i+9))+i*3),3);x.fillStyle=`rgba(255,238,170,${.16*a})`;x.beginPath();x.arc(px,py,2.8,0,7);x.fill();x.fillStyle=`rgba(255,244,190,${.9*a})`;x.beginPath();x.arc(px,py,.75,0,7);x.fill()}
  x.globalCompositeOperation='source-over';idt();
+ blit(CA.img('gate_fore'),1.6,cam,1,Math.sin(T*.6)*.8,0);
  title(u)}
 
 /* ---------- Thế giới: TRANG SÁCH (cận cảnh ghi chú bên lề) ---------- */
@@ -1066,33 +1119,40 @@ function dBook(sh,cam,u,T){u=Math.min(u,9);
  x.fillStyle='rgba(0,0,0,.5)';x.fillRect(X+10,Y+14,bw,bh);
  for(const s of[0,1]){g=x.createLinearGradient(X+bw/2,0,s?X+bw:X,0);g.addColorStop(0,'#c9b27c');g.addColorStop(.12,'#ecdcae');g.addColorStop(1,'#f3e6bd');x.fillStyle=g;x.fillRect(s?X+bw/2:X,Y,bw/2,bh)}
  x.fillStyle='rgba(60,40,20,.28)';for(let s=0;s<2;s++)for(let i=0;i<13;i++)x.fillRect(X+bw*(s?.55:.06),Y+bh*.1+i*bh*.058,bw*.37*(.7+hh(i+s*20)*.3),3);
- const note=(t,px,py,t1,d,sz,col)=>{const k=ez(cl((u-t1)/d));if(k<=0)return 0;x.font=`500 ${sz}px Caveat,cursive`;const w=x.measureText(t).width;x.save();x.beginPath();x.rect(px-4,py-sz,w*k+8,sz*1.5);x.clip();x.fillStyle=col;x.fillText(t,px,py);x.restore();return w};
+ const note=(t,px,py,t1,d,sz,col)=>{const k=ez(cl((u-t1)/d));if(k<=0)return 0;x.font=`400 ${sz}px "Patrick Hand","Segoe Print","Bradley Hand",cursive`;const w=x.measureText(t).width;x.save();x.beginPath();x.rect(px-4,py-sz,w*k+8,sz*1.5);x.clip();x.fillStyle=col;x.fillText(t,px,py);x.restore();return w};
  const s1=bh*.075,w1=note('Hòa An – 1927 đến 1929',X+bw*.56,Y+bh*.3,1,1.6,s1,'#6b3a14');
  const k=ez(cl((u-2.8)/1));if(k>0){x.strokeStyle='#8b2a1c';x.lineWidth=2.5;x.beginPath();x.ellipse(X+bw*.56+w1/2,Y+bh*.3-s1*.3,w1/2+16,s1*.8,-.04,0,k*6.28);x.stroke()}
  const s2=bh*.05;note('Bắt đầu từ nơi người dân',X+bw*.07,Y+bh*.84,3.4,1.5,s2,'#3d4f7a');note('Đồng Tháp gửi lòng biết ơn.',X+bw*.07,Y+bh*.9,4.5,1.5,s2,'#3d4f7a');
  const w3=note('Người lái đò',X+bw*.56,Y+bh*.62,5,1,s1,'#4a3020');
- if(u>6){x.strokeStyle='#8b2a1c';x.lineWidth=2;x.beginPath();x.moveTo(X+bw*.56,Y+bh*.6);x.lineTo(X+bw*.56+w3*ez(cl(u-6)),Y+bh*.6);x.stroke();x.font=`${s1*1.4}px Caveat`;x.fillStyle='#8b2a1c';x.globalAlpha=cl(u-6.4);x.fillText('?',X+bw*.56+w3+10,Y+bh*.62);x.globalAlpha=1}
+ if(u>6){x.strokeStyle='#8b2a1c';x.lineWidth=2;x.beginPath();x.moveTo(X+bw*.56,Y+bh*.6);x.lineTo(X+bw*.56+w3*ez(cl(u-6)),Y+bh*.6);x.stroke();x.font=`400 ${s1*1.4}px "Patrick Hand","Segoe Print",cursive`;x.fillStyle='#8b2a1c';x.globalAlpha=cl(u-6.4);x.fillText('?',X+bw*.56+w3+10,Y+bh*.62);x.globalAlpha=1}
  if(u<5.5){x.save();x.translate(X+bw*.7+Math.sin(u*2)*30,Y-40+u*H*.14);x.rotate(u*2);x.fillStyle='rgba(214,120,150,.9)';x.beginPath();x.ellipse(0,0,18,8,0,0,7);x.fill();x.restore()}
  x.restore();
  x.globalCompositeOperation='multiply';g=x.createRadialGradient(W/2,H/2,H*.25,W/2,H/2,W*.62);g.addColorStop(0,'rgba(255,240,215,1)');g.addColorStop(1,'rgba(110,70,35,1)');x.fillStyle=g;x.fillRect(0,0,W,H);x.globalCompositeOperation='source-over';
  glowS(W*.86,H*.1,W*.6,'255,205,140',.07+.02*Math.sin(T*.8));dust({x:160,y:90,z:1},T,60)}
 
-/* ---------- Danh sách cú máy ---------- */
-const lin=(a,b,u,D)=>mix(a,b,cl(u/D));
+/* ---------- Danh sách cú máy ----------
+   Ngôn ngữ điện ảnh: toàn cảnh (riv0, libA, libW, gate) → trung cảnh (riv2, libM, libOTS, rd2) → cận cảnh (anA/B, hanhA/B, emma, khoa) → đặc tả (book, notes, rdB, box).
+   Chuyển động máy: tilt xuống (riv0) · lia ngang có thị sai (riv1, rd1) · dolly tiến (riv2, anA…) · crane lùi (libA) · tilt lên từ thấp (libLow) · nét sắc dần (rack focus) khi vào cận cảnh.
+   curD = thời lượng của cú máy đang chạy (tính từ độ dài câu thoại) để chuyển động luôn vừa khít. */
+const lin=(a,b,u,D)=>mix(a,b,cl(u/D)),rack=u=>.35+.6*ez(cl(u/1.4));
 const SH={
  /* Sông */
- riv1:{w:dRiver,act:0,bloom:.55,cam:u=>({x:lin(146,174,u,4.6),y:lin(108,99,u,4.6),z:lin(1.38,1.5,u,4.6)})},
- riv2:{w:dRiver,act:0,bloom:.55,cam:u=>({x:lin(112,208,u,4.2),y:94,z:1.58})},
- riv3:{w:dRiver,act:0,bloom:.8,sun:u=>Math.pow(cl(u/4),2),flare:u=>.25+.75*Math.pow(cl(u/4),2),white:u=>Math.pow(cl((u-3.1)/.9),2),
-  cam:u=>{const e=Math.pow(cl(u/4),2);return{x:mix(178,198,e),y:mix(96,88,e),z:mix(1.3,2.6,e)}}},
- /* Thư viện: toàn cảnh mở đầu (kéo lùi từ ô cửa sáng), toàn cảnh thường, nhân vật, chi tiết */
+ riv0:{w:dRiver,act:0,bloom:.4,cam:u=>{const k=ez(cl(u/curD));return{x:mix(150,166,k),y:mix(88,104,k),z:mix(1.12,1.34,k)}}},
+ riv1:{w:dRiver,act:0,bloom:.4,cam:u=>{const k=cl(u/curD);return{x:mix(110,212,k),y:mix(100,96,k),z:1.46}}},
+ riv2:{w:dRiver,act:0,bloom:.45,cam:u=>{const k=ez(cl(u/curD));return{x:mix(158,184,k),y:mix(104,100,k),z:mix(1.9,2.35,k)}}},
+ riv3:{w:dRiver,act:0,bloom:.8,sun:u=>Math.pow(cl(u/curD),2),flare:u=>.25+.75*Math.pow(cl(u/curD),2),white:u=>Math.pow(cl((u-(curD-1.4))/1.1),2),
+  cam:u=>{const e=Math.pow(cl(u/curD),2);return{x:mix(176,198,e),y:mix(100,90,e),z:mix(1.3,2.7,e)}}},
+ /* Thư viện */
  libA:{w:dLib,act:1,focus:.2,bloom:.8,flare:.7,light:1.15,cam:u=>{const r=1-Math.pow(1-cl(u/4.2),3),d=Math.max(0,u-4.2);return{x:mix(162,166,r)+d*.1,y:mix(60,93,r)+d*.04,z:mix(2.2,1.06,r)+d*.005}}},
  libW:{w:dLib,act:1,focus:.2,bloom:.7,flare:.35,cam:u=>({x:162+u*.12,y:94,z:1.08+u*.006})},
- anA:{w:dLib,act:1,focus:.9,bloom:.75,cam:u=>{const k=asym(u,8);return{x:mix(92,84,k),y:104,z:mix(2.15,2.42,k)}}},
- anB:{w:dLib,act:1,focus:.95,bloom:.75,flare:.2,cam:u=>{const k=asym(u,8);return{x:mix(56,68,k),y:101,z:mix(2.75,3.0,k)}}},
- hanhA:{w:dLib,act:1,focus:.9,bloom:.75,cam:u=>{const k=asym(u,8);return{x:mix(214,228,k),y:102,z:mix(2.1,2.35,k)}}},
- hanhB:{w:dLib,act:1,focus:.95,bloom:.75,cam:u=>{const k=asym(u,8);return{x:mix(254,243,k),y:98,z:mix(2.6,2.85,k)}}},
- book:{w:dLib,act:1,focus:.9,bloom:.8,flare:.35,light:1.2,cam:u=>{const k=asym(u,7);return{x:mix(168,158,k),y:mix(134,129,k),z:mix(2.3,3.1,k)}}},
+ libM:{w:dLib,act:1,focus:.3,bloom:.7,flare:.2,cam:u=>{const k=asym(u,10);return{x:mix(160,168,k),y:mix(101,97,k),z:mix(1.34,1.52,k)}}},
+ libOTS:{w:dLib,act:1,focus:u=>.5+.45*ez(cl(u/1.6)),bloom:.75,cam:u=>{const k=asym(u,9);return{x:mix(122,134,k),y:101,z:mix(1.75,1.95,k)}}},
+ libLow:{w:dLib,act:1,focus:.35,bloom:.85,flare:.5,light:1.25,cam:u=>{const k=ez(cl(u/9));return{x:mix(150,164,k),y:mix(150,50,k),z:mix(1.5,1.28,k)}}},
+ anA:{w:dLib,act:1,focus:rack,bloom:.75,cam:u=>{const k=asym(u,8);return{x:mix(92,84,k),y:104,z:mix(2.15,2.42,k)}}},
+ anB:{w:dLib,act:1,focus:rack,bloom:.75,flare:.2,cam:u=>{const k=asym(u,8);return{x:mix(56,68,k),y:101,z:mix(2.75,3.0,k)}}},
+ hanhA:{w:dLib,act:1,focus:rack,bloom:.75,cam:u=>{const k=asym(u,8);return{x:mix(214,228,k),y:102,z:mix(2.1,2.35,k)}}},
+ hanhB:{w:dLib,act:1,focus:rack,bloom:.75,cam:u=>{const k=asym(u,8);return{x:mix(254,243,k),y:98,z:mix(2.6,2.85,k)}}},
+ book:{w:dLib,act:1,focus:rack,petal:1,bloom:.8,flare:.35,light:1.2,cam:u=>{const k=asym(u,7);return{x:mix(172,160,k),y:mix(120,129,k),z:mix(2.0,3.1,k)}}},
  box:{w:dLib,act:1,focus:.85,bloom:.7,cam:u=>{const k=asym(u,7);return{x:mix(290,274,k),y:121,z:mix(2.15,2.5,k)}}},
  libEnd:{w:dLib,act:1,focus:.15,bloom:.7,light:.85,dim:u=>.22*ez(cl(u/10)),cam:u=>{const k=asym(u,6);return{x:mix(150,160,k),y:mix(100,92,k),z:mix(1.55,1.03,k)}}},
  notes:{w:dBook,act:2,bloom:.08,cam:()=>({x:160,y:90,z:1})},
@@ -1101,29 +1161,31 @@ const SH={
  khoa:{w:dDoor,act:1,focus:.85,bloom:.8,walk:()=>1,cam:u=>{const k=asym(u,8);return{x:mix(188,184,k),y:72,z:mix(1.7,1.85,k)}}},
  /* Sau đoạn chơi được */
  bk:{w:dBook,act:2,bloom:.08,cam:()=>({x:160,y:90,z:1})},
- rd1:{w:dRoad,act:3,bloom:.7,flare:()=>.3,cam:u=>({x:lin(118,200,u,3.4),y:96,z:1.55})},
- rd2:{w:dRoad,act:3,bloom:.7,bikes:1,flare:()=>.25,cam:u=>({x:lin(106,176,u,3.2),y:104,z:1.55})},
- rd3:{w:dRoad,act:3,bloom:.85,sun:u=>Math.pow(cl(u/2.4),2),flare:u=>.3+.7*Math.pow(cl(u/2.4),2),white:u=>Math.pow(cl((u-1.6)/.8),2),cam:u=>{const e=Math.pow(cl(u/2.4),1.6);return{x:mix(190,208,e),y:mix(94,88,e),z:mix(1.35,2.2,e)}}},
- gate:{w:dGate,act:4,bloom:.6,cam:u=>{const k=cl(u/13);return{x:160,y:mix(112,92,ez(cl(u/9))),z:mix(1.3,1.14,k)}}}
+ rd1:{w:dRoad,act:3,bloom:.7,flare:()=>.3,cam:u=>({x:lin(118,200,u,curD),y:100,z:1.5})},
+ rd2:{w:dRoad,act:3,bloom:.7,bikes:1,flare:()=>.25,cam:u=>({x:lin(100,184,u,curD),y:110,z:1.55})},
+ rdB:{w:dRoad,act:3,bloom:.7,bclose:1,flare:()=>.3,cam:u=>({x:lin(140,190,u,curD),y:118,z:1.8})},
+ rd3:{w:dRoad,act:3,bloom:.85,sun:u=>Math.pow(cl(u/curD),2),flare:u=>.3+.7*Math.pow(cl(u/curD),2),white:u=>Math.pow(cl((u-(curD-1.4))/1.1),2),
+  cam:u=>{const e=Math.pow(cl(u/curD),1.6);return{x:mix(190,208,e),y:mix(102,92,e),z:mix(1.35,2.3,e)}}},
+ gate:{w:dGate,act:4,bloom:.6,cam:u=>{const k=cl(u/curD);return{x:160,y:mix(116,98,ez(cl(u/9))),z:mix(1.3,1.12,k)}}}
 };
-/* Phần không tương tác: [bắt đầu, kết thúc, cú máy, kiểu chuyển, thời lượng chuyển] */
-const AUTO=[[0,4.4,'riv1','cut'],[4.4,8.4,'riv2','dissolve',.7],[8.4,12,'riv3','dissolve',.7],[25,32,'bk','dip',.9],[32,35.4,'rd1','dissolve',.8],[35.4,38.6,'rd2','cut'],[38.6,41,'rd3','dissolve',.6],[41,54,'gate','dip',1.1]];
 
 /* ---------- Dựng theo lời thoại: mỗi câu = một cú máy ---------- */
-const cnt={an:0,hanh:0},INS=['book','box','notes','libEnd','door','libA','libW'];
-function cut(name,type='cut',d=.5){if(name===curN||!SH[name])return;
+const cnt={an:0,hanh:0},INS=['book','box','notes','libEnd','door','libA','libW','libLow','libM','libOTS'];
+function cut(name,type='cut',d=.5,D=8){if(name===curN||!SH[name])return;
  if(type!=='cut'&&cur){sx.setTransform(1,0,0,1,0,0);sx.globalAlpha=1;sx.drawImage(wk,0,0);trans={type,t:TT,d}}else trans=null;
- cur=SH[name];curN=name;curT0=TT}
-function onLine(sp,tx){const b=(sp||'').replace(/\s*[–—-].*$/,'').trim(),tl=tx||'';let n;
- if(!b)n=/quạt|chuyển một phần/.test(tl)?(inLib?'libW':'libA'):/bìa cứng|Dưới đáy/.test(tl)?'book':/lô tư liệu|chưa có mã/.test(tl)?'box':/Emma đến/.test(tl)?'door':/Cả ba|bản chụp/.test(tl)?'libEnd':'libW';
- else if(/quan sát/.test(sp))n='notes';
- else if(/xin phép/.test(sp))n='book';
- else if(b=='An')n=(cnt.an++%2)?'anB':'anA';
- else if(/Hạnh/.test(b))n=(cnt.hanh++%2)?'hanhB':'hanhA';
- else if(b=='Emma')n='emma';else if(b=='Khoa')n='khoa';else n='libW';
- if(n===curN)n={anA:'anB',anB:'anA',hanhA:'hanhB',hanhB:'hanhA'}[n]||n;
+ cur=SH[name];curN=name;curT0=TT;curD=D}
+/* Mỗi câu thoại = một cú máy. Câu có gợi ý (mục thứ 4 trong prologue.js) dùng đúng cú máy đó; còn lại chọn theo người nói, xen kẽ hai góc để không lặp. */
+function onLine(sp,tx,hint){const b=(sp||'').replace(/\s*[–—-].*$/,'').trim();let n=hint&&SH[hint]?hint:null;
+ if(!n){if(!b)n='libW';
+  else if(/quan sát/.test(sp))n='notes';
+  else if(/xin phép/.test(sp))n='libOTS';
+  else if(/chọn/.test(sp))n='libM';
+  else if(b=='An')n=(cnt.an++%2)?'anB':'anA';
+  else if(/Hạnh/.test(b))n=(cnt.hanh++%2)?'hanhB':'hanhA';
+  else if(b=='Emma')n='emma';else if(b=='Khoa')n='khoa';else n='libW'}
+ if(n===curN)n={anA:'anB',anB:'anA',hanhA:'hanhB',hanhB:'hanhA',libW:'libM',libM:'libW'}[n]||n;
  const first=!inLib;inLib=1;
- cut(n,first?'flash':(INS.includes(n)||INS.includes(curN))?'dissolve':'cut',first?1:.45)}
+ cut(n,first?'flash':(INS.includes(n)||INS.includes(curN))?'dissolve':'cut',first?1:.6)}
 
 /* ---------- Hậu kỳ ---------- */
 function post(sh,T){
@@ -1137,7 +1199,9 @@ function post(sh,T){
  /* hạt phim mịn, đổi 12 lần/giây */
  const gi=Math.floor(T*12),ox=hh(gi)*160|0,oy=hh(gi+9)*160|0;fx.save();fx.globalCompositeOperation='overlay';fx.globalAlpha=.07;fx.translate(-ox,-oy);fx.fillStyle=grp;fx.fillRect(ox,oy,W,H);fx.restore()}
 
-function render(T){const sh=cur,u=T-curT0,cam=sh.cam(u);
+function render(T){const sh=cur,u=T-curT0,cam=sh.cam(u),hd=(sh.w===dLib||sh.w===dDoor)?1:.5;
+ /* rung tay rất nhẹ: máy quay như có người cầm */
+ cam.x+=Math.sin(T*.7)*.22*hd;cam.y+=Math.sin(T*1.05+2)*.15*hd;cam.z*=1+Math.sin(T*.45)*.004*hd;
  x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';
  sh.w(sh,cam,u,T);
  if(sh.white){const a=sh.white(u);if(a>0){x.globalCompositeOperation='lighter';x.fillStyle=`rgba(255,226,180,${a})`;x.fillRect(0,0,W,H);x.globalCompositeOperation='source-over'}}
@@ -1154,24 +1218,31 @@ function end(){if(!run)return;run=0;window.onSeqLine=null;if(pro){pro=0;busy=fal
 
 function frame(now){if(!run)return;requestAnimationFrame(frame);
  try{const T=TT=Math.max(0,(now-t0)/1000);
-  if(!pro&&!pd&&T>=12){pd=1;pro=1;document.body.classList.add('pro');window.onSeqLine=onLine;PRO(()=>{pro=0;window.onSeqLine=null;document.body.classList.remove('pro');t0=performance.now()-25000})}
-  if(T>=54&&!pro)return end();
-  if(!pro){const a=AUTO.find(q=>TT>=q[0]&&TT<q[1]);if(a)cut(a[2],a[3],a[4])}
+  if(!pro&&!pd&&T>=PRO_AT){pd=1;pro=1;document.body.classList.add('pro');window.onSeqLine=onLine;PRO(()=>{pro=0;window.onSeqLine=null;document.body.classList.remove('pro');t0=performance.now()-PA*1000})}
+  if(T>=END_AT&&!pro)return end();
+  if(!pro){const a=AUTO.find(q=>TT>=q[0]&&TT<q[1]);if(a)cut(a[2],a[3],a[4],a[1]-a[0])}
   shY+=((pro?-H*.03:0)-shY)*.06;
   if(!cur)return;
   render(TT);
   if(cur.act!==si){si=cur.act;try{SFX.scene(si);A&&A.f.frequency.setTargetAtTime([300,380,900,2200,500][si],A.a.currentTime,.8)}catch(e){console.warn('[audio]',e)}}
   /* mở/đóng cảnh bằng đen */
-  const fo=Math.min(cl(T/1.4),pro?1:cl((54-T)/1.2));if(fo<1){fx.fillStyle=`rgba(0,0,0,${1-fo})`;fx.fillRect(0,0,W,H)}
-  const k=pro?-1:SUB.findIndex(s=>T>=s[0]&&T<s[1]);if(k!=ls){ls=k;if(k<0)SB.className='';else{SB.innerHTML=(SUB[k][2]?'<b>'+SUB[k][2]+'</b>':'')+SUB[k][3];SB.className='in'}}
+  const fo=Math.min(cl(T/1.4),pro?1:cl((END_AT-T)/1.2));if(fo<1){fx.fillStyle=`rgba(0,0,0,${1-fo})`;fx.fillRect(0,0,W,H)}
+  const k=pro?-1:SUB.findIndex(s=>T>=s[0]&&T<s[1]);if(k!=ls){ls=k;if(k<0)SB.className='';else showSub(SUB[k])}
  }catch(e){if(!errOnce++)console.error('[cine]',e)}}
 
-$('go').onclick=()=>{$('cs').style.display='none';['700 40px "Playfair Display"','500 30px Caveat'].forEach(f=>document.fonts?.load(f));$('cine').classList.add('on');aud();SFX.init();CA.lib;CA.door;run=1;t0=performance.now();requestAnimationFrame(frame)};
+/* Phông: chữ tiếng Việt có dấu chồng (ế, ợ, ữ…) nằm trong các tệp unicode-range "vietnamese". document.fonts.load() mà không đưa chữ mẫu chỉ nạp phần latin,
+   nên trước đây canvas vẽ "Dấu mực bên lề"/phụ đề bằng phông dự phòng -> lẫn phông, vỡ dấu. Nay nạp kèm chữ mẫu có dấu và chờ xong (tối đa 3,5 s) rồi mới chiếu. */
+const VN='ÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬĐÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴàáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ';
+const FONTS=['400 24px "Playfair Display"','italic 400 24px "Playfair Display"','700 60px "Playfair Display"','400 28px "Patrick Hand"','400 16px "Be Vietnam Pro"','500 16px "Be Vietnam Pro"','700 16px "Be Vietnam Pro"'];
+const loadFonts=()=>document.fonts?Promise.race([Promise.all(FONTS.map(f=>document.fonts.load(f,VN).catch(()=>0))),new Promise(r=>setTimeout(r,3500))]):Promise.resolve();
+loadFonts();
+$('go').onclick=()=>{const b=$('go');b.disabled=true;b.textContent='Đang chuẩn bị…';aud();SFX.init();CA.lib;CA.door;
+ loadFonts().then(()=>{$('cs').style.display='none';$('cine').classList.add('on');run=1;t0=performance.now();requestAnimationFrame(frame)})};
 $('skp').onclick=end;$('sk2').onclick=()=>{run=1;end()};addEventListener('keydown',e=>{if(e.key=='Escape'&&$('cine')){if(!run)run=1;end()}});
 /* Công cụ xem trước từng cú máy (dùng khi chỉnh dựng): CIN.preview('anA',3) */
-const preview=(name,u=0,T=u)=>{rs();$('cs').style.display='none';$('lb1').style.transition=$('lb2').style.transition='none';CE.classList.add('on');TT=T;curN='';trans=null;cut(name);curT0=T-u;shY=0;render(T)};
+const preview=(name,u=0,T=u,D=8)=>{rs();curD=D;$('cs').style.display='none';$('lb1').style.transition=$('lb2').style.transition='none';CE.classList.add('on');TT=T;curN='';trans=null;cut(name);curT0=T-u;shY=0;render(T)};
 setTimeout(()=>{try{CA.lib;CA.door}catch(e){}},80);
-return{preview,names:Object.keys(SH)}
+return{preview,names:Object.keys(SH),RIV,POST,PA}
 })();
 </script>
 <script>/* Khởi động: START() */
