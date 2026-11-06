@@ -25,7 +25,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nguồn báo chí/du lịch: vòm mộ trắng, cách điệu cánh sen (dáng bàn tay úp); vẽ vòm trắng bát giác theo biểu tượng trên sơ đồ — kích thước chưa xác định [R2][R3]"
+  "notes": "Trục chính của khu mộ; dùng sprite riêng (vòm mái cánh sen)"
  },
  {
   "id": "A2_HO_SAO",
@@ -53,7 +53,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nguồn xác nhận là hồ sen hình ngôi sao 5 cánh, giữa có đài sen trắng cao 6,5 m (sơ đồ tô xanh lục) → vẽ nước + đài sen [R3][R4]"
+  "notes": "Giữ đúng số cánh sao; không đổi thành hồ tròn"
  },
  {
   "id": "A3_DEN_THO",
@@ -529,7 +529,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Tương ứng \"Ao sen Đồng Tháp\" cạnh Nhà sàn (khởi công 19/5/1990) [R5][R6]"
+  "notes": "Giữ đường bờ; cây là lớp phụ"
  },
  {
   "id": "D2_NHA_SAN",
@@ -557,7 +557,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Mô hình Nhà sàn Bác Hồ gỗ, bên ao sen; footprint theo sơ đồ, vẽ màu gỗ [R5][R6]"
+  "notes": "Mô hình nhà sàn: sprite riêng (sàn nâng, hàng cột, mái)"
  },
  {
   "id": "D3_QUAY_LUU_NIEM",
@@ -783,7 +783,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống gần Cổng số 2 · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống gần Cổng số 2"
  },
  {
   "id": "E5_WC",
@@ -839,7 +839,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống"
  },
  {
   "id": "F2_TUONG_CU",
@@ -923,7 +923,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống"
  },
  {
   "id": "F5_NHA_ONG_NAM_GIAO",
@@ -951,7 +951,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống"
  },
  {
   "id": "F6_NHA_CU_SAC",
@@ -979,7 +979,7 @@
   "needs_verification": true,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà trong làng; chưa xác minh có phải nhà trưng bày · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà trong làng; chưa xác minh có phải nhà trưng bày"
  },
  {
   "id": "F7_NHA_CHU_DINH_2",
@@ -1007,7 +1007,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống"
  },
  {
   "id": "F8_NHA_BAT_DAN_2",
@@ -1035,7 +1035,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống"
  },
  {
   "id": "F9_NHA_ONG_CA_NHI_NGUU",
@@ -1063,7 +1063,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống"
  },
  {
   "id": "F10_NHA_TREN_COC_2",
@@ -1091,7 +1091,7 @@
   "needs_verification": true,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà trên cọc (nhãn nhỏ, đọc lại khi có ảnh nét hơn) · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà trên cọc (nhãn nhỏ, đọc lại khi có ảnh nét hơn)"
  },
  {
   "id": "F11_DIEM_DUNG_CHAN",
@@ -1203,7 +1203,7 @@
   "needs_verification": true,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà trên cọc · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà trên cọc"
  },
  {
   "id": "F15_CAFE_HOA_AN",
@@ -1259,7 +1259,7 @@
   "needs_verification": false,
   "source_capture_date": "2026-11-05",
   "conflict_note": null,
-  "notes": "Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+  "notes": "Nhà truyền thống"
  },
  {
   "id": "F17_KENH",

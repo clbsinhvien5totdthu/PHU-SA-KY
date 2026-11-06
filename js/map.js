@@ -2,6 +2,3 @@
 const CHR='0123456789a';
 const M=MAPDATA.M.map(r=>[...r].map(c=>CHR.indexOf(c)));
 const B=MAPDATA.B.map(r=>[...r].map(c=>+c));
-
-/* Giải nén V (RLE) thành lưới lớp hình ảnh VW x VH */
-const VG=MAPDATA.V.map(r=>{const o=[];r.split(',').forEach(t=>{const k=parseInt(t[0],36),n=+t.slice(1);for(let i=0;i<n;i++)o.push(k)});return o});
