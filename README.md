@@ -36,3 +36,10 @@ Cuốn sách, ghi chú bên lề, thầy Lâm, "Người lái đò", An/Emma/Kho
 - Tranh sông / đường quê / cổng di tích vẽ bằng **pxl** (`assets/art/art.px.js`, lớp thị sai + hoạt hoạ người chèo xuồng + cánh sen). Dựng lại: `node <pxl>/bin/pxl.js build assets/art/art.px.js --out assets/art/out && node tools/build_img.js`.
 - Nhịp phụ đề tính tự động từ độ dài câu (`CPS`, `rt`, `build` trong `js/cutscene.js`); hộp thoại gõ chữ ~24 ký tự/giây (`TYPE` trong `js/state.js`).
 - Phông: Be Vietnam Pro / Playfair Display / Patrick Hand (đủ dấu tiếng Việt), nạp kèm chữ mẫu có dấu trước khi chiếu.
+- Âm thanh intro: `js/sfx.js` (`SFX.cue`, `SFX.C.*`) tổng hợp bằng WebAudio, cue theo từng cú máy; muốn dùng file thật xem `assets/audio/sfx/cue/README.md` + `tools/build_sfx_cues.py`.
+
+
+## Bản đồ Map 01 v3 (ghép với bản intro)
+- Nền bản đồ được **trích trực tiếp từ sơ đồ chuẩn** bằng phân loại màu (nước, lề vàng, khu mộ, lối trắng, nét đen) thay cho đa giác vẽ tay: `python3 tools/build_map.py` (cần numpy, scipy, Pillow, opencv-python) → sinh `js/data/mapdata.js`, `data/ref/01b_master_clean.png`, `classes_preview.png`, `overlay_check.png`.
+- Đối chiếu nguồn mạng và ảnh bay: xem `docs/RESEARCH_NOTES.md` (có các điểm cần người quản lý xác nhận: tu bổ 2025, số liệu diện tích, địa chỉ).
+- Kiểm tra đi lại: `node tools/check_map.js`. Dựng file đơn: `python3 tools/build_single.py` → `dist/phu_sa_ky.html`.

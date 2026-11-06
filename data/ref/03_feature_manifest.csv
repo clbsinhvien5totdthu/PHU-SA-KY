@@ -1,6 +1,6 @@
 ﻿num,id,name_vi,zone,feature_type,x_px,y_px,tile_col,tile_row,u,v,symbol_on_map,confidence,spatial_status,status,notes
-1,A1_MO_CU,Mộ cụ,A,tomb,908,585,108,68,0.472,0.387,"Biểu tượng vòm tròn nhiều cánh, nằm trong mảng xanh lục đậm",B,approximate,provisional,Trục chính của khu mộ; dùng sprite riêng (vòm mái cánh sen)
-2,A2_HO_SAO,Hồ Sao,A,water,916,688,109,81,0.476,0.460,Hồ hình ngôi sao nằm trong vòng tròn bao,B,approximate,provisional,Giữ đúng số cánh sao; không đổi thành hồ tròn
+1,A1_MO_CU,Mộ cụ,A,tomb,908,585,108,68,0.472,0.387,"Biểu tượng vòm tròn nhiều cánh, nằm trong mảng xanh lục đậm",B,approximate,provisional,"Nguồn báo chí/du lịch: vòm mộ trắng, cách điệu cánh sen (dáng bàn tay úp); vẽ vòm trắng bát giác theo biểu tượng trên sơ đồ — kích thước chưa xác định [R2][R3]"
+2,A2_HO_SAO,Hồ Sao,A,water,916,688,109,81,0.476,0.460,Hồ hình ngôi sao nằm trong vòng tròn bao,B,approximate,provisional,"Nguồn xác nhận là hồ sen hình ngôi sao 5 cánh, giữa có đài sen trắng cao 6,5 m (sơ đồ tô xanh lục) → vẽ nước + đài sen [R3][R4]"
 3,A3_DEN_THO,Đền thờ cụ,A,temple,986,820,118,97,0.514,0.554,"Biểu tượng bát giác nhiều cạnh, cạnh một WC nhỏ",B,approximate,provisional,Mặt bằng bát giác; chỉ dựng đúng hình dạng này
 4,A4_NHA_KIENG,Nhà kiểng,A,building,851,805,101,95,0.441,0.543,Nhãn xoay dọc ở mép trái sân Hồ Sao,B,approximate,provisional,"Chưa có footprint rõ; chỉ ghi nhãn, chờ xác minh"
 5,A5_CONG_MO,Cổng vào mộ cụ,A,gate,915,872,109,104,0.476,0.591,Chữ nhật cam trên mép dưới mảng xanh,B,approximate,provisional,Cửa vào từ trục ngang phía dưới
@@ -17,8 +17,8 @@
 16,C3_DIEM_DUNG_CHAN,Điểm dừng chân (ô xanh),C,service,637,1136,74,137,0.324,0.778,Ô vuông xanh dương,B,approximate,provisional,Dịch vụ
 17,C4_QUAY_LUU_NIEM,Quầy lưu niệm (trái),C,service,637,1170,74,141,0.324,0.803,Ô vuông hồng nhạt,B,approximate,provisional,Dịch vụ
 18,G1_CONG_1,Cổng số 1,C,gate,688,1222,81,147,0.352,0.839,Chữ nhật cam ở mép dưới trái,B,approximate,provisional,Giữ đúng số 1; lối bộ có mũi tên đi lên
-19,D1_HO_SEN,Hồ Sen,D,water,815,1010,96,121,0.421,0.689,"Mảng nước xanh nhạt hình đa giác, có cây rải quanh",B,approximate,provisional,Giữ đường bờ; cây là lớp phụ
-20,D2_NHA_SAN,Nhà sàn,D,building,943,1002,112,120,0.491,0.683,Khối lưới đen cạnh lối vòng,B,approximate,provisional,"Mô hình nhà sàn: sprite riêng (sàn nâng, hàng cột, mái)"
+19,D1_HO_SEN,Hồ Sen,D,water,815,1010,96,121,0.421,0.689,"Mảng nước xanh nhạt hình đa giác, có cây rải quanh",B,approximate,provisional,"Tương ứng ""Ao sen Đồng Tháp"" cạnh Nhà sàn (khởi công 19/5/1990) [R5][R6]"
+20,D2_NHA_SAN,Nhà sàn,D,building,943,1002,112,120,0.491,0.683,Khối lưới đen cạnh lối vòng,B,approximate,provisional,"Mô hình Nhà sàn Bác Hồ gỗ, bên ao sen; footprint theo sơ đồ, vẽ màu gỗ [R5][R6]"
 21,D3_QUAY_LUU_NIEM,Quầy lưu niệm (cạnh Nhà sàn),D,service,1027,935,123,111,0.536,0.636,Ô vuông hồng nhạt,B,approximate,provisional,Dịch vụ
 22,D4_BAN_QUAN_LY,Ban quản lý khu di tích,D,building,916,1228,109,148,0.476,0.844,Khối đen có nhiều ô,B,approximate,provisional,Footprint rõ trên sơ đồ
 23,D5_LOI_BO,Lối bộ xanh (mũi tên đi lên),D,path,686,1013,80,121,0.351,0.691,"Dải xanh lá hẹp, mũi tên vàng",B,approximate,provisional,Trục từ Cổng số 1 đi lên
@@ -26,24 +26,24 @@
 25,E1_BAI_XE,Bãi xe,E,service,1173,1262,141,152,0.616,0.868,Vùng viền trắng cạnh dải nước hẹp,B,approximate,provisional,Chưa có footprint rõ
 26,E2_DIEM_DUNG_CHAN,Điểm dừng chân (cạnh bãi xe),E,service,1105,1213,133,146,0.579,0.833,Ô vuông xanh dương,B,approximate,provisional,Dịch vụ
 27,E3_QUAY_LUU_NIEM,Quầy lưu niệm (gần Cổng 2),E,service,1310,1235,158,149,0.690,0.849,Ô vuông hồng nhạt,B,approximate,provisional,Khớp với dãy ki-ốt trong ảnh thực địa (cần xác minh)
-28,E4_NHA_CHU_DINH_1,Nhà chữ đinh 1,E,house,1421,1259,172,152,0.751,0.866,"Khối lưới đen, phần nhô hình chữ đinh",B,approximate,provisional,Nhà truyền thống gần Cổng số 2
+28,E4_NHA_CHU_DINH_1,Nhà chữ đinh 1,E,house,1421,1259,172,152,0.751,0.866,"Khối lưới đen, phần nhô hình chữ đinh",B,approximate,provisional,"Nhà truyền thống gần Cổng số 2 · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
 29,E5_WC,WC (gần Cổng 2),E,service,1337,1310,162,158,0.705,0.902,Ô vuông đen nhỏ,B,approximate,provisional,Dịch vụ
-30,F1_NHA_NOC_NGUA_1,Nhà nọc ngựa 1,F,house,1126,817,135,97,0.590,0.552,Khối lưới đen gần kênh,B,approximate,provisional,Nhà truyền thống
+30,F1_NHA_NOC_NGUA_1,Nhà nọc ngựa 1,F,house,1126,817,135,97,0.590,0.552,Khối lưới đen gần kênh,B,approximate,provisional,"Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
 31,F2_TUONG_CU,Tượng cụ,F,statue,1166,866,140,103,0.612,0.587,Vòng tròn đồng tâm có tượng,B,approximate,provisional,Điểm nhấn trục; giữ nguyên dạng tròn
 32,F3_DIEM_DUNG_CHAN,Điểm dừng chân (2 ô xanh),F,service,1371,922,166,110,0.723,0.626,2 ô vuông xanh dương xếp dọc,B,approximate,provisional,Dịch vụ
-33,F4_NHA_BAT_DAN_1,Nhà bát dần 1,F,house,1110,963,133,115,0.582,0.656,Khối lưới đen cạnh ao nhỏ,B,approximate,provisional,Nhà truyền thống
-34,F5_NHA_ONG_NAM_GIAO,Nhà ông Năm Giáo,F,house,1194,1069,144,128,0.627,0.731,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
-35,F6_NHA_CU_SAC,Nhà Cụ Sắc,F,house,1300,1092,157,131,0.685,0.747,Khối lưới đen,B,approximate,provisional,Nhà trong làng; chưa xác minh có phải nhà trưng bày
-36,F7_NHA_CHU_DINH_2,Nhà chữ đinh 2,F,house,1387,1030,168,123,0.732,0.703,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
-37,F8_NHA_BAT_DAN_2,Nhà bát dần 2,F,house,1473,1067,179,128,0.779,0.729,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
-38,F9_NHA_ONG_CA_NHI_NGUU,Nhà ông Cả Nhị Ngưu,F,house,1373,1133,166,136,0.724,0.776,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
-39,F10_NHA_TREN_COC_2,Nhà trên cọc 2,F,house,1538,949,187,113,0.814,0.646,Khối lưới đen,B,approximate,provisional,"Nhà trên cọc (nhãn nhỏ, đọc lại khi có ảnh nét hơn)"
+33,F4_NHA_BAT_DAN_1,Nhà bát dần 1,F,house,1110,963,133,115,0.582,0.656,Khối lưới đen cạnh ao nhỏ,B,approximate,provisional,"Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+34,F5_NHA_ONG_NAM_GIAO,Nhà ông Năm Giáo,F,house,1194,1069,144,128,0.627,0.731,Khối lưới đen,B,approximate,provisional,"Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+35,F6_NHA_CU_SAC,Nhà Cụ Sắc,F,house,1300,1092,157,131,0.685,0.747,Khối lưới đen,B,approximate,provisional,"Nhà trong làng; chưa xác minh có phải nhà trưng bày · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+36,F7_NHA_CHU_DINH_2,Nhà chữ đinh 2,F,house,1387,1030,168,123,0.732,0.703,Khối lưới đen,B,approximate,provisional,"Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+37,F8_NHA_BAT_DAN_2,Nhà bát dần 2,F,house,1473,1067,179,128,0.779,0.729,Khối lưới đen,B,approximate,provisional,"Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+38,F9_NHA_ONG_CA_NHI_NGUU,Nhà ông Cả Nhị Ngưu,F,house,1373,1133,166,136,0.724,0.776,Khối lưới đen,B,approximate,provisional,"Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
+39,F10_NHA_TREN_COC_2,Nhà trên cọc 2,F,house,1538,949,187,113,0.814,0.646,Khối lưới đen,B,approximate,provisional,"Nhà trên cọc (nhãn nhỏ, đọc lại khi có ảnh nét hơn) · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
 40,F11_DIEM_DUNG_CHAN,Điểm dừng chân (góc trên phải),F,service,1460,876,177,104,0.772,0.594,Ô vuông xanh dương,B,approximate,provisional,Dịch vụ
 41,F12_WC,WC (phải),F,service,1663,977,202,117,0.882,0.665,Ô vuông đen,B,approximate,provisional,Dịch vụ
 42,F13_KHU_AM_THUC,Khu ẩm thực,F,service,1613,1028,196,123,0.855,0.702,Ô chữ nhật xanh dương lớn,B,approximate,provisional,Dịch vụ
-43,F14_NHA_TREN_COC_1,Nhà trên cọc 1,F,house,1579,1112,192,134,0.836,0.761,Khối lưới đen,B,approximate,provisional,Nhà trên cọc
+43,F14_NHA_TREN_COC_1,Nhà trên cọc 1,F,house,1579,1112,192,134,0.836,0.761,Khối lưới đen,B,approximate,provisional,"Nhà trên cọc · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
 44,F15_CAFE_HOA_AN,Cafe Hòa An,F,service,1543,1226,187,148,0.817,0.842,Ô nhỏ đen cạnh Cổng khu ẩm thực,B,approximate,provisional,Dịch vụ
-45,F16_NHA_NOC_NGUA_2,Nhà nọc ngựa 2,F,house,1504,1256,183,152,0.796,0.864,Khối lưới đen,B,approximate,provisional,Nhà truyền thống
+45,F16_NHA_NOC_NGUA_2,Nhà nọc ngựa 2,F,house,1504,1256,183,152,0.796,0.864,Khối lưới đen,B,approximate,provisional,"Nhà truyền thống · Làng Hòa An xưa: nhà gỗ Nam Bộ (chữ đinh, bát dần, nọc ngựa, nhà sàn) — vẽ màu gỗ, chưa rõ mái lá/ngói [R7]"
 46,F17_KENH,Kênh nước uốn quanh làng,F,water,1111,660,133,77,0.582,0.440,"Dải xanh nhạt uốn cong, chạy từ phía trên xuống rồi vòng quanh cụm nhà",B,approximate,provisional,Trace liên tục; không làm thẳng
 47,G3_CONG_3,Cổng số 3,A,gate,777,521,92,60,0.401,0.342,Chữ nhật cam ở cạnh trên trái của mảng xanh,B,approximate,provisional,Có mũi tên vàng hướng xe khách vào
 48,GX_CONG_KHONG_NHAN,Cổng/cầu chưa có nhãn,F,gate,1069,883,128,105,0.559,0.599,"Chữ nhật cam trên kênh, nối trục ngang sang làng",B,approximate,provisional,Không có nhãn trên sơ đồ; không tự đặt tên

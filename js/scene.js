@@ -3,16 +3,21 @@ class G extends Phaser.Scene{create(){const sc=this;
 const mk=(k,w,h,f)=>{const g=sc.make.graphics({add:false});f((c,x,y,a,b,al=1)=>{g.fillStyle(c,al);g.fillRect(x,y,a,b)},w,h);g.generateTexture(k,w,h);g.destroy()};
 const disc=(P,cx,cy,r,c)=>{for(let y=-r;y<=r;y++){const d=Math.floor(Math.sqrt(r*r-y*y));P(c,cx-d,cy+y,d*2+1,1)}};
 const BS={0:[0x78b347,0x72ac43,0x80ba4e],4:[0x5f9d3c,0x66a640,0x5a9638],1:[0xc7a26a,0xbf9a62,0xcfab74],2:[0x4fa8cb,0x4aa0c4,0x56b0d2],3:[0xd8743a],5:[0xd0c9b6],6:[0x9fae7e,0x97a876],7:[0x9b6a3a],8:[0xc4c6c1,0xbdbfba],9:[0x8a8c8b,0x848684],10:[0xdcdcd4]};
-mk('map',W*T,H*T,P=>{for(let y=0;y<H;y++)for(let x=0;x<W;x++){const t=M[y][x],X=x*T,Y=y*T,r=()=>R()*14|0;P(pick(BS[t]),X,Y,T,T);
- if(t==0||t==4){for(let i=0;i<4;i++)P(R()<.5?0x5a9638:0x95cd5c,X+r(),Y+r(),1,2);if(R()<.05)P(pick([0xffffff,0xf7d84a,0xf08fb0]),X+r(),Y+r(),2,2);if(t==4&&y%2)P(0xffffff,X,Y,T,T,.05)}
- if(t==1){for(let i=0;i<3;i++)P(R()<.5?0xa98350:0xe0c28e,X+r(),Y+r(),2,1)}
- if(t==5){P(0xb5ad98,X,Y+15,T,1);P(0xb5ad98,X+15,Y,1,T);P(0xe8e2d2,X,Y,T,1)}
- if(t==2&&R()<.3)P(0x8fd2e8,X+r()%10,Y+r(),5,1,.6);
- if(t==3){P(0xe99055,X,Y,T,3);P(0xa8512a,X,Y+12,T,4);P(0xb85d2e,X+(y%2?4:10),Y+3,1,9)}
- if(t==6){for(let i=0;i<3;i++)P(0x7f9060,X+r(),Y+r(),2,2)}
- if(t==7){for(let i=0;i<4;i++)P(0x7d5229,X,Y+i*4+3,T,1);P(0x6a4422,X,Y,1,T)}
- if(t==8&&R()<.2)P(0xa9aba6,X+r(),Y+r(),3,1);if(t==9&&R()<.12)P(0xf2f2f2,X+r(),Y+r(),4,1,.35);
- if([0,4,1,8,5].includes(t))[[0,-1,X,Y,T,2],[0,1,X,Y+14,T,2],[-1,0,X,Y,2,T],[1,0,X+14,Y,2,T]].forEach(([a,b,...q])=>{if(M[y+b]?.[x+a]==2)P(0x9b8452,...q)})}});
+{const VW=MAPDATA.VW,VH=MAPDATA.VH,CS=W*T/VW,off=document.createElement('canvas');off.width=VW;off.height=VH;const q=off.getContext('2d'),id=q.createImageData(VW,VH),hx=c=>[c>>16&255,c>>8&255,c&255];
+const PL={0:[0xdad7c8,0xd6d3c4,0xdedbcc],1:[0xf4f1e6,0xefece0],2:[0x3f3f46],3:[0x4ea9d6,0x49a2cf,0x57b3dc],4:[0x2f7f55,0x2b7850,0x34875b],5:[0xe2b246,0xd9a73c],6:[0xbfc2c4,0xbabdbf,0xc3c6c8],7:[0x70727a],8:[0xcdaa60],9:[0xb05c3a,0xa65234],10:[0xf3f1ea,0xe9e6dc],11:[0x9a6b3f,0x8f6238],12:[0x1f6a5c,0x226f60,0x1b5f53],13:[0x9aab6c,0x93a465,0xa2b274],14:[0x4a9a5f,0x5aa86b]};
+const at=(x,y)=>VG[y]?.[x];
+for(let y=0;y<VH;y++)for(let x=0;x<VW;x++){const k=VG[y][x];let c=pick(PL[k]);
+ const up=at(x,y-1),lf=at(x-1,y);
+ if(k==3&&(up!=3||lf!=3))c=0x8fd2ea;                       /* mép nước sáng */
+ if(k!=3&&(up==3||at(x,y+1)==3||lf==3||at(x+1,y)==3))c=k==5||k==8?0xb98a2e:0x9aa7a8; /* bờ */
+ if(k==5&&(at(x,y+1)==0||at(x,y+1)==6||at(x,y-1)==0||at(x,y-1)==6))c=0xb98a2e; /* viền lề vàng */
+ if(k==4&&((x+y)&3)==0)c=0x34875b;
+ if(k==9&&(y&3)==0)c=0x8f4426;
+ if(k==12&&((x*7+y*13)%11)<2)c=0x3f9a7a;                 /* lá sen */
+ if(k==14&&at(x-1,y)!=14&&at(x,y-1)!=14)c=0x2f7a4a;
+ if(k==11&&(y%3)==0)c=0x7a5230;
+ const[r,g,b]=hx(c),i=(y*VW+x)*4;id.data[i]=r;id.data[i+1]=g;id.data[i+2]=b;id.data[i+3]=255}
+q.putImageData(id,0,0);const cv=sc.textures.createCanvas('map',W*T,H*T),cx=cv.getContext();cx.imageSmoothingEnabled=false;cx.drawImage(off,0,0,W*T,H*T);cv.refresh()}
 sc.add.image(0,0,'map').setOrigin(0).setDepth(0);
 const house=(k,w,h,r1,r2,wl)=>mk(k,w*T,h*T,(P,Wd,Hd)=>{const rh=Hd*.6|0;P(0,2,Hd-3,Wd-2,3,.2);P(wl,0,rh-6,Wd,Hd-rh+6);P(0,0,Hd-4,Wd,4,.15);
  for(let r=0;r<rh;r+=4){P(r%8?r1:r2,0,r,Wd,3);P(0,0,r+3,Wd,1,.25)}P(0xffffff,0,0,Wd,2,.25);P(0,0,rh-2,Wd,3,.3);
@@ -45,13 +50,9 @@ mk('eng',14,10,P=>{P(0,1,9,12,1,.3);P(0x4a5a4a,1,3,10,6);P(0x6a7a6a,1,3,10,2);P(
 const ob=(k,cx,cy,m=1)=>{const f=sc.textures.get(k).getSourceImage(),w=f.width/T*SS*m,h=f.height/T*SS*m,x0=cx*Q-w/2,y0=cy*Q-h/2;sc.add.image(x0*T,(y0+h)*T,k).setOrigin(0,1).setScale(SS*m).setDepth((y0+h)*T);for(let i=0;i<Math.ceil(w);i++)for(let j=0;j<Math.ceil(h);j++){const X=Math.floor(x0)+i,Y=Math.floor(y0)+j;if(B[Y]?.[X]===0)B[Y][X]=1}};
 const lab=(x,y,t,c='#fff')=>sc.add.text(x*Q*T,y*Q*T,t,{fontFamily:"'VT323','Be Vietnam Pro',monospace",fontSize:'8px',color:c,stroke:'#3b2412',strokeThickness:2,align:'center'}).setOrigin(.5).setResolution(4).setDepth(9998);
 /* Công trình: đặt theo 51 hạng mục của sơ đồ chuẩn (features.js), toạ độ px sơ đồ đã cắt khung — chỉ vẽ hình dáng, không thêm công trình ngoài sơ đồ */
-FT.forEach(f=>{const id=f[1],x=f[7],y=f[8],S=SPR[id],MU=MULTI[id];if(S)ob(S[0],x,y,S[1]);if(MU)MU[1].forEach(([dx,dy])=>ob(MU[0],x+dx,y+dy));
+FT.forEach(f=>{const id=f[1],x=f[7],y=f[8],S=SPR[id],MU=MULTI[id];if(S&&!['exh','dt','san','bql','th','th2','stat'].includes(S[0]))ob(S[0],x,y,S[1]);if(MU)MU[1].forEach(([dx,dy])=>ob(MU[0],x+dx,y+dy));
  if(['A4_NHA_KIENG','B2_DIEU_KHAC_1','B3_DIEU_KHAC_2'].includes(id))sc.add.star(x*Q*T,y*Q*T,4,2.2,5.5,0xffd27a).setStrokeStyle(1,0x3b2412).setDepth(5)});
-const tb=FID.A1_MO_CU;sc.add.image(tb[7]*Q*T,(tb[8]+30)*Q*T,'tomb').setOrigin(.5,1).setScale(1.9).setDepth((tb[8]+30)*Q*T);for(let y=63;y<=69;y++)for(let x=104;x<=113;x++)B[y][x]=1;
-CHUA.forEach(([c,r,w,h])=>{sc.add.rectangle(c*T,r*T,w*T,h*T,0xe9e5d8).setOrigin(0).setStrokeStyle(2,0x3b3a36).setDepth(3);for(let y=r;y<r+h;y++)for(let x=c;x<c+w;x++)B[y][x]=1});
-sc.add.rectangle(115*T,60*T,8*T,15*T).setOrigin(0).setStrokeStyle(2,0xe9e5d8).setDepth(3);sc.add.rectangle(116*T,61*T,6*T,13*T).setOrigin(0).setStrokeStyle(1,0xe9e5d8).setDepth(3);
-sc.add.polygon(0,0,[[162.5,121],[165,116],[167,118],[165,124]].map(([x,y])=>[x*T,y*T]).flat(),0,0).setOrigin(0).setStrokeStyle(2,0xffffff).setDepth(3);
-sc.add.rectangle(141*T,148*T,9*T,8*T).setOrigin(0).setStrokeStyle(2,0xffffff).setDepth(3);
+/* Mộ cụ, Chùa Hòa Long, Đền thờ, nhà trưng bày, nhà trong làng: lấy đúng footprint nét đen + mái tô từ sơ đồ (lưới V) — không thêm sprite mô tả kiến trúc */
 LBL.filter(l=>!HIDE.has(l[7])||PSK.cfg.debug).forEach(([x,y,t,c,,,,id])=>lab(x,y,t,PSK.cfg.debug&&VERIFY.has(id)?'#ffb4a8':c||'#fff'));
 GATES.forEach(([gx,gy,n,a,b,x,y])=>{sc.add.image(x*Q*T,y*Q*T,'rg').setDepth(y*Q*T-1);if(n)lab(x,y-14,n,'#ffd27a')});
 const tree=(x,y,k)=>{if(B[y]?.[x]!==0)return;B[y][x]=1;sc.add.image((x+.5)*T,(y+1)*T,k).setOrigin(.5,1).setDepth((y+1)*T)};

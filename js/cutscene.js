@@ -70,32 +70,68 @@ function flareAt(wx,wy,a){if(a<=0)return;x.save();x.setTransform(1,0,0,1,0,0);x.
  [[.5,.06,'255,170,100'],[1.35,.09,'190,215,255'],[1.8,.05,'255,205,140']].forEach(([k,r,col])=>glowS(wx+(W/2-wx)*k,wy+(H/2-wy)*k,H*r*2.4,col,.16*a));x.restore()}
 
 /* ---------- Thế giới: SÔNG ---------- */
+/* Nước chuyển động: vẽ lớp nước theo từng dải ngang 1,5 px thế giới, mỗi dải lệch ngang theo sóng (càng gần càng lắc mạnh);
+   phản chiếu (bờ xa, thuyền, người chèo) cũng được lật + làm gợn theo cùng kiểu → mặt sông "thở" thay vì là một tấm ảnh. */
+function waveBlit(L,q,cam,y0,y1,T,amp=1,al=1){if(!L)return;const t=tf(q,cam),K=CA.K,st=1.5;x.globalAlpha=al;
+ for(let wy=y0;wy<y1;wy+=st){const k=(wy-y0)/(y1-y0),a=(.1+1.3*k)*amp,dx=Math.sin(T*1.1+wy*.55)*a+Math.sin(T*.55+wy*.21)*a*.7;
+  x.drawImage(L.cv,0,(wy-L.oy)*K,L.cv.width,st*K,W/2+(L.ox+dx-t.cx)*t.s,H/2+shY+(wy-t.cy)*t.s,L.w*t.s,st*t.s+.6)}x.globalAlpha=1}
+function reflectL(L,q,cam,axis,depth,T,al,xa,xb,dxs=0){if(!L)return;const t=tf(q,cam),K=CA.K,st=1.5;
+ for(let wy=axis;wy<axis+depth;wy+=st){const k=(wy-axis)/depth,sy=2*axis-wy-st,dx=Math.sin(T*1.5+wy*.9)*(.25+1.5*k)+dxs;x.globalAlpha=al*(1-k)*(1-k*.4);
+  x.drawImage(L.cv,xa*K,(sy-L.oy)*K,(xb-xa)*K,st*K,W/2+(L.ox+xa+dx-t.cx)*t.s,H/2+shY+(wy-t.cy)*t.s,(xb-xa)*t.s,st*t.s+.6)}x.globalAlpha=1}
+/* tia nắng xuyên khói: các nan quạt mảnh toả từ mặt trời, thở chậm */
+function rays(wx,wy,e,T){x.save();x.setTransform(1,0,0,1,0,0);x.globalCompositeOperation='lighter';x.translate(wx,wy);
+ for(let i=0;i<11;i++){const ang=-Math.PI/2+(i-5)*.2+Math.sin(T*.12+i*1.7)*.03,w=.018+.02*hh(i+3),a=(.035+.05*hh(i+7))*(.6+.4*Math.sin(T*.4+i*2.1))*(1+e*1.3),L=Math.hypot(W,H)*1.1;
+  const g=x.createLinearGradient(0,0,Math.cos(ang)*L,Math.sin(ang)*L);g.addColorStop(0,`rgba(255,214,150,${a})`);g.addColorStop(1,'rgba(255,214,150,0)');x.fillStyle=g;x.beginPath();x.moveTo(0,0);x.lineTo(Math.cos(ang-w)*L,Math.sin(ang-w)*L);x.lineTo(Math.cos(ang+w)*L,Math.sin(ang+w)*L);x.closePath();x.fill()}x.restore()}
+
 function dRiver(sh,cam,u,T){
  x.fillStyle='#0b1022';x.fillRect(0,0,W,H);
  const sky=CA.img('river_sky'),far=CA.img('river_far'),wat=CA.img('river_water'),bts=CA.img('river_boats'),fore=CA.img('river_fore'),rw=CA.strip('rower',8),e=sh.sun?sh.sun(u):0;
- blit(sky,.7,cam);{const[sxp,syp,s]=wpos(.7,cam,200,94);glowS(sxp,syp,s*(60+100*e),'255,205,130',.2+.5*e)}
+ blit(sky,.7,cam);{const[sxp,syp,s]=wpos(.7,cam,200,94);glowS(sxp,syp,s*(60+100*e),'255,205,130',.2+.5*e);rays(sxp,syp,e,T)}
  blit(far,.8,cam);
- /* sương mỏng ở chân trời */
- place(.85,cam);{x.globalCompositeOperation='lighter';const g=x.createLinearGradient(0,92,0,120);g.addColorStop(0,'rgba(255,190,130,0)');g.addColorStop(.45,'rgba(255,190,130,.18)');g.addColorStop(1,'rgba(255,190,130,0)');x.fillStyle=g;x.fillRect(-80,92,480,28);x.globalCompositeOperation='source-over'}idt();
- blit(wat,.9,cam);
- /* ánh nắng lấp lánh trên mặt nước (vị trí liên tục, không làm tròn) */
+ /* sương mỏng ở chân trời, trôi chậm theo gió */
+ place(.85,cam);{x.globalCompositeOperation='lighter';const g=x.createLinearGradient(0,92,0,120);g.addColorStop(0,'rgba(255,190,130,0)');g.addColorStop(.45,'rgba(255,190,130,.18)');g.addColorStop(1,'rgba(255,190,130,0)');x.fillStyle=g;x.fillRect(-80,92,480,28);
+  for(let i=0;i<4;i++){const mx=((i*110+T*(2.2+i*.7))%520)-100,g2=x.createRadialGradient(mx,100+i*3,0,mx,100+i*3,70);g2.addColorStop(0,'rgba(255,205,160,.09)');g2.addColorStop(1,'rgba(255,205,160,0)');x.fillStyle=g2;x.fillRect(mx-70,84,140,40)}x.globalCompositeOperation='source-over'}idt();
+ /* nước: dải sóng + bóng bờ xa lật ngược */
+ waveBlit(wat,.9,cam,100,180,T);
+ reflectL(far,.9,cam,100,20,T,.5,0,320);
+ /* dòng chảy: vệt bọt sáng trôi ngang, gần thì nhanh – xa thì chậm (thị sai) */
  place(.9,cam);x.globalCompositeOperation='lighter';
- for(let i=0;i<70;i++){const y=103+hh(i)*74,k=(y-100)/80,xx=200+(hh(i+9)-.5)*(26+k*120)+Math.sin(T*.5+i)*1.6,len=5+hh(i+2)*(10+k*34),a=(.08+.4*hh(i+3))*Math.pow(.5+.5*Math.sin(T*(1.1+hh(i)*1.4)+i*5),2)*(1-k*.4)*(1+e);
+ for(let i=0;i<46;i++){const k=Math.pow(hh(i+30),.8),y=102+k*76,xx=(((hh(i)*380-T*(2+k*13))%400)+400)%400-40,len=6+k*34+hh(i+4)*10,a=(.05+.13*hh(i+5))*(.5+.5*Math.sin(T*.9+i*3));x.fillStyle=`rgba(255,226,180,${a})`;x.fillRect(xx,y,len,.45+k*.6)}
+ /* ánh nắng lấp lánh trên mặt nước (vị trí liên tục, không làm tròn) */
+ for(let i=0;i<80;i++){const y=103+hh(i)*74,k=(y-100)/80,xx=200+(hh(i+9)-.5)*(26+k*120)+Math.sin(T*.5+i)*1.6+Math.sin(T*1.3+y)*.8*k,len=5+hh(i+2)*(10+k*34),a=(.08+.4*hh(i+3))*Math.pow(.5+.5*Math.sin(T*(1.1+hh(i)*1.4)+i*5),2)*(1-k*.4)*(1+e);
   x.fillStyle=`rgba(255,214,150,${a})`;x.fillRect(xx-len/2,y,len,.55+hh(i+8)*.8)}
  x.globalCompositeOperation='source-over';idt();
- blit(bts,1,cam,1,Math.sin(T*.33)*1.4,Math.sin(T*.9)*.12);
- /* người chèo xuồng (hoạt hoạ pxl, 8 khung) trôi chậm trên sông */
- if(rw){const[wx,wy,s]=wpos(1,cam,150+Math.sin(T*.3)*3,84+Math.sin(T*.9)*.35),fr=Math.floor(T*6)%rw.n;x.drawImage(rw.cv,fr*rw.fw*CA.K,0,rw.fw*CA.K,rw.fh*CA.K,wx,wy,rw.fw*s,rw.fh*s)}
- /* cò bay */
+ /* thuyền + bóng thuyền soi nước (cùng nhịp lắc) */
+ const bdx=Math.sin(T*.33)*1.4,bdy=Math.sin(T*.9)*.12;
+ reflectL(bts,1,cam,129,22,T,.4,40,130,bdx);
+ blit(bts,1,cam,1,bdx,bdy);
+ /* người chèo xuồng: hoạt hoạ pxl 8 khung, bóng đổ xuống nước, sóng tròn lan ra mỗi nhát chèo, vệt nước sau xuồng */
+ if(rw){const rx=150+Math.sin(T*.3)*3,ry=84+Math.sin(T*.9)*.35,[wx,wy,s]=wpos(1,cam,rx,ry),fr=Math.floor(T*6)%rw.n,K=CA.K,fw=rw.fw;
+  for(let i=0;i<20;i++){const dx=Math.sin(T*1.5+i*.9)*(.2+i*.06);x.globalAlpha=.34*(1-i/20);x.drawImage(rw.cv,fr*fw*K,(33-i)*K,fw*K,K,wx+dx*s,wy+(33+i)*s,fw*s,s+.6)}x.globalAlpha=1;
+  x.drawImage(rw.cv,fr*fw*K,0,fw*K,rw.fh*K,wx,wy,fw*s,rw.fh*s);
+  const sc=T*6-2,idx=Math.floor(sc/8),T0=(idx*8+2)/6,age=T-T0;
+  if(age>=0&&age<1.5){const rx0=150+Math.sin(T0*.3)*3+55,[px,py,ss]=wpos(1,cam,rx0,116.5);x.save();x.setTransform(1,0,0,1,0,0);x.globalCompositeOperation='lighter';x.lineWidth=Math.max(1,ss*.3);
+   for(let n=0;n<3;n++){const ag=age-n*.18;if(ag<=0)continue;x.strokeStyle=`rgba(255,226,175,${.34*(1-ag/1.5)})`;x.beginPath();x.ellipse(px,py,ag*20*ss,ag*4.2*ss,0,0,7);x.stroke()}x.restore()}
+  place(1,cam);x.globalCompositeOperation='lighter';for(let i=0;i<14;i++){const k=i/14,xx=rx-2-i*3.2-Math.sin(T*2+i)*.6,a=.16*(1-k);x.fillStyle=`rgba(255,226,175,${a})`;x.fillRect(xx,116+Math.sin(T*1.7+i*.8)*.6+k*1.2,2.4+k*2.6,.55)}x.globalCompositeOperation='source-over';idt()}
+ /* cò bay: vài đàn nhỏ, vỗ cánh lệch pha */
  place(.85,cam);x.strokeStyle='#0a0b16';x.lineWidth=.9;x.lineCap='round';
  for(let i=0;i<8;i++){const bx=(((i*53-T*(4+hh(i)*4))%380)+380)%380-30,by=24+hh(i+3)*40+Math.sin(T*.6+i)*2.5,w=Math.sin(T*7+i*2)*2.2;x.beginPath();x.moveTo(bx-4.5,by+w);x.lineTo(bx,by);x.lineTo(bx+4.5,by+w);x.stroke()}idt();
+ /* hạt bụi / phấn hoa bay trong nắng (gần máy hơn, bay chậm lên trên) */
+ place(1.25,cam);x.globalCompositeOperation='lighter';for(let i=0;i<46;i++){const px=((hh(i)*360-T*(2+hh(i+2)*3)+Math.sin(T*.4+i)*8)%360+360)%360-20,py=((hh(i+5)*200-T*(1.5+hh(i+8)*2))%200+200)%200-10,a=.5*Math.pow(.5+.5*Math.sin(T*(.8+hh(i+9))+i*4),2);x.fillStyle=`rgba(255,226,170,${.5*a})`;x.fillRect(px,py,.8+hh(i+1)*.9,.8+hh(i+1)*.9)}x.globalCompositeOperation='source-over';idt();
  /* tàu dừa nước ở hai mép khung (vẽ bằng pxl) + lau sậy rất gần, mờ nhẹ tạo chiều sâu */
  blit(fore,1.45,cam,1,Math.sin(T*.5)*.7,Math.sin(T*.37)*.25);
  place(2.1,cam);x.strokeStyle='#04050b';x.lineCap='round';x.shadowColor='#04050b';x.shadowBlur=14;
  for(let i=0;i<14;i++){const bx=i*24+hh(i)*9-8,h=22+hh(i+4)*34,sw=Math.sin(T*.7+i*1.7)*2.4+Math.sin(T*.31+i)*1.2,lean=(hh(i+2)-.5)*14;x.lineWidth=.9+hh(i+7)*.9;x.beginPath();x.moveTo(bx,196);x.quadraticCurveTo(bx+sw*.3+lean*.3,196-h*.6,bx+lean+sw,196-h);x.stroke()}
  x.shadowBlur=0;idt();
  if(sh.flare)flareAt(...wpos(.7,cam,200,94).slice(0,2),sh.flare(u));
+ /* dòng chữ mở đầu kiểu phim: hiện – giữ – tan */
+ if(sh===SH.riv0)estab(u)
 }
+function estab(u){const aa=ez(cl((u-1.1)/1.3))*(1-ez(cl((u-5.6)/1.1)));if(aa<=0)return;
+ x.save();x.setTransform(1,0,0,1,0,0);x.globalAlpha=aa;x.fillStyle='#f3e6bd';x.textBaseline='middle';x.textAlign='left';const fs=Math.max(22,H*.052),X=W*.075,Y=H*.74;
+ try{x.letterSpacing=(fs*.32)+'px'}catch(e){}x.font=`400 ${fs}px "VT323","Be Vietnam Pro",monospace`;x.shadowColor='rgba(0,0,0,.6)';x.shadowBlur=8;
+ x.fillText('ĐỒNG BẰNG SÔNG CỬU LONG',X,Y);x.shadowBlur=0;x.globalAlpha=aa*.7;x.fillStyle='#e0b25a';x.fillRect(X,Y+fs*.8,Math.min(W*.3,x.measureText('ĐỒNG BẰNG SÔNG CỬU LONG').width)*(.4+.6*ez(cl((u-1.3)/1.6))),Math.max(1,H*.002));
+ try{x.letterSpacing=(fs*.2)+'px'}catch(e){}x.font=`400 ${fs*.62}px "VT323","Be Vietnam Pro",monospace`;x.fillStyle='#e8d8a8';x.fillText('HOÀNG HÔN · MÙA NƯỚC NỔI',X,Y+fs*1.55);x.restore()}
 
 /* ---------- Thế giới: THƯ VIỆN ---------- */
 function shafts(cam,T,I,feather){place(.86,cam);x.globalCompositeOperation='lighter';
@@ -175,9 +211,9 @@ function dGate(sh,cam,u,T){x.fillStyle='#0b0f22';x.fillRect(0,0,W,H);
  {const[a,b,s]=wpos(.82,cam,150,106);glowS(a,b,s*14,'255,214,150',.3);const[a2,b2,s2]=wpos(.82,cam,172,108);glowS(a2,b2,s2*12,'255,214,150',.28)}   /* đèn sân phát sáng lúc chạng vạng */
  blit(CA.img('gate_gate'),1,cam);
  /* bảng tên: chữ vẽ bằng canvas để đủ dấu tiếng Việt (ễ, ắ, Ỉ…), vàng trên nền đỏ */
- {const[px,py,s]=wpos(1,cam,160,89.2);x.save();x.textAlign='center';x.textBaseline='middle';x.fillStyle='#ecc65c';x.shadowColor='rgba(0,0,0,.45)';x.shadowBlur=s*.6;
-  x.font=`500 ${s*1.9}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillText('KHU DI TÍCH CỤ PHÓ BẢNG',px,py-s*1.95);
-  x.font=`700 ${s*3.9}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillText('NGUYỄN SINH SẮC',px,py+s*2.0);x.restore()}
+ {const[px,py,s]=wpos(1,cam,160,91.6);x.save();x.textAlign='center';x.textBaseline='middle';x.fillStyle='#ecc65c';x.shadowColor='rgba(0,0,0,.5)';x.shadowBlur=s*.5;try{x.letterSpacing=(s*.12)+'px'}catch(e){}
+  x.font=`500 ${s*1.9}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillText('KHU DI TÍCH CỤ PHÓ BẢNG',px,py-s*3.3);
+  x.font=`700 ${s*3.9}px "Be Vietnam Pro","Segoe UI",Arial,sans-serif`;x.fillText('NGUYỄN SINH SẮC',px,py+s*1.8);x.restore()}
  blit(CA.img('gate_ground'),1,cam);blit(CA.img('gate_people'),1,cam,1,Math.sin(T*.7)*.12,0);
  /* ánh sáng ấm hắt lên sân + đom đóm */
  place(1.04,cam);x.globalCompositeOperation='lighter';
@@ -250,7 +286,7 @@ const SH={
 const cnt={an:0,hanh:0},INS=['book','box','notes','libEnd','door','libA','libW','libLow','libM','libOTS'];
 function cut(name,type='cut',d=.5,D=8){if(name===curN||!SH[name])return;
  if(type!=='cut'&&cur){sx.setTransform(1,0,0,1,0,0);sx.globalAlpha=1;sx.drawImage(wk,0,0);trans={type,t:TT,d}}else trans=null;
- cur=SH[name];curN=name;curT0=TT;curD=D}
+ cur=SH[name];curN=name;curT0=TT;curD=D;try{window.SFX&&SFX.cue&&SFX.cue(name,D,trans?type:'cut')}catch(e){console.warn('[sfx]',e)}}
 /* Mỗi câu thoại = một cú máy. Câu có gợi ý (mục thứ 4 trong prologue.js) dùng đúng cú máy đó; còn lại chọn theo người nói, xen kẽ hai góc để không lặp. */
 function onLine(sp,tx,hint){const b=(sp||'').replace(/\s*[–—-].*$/,'').trim();let n=hint&&SH[hint]?hint:null;
  if(!n){if(!b)n='libW';
@@ -271,6 +307,8 @@ function post(sh,T){
  const ba=sh.bloom??.5;fx.globalCompositeOperation='lighter';fx.globalAlpha=ba*(CA.FILT?.3:.12);fx.drawImage(bl[2].e,0,0,W,H);fx.globalAlpha=ba*(CA.FILT?.42:.16);fx.drawImage(bl[3].e,0,0,W,H);
  /* chỉnh màu: sáng ấm */
  fx.globalAlpha=1;fx.globalCompositeOperation='soft-light';fx.fillStyle='rgba(255,158,78,.17)';fx.fillRect(0,0,W,H);
+ /* phân sắc: ánh sáng ấm ở vùng sáng, bóng đổ ngả xanh lạnh ở nửa dưới khung */
+ {const g=fx.createLinearGradient(0,H*.45,0,H);g.addColorStop(0,'rgba(40,70,130,0)');g.addColorStop(1,'rgba(40,70,130,.2)');fx.globalCompositeOperation='soft-light';fx.fillStyle=g;fx.fillRect(0,0,W,H)}
  /* vignette */
  fx.globalCompositeOperation='source-over';const v=fx.createRadialGradient(W/2,H/2,Math.min(W,H)*.34,W/2,H/2,Math.hypot(W,H)*.56);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.62)');fx.fillStyle=v;fx.fillRect(0,0,W,H);
  /* hạt phim mịn, đổi 12 lần/giây */

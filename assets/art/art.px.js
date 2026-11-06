@@ -129,6 +129,18 @@ const lattice=(c,x,y)=>{c.rect(x-4,y,9,9,"x");c.box(x-4,y,9,9,"Q");c.px(x,y+4,"Q
 const dou=(c,cx,yT,yB)=>{c.poly([cx-12,yT,cx+12,yT,cx+7,yB,cx-7,yB],"q");c.line(cx-12,yT,cx-7,yB,"X");c.line(cx+12,yT,cx+7,yB,"X");
  c.rect(cx-9,yT+1,18,2,"x");c.rect(cx-5,yT+4,10,3,"Q");c.rect(cx-3,yT+7,6,yB-yT-7,"X");
  c.line(cx-12,yT+1,cx-3,yB,"Q");c.line(cx+12,yT+1,cx+3,yB,"Q");c.rect(cx-2,yB-1,4,2,"x")}
+/* cụm lá: hàng chục lá nhỏ rải trong hình elip dẹt, 3 tông (đáy tối – thân – mặt sáng hướng mặt trời), mép lởm chởm có cành con;
+   cols = [tối, thân, sáng]; d = hướng sáng (+1 sáng bên phải, -1 sáng bên trái) */
+const leafy=(c,r,cx,cy,rx,ry,n,d,cols=["T","t","G"])=>{const pts=[];for(let i=0;i<n;i++){const a=r()*6.283,m=Math.pow(r(),.6);pts.push([Math.round(cx+Math.cos(a)*m*rx),Math.round(cy+Math.sin(a)*m*ry),2+Math.floor(r()*3)])}
+ pts.sort((p,q)=>p[1]-q[1]);
+ for(let i=0;i<Math.round(n/5);i++){const a=r()*6.283,x0=cx+Math.cos(a)*rx*.9,y0=cy+Math.sin(a)*ry*.9;c.line(Math.round(x0),Math.round(y0),Math.round(x0+Math.cos(a)*7),Math.round(y0+Math.sin(a)*5+3),cols[0])}
+ pts.forEach(([x,y,rr])=>{c.circ(x,y+1,rr,cols[0]);c.circ(x,y,rr,cols[1])});
+ pts.forEach(([x,y,rr])=>{if(r()<.6)c.circ(x+d,y-1,Math.max(1,rr-1),cols[2])});
+ pts.forEach(([x,y,rr])=>{if(r()<.22){c.px(x+d*Math.max(1,rr-1),y-rr+1,"h");c.px(x+d*rr,y-rr+2,"o")}});
+ pts.forEach(([x,y,rr])=>{if(r()<.3)c.px(x-d*(rr-1),y+rr-1,cols[0])})}
+/* thân cây thon dần + vân vỏ + cành đỡ tán */
+const trunk=(c,r,x,yb,yt,w,lean,d)=>{const xt=x+lean;for(let y=yb;y>yt;y-=2){const k=(yb-y)/(yb-yt),xx=Math.round(x+(xt-x)*k),ww=Math.max(2,Math.round(w*(1-k*.55)));c.rect(xx-(ww>>1),y-2,ww,3,"T");c.px(xx+d*(ww>>1),y-1,"d")}
+ for(let i=0;i<24;i++){const y=yt+Math.floor(r()*(yb-yt)),k=(yb-y)/(yb-yt),xx=Math.round(x+(xt-x)*k);c.px(xx+Math.floor(r()*3)-1,y,r()<.5?"D":"t")}}
 const blob=(c,x,y,r,d)=>{c.circ(x,y+1,r,"T");c.circ(x,y,r,"t");c.circ(x+d*Math.round(r*.3),y-Math.round(r*.25),Math.max(2,Math.round(r*.62)),"G");if(r>5)c.circ(x+d*Math.round(r*.4),y-Math.round(r*.4),Math.round(r*.28),"g")}
 const person=(c,x,fy,h,hat)=>{const u=h/26;c.circ(x,fy-h+3*u,3*u,"T");if(hat)c.poly([x-4*u,fy-h+3*u,x,fy-h-2*u,x+4*u,fy-h+3*u],"T");c.poly([x-4*u,fy-h+7*u,x+4*u,fy-h+7*u,x+5*u,fy-4*u,x-5*u,fy-4*u],"T");c.rect(x-4*u,fy-4*u,3*u,4*u,"T");c.rect(x+1*u,fy-4*u,3*u,4*u,"T")}
 
@@ -142,13 +154,18 @@ scene("gate",{w:640,h:360,layers:true},
  layer("trees",
    rect(0,248,640,48,"E"),rect(0,248,640,3,"e"),
    (c)=>{const r=c.rng(19);
-     /* hàng cây thấp ở hậu cảnh, thấy qua cổng */
-     for(let i=0;i<70;i++)blob(c,170+Math.floor(r()*300),214+Math.floor(r()*28),4+Math.floor(r()*4),r()<.5?1:-1);
-     /* hai khối cây cao hai bên: thân thẳng + nhiều cụm lá ba tông, viền sáng phía mặt trời */
-     [[26,0],[118,0],[430,0],[560,0]].forEach(([x],k)=>{c.line(x,290,x+(k%2?6:-6),40,"T",9);c.line(x+(k%2?-2:2),180,x+(k%2?-34:34),120,"T",4);c.line(x+(k%2?2:-2),130,x+(k%2?36:-36),80,"T",3)});
-     const L=[],R=[];for(let i=0;i<330;i++)L.push([Math.floor(r()*(215-r()*40)),Math.floor(r()*250),5+Math.floor(r()*7)]);for(let i=0;i<330;i++)R.push([410+Math.floor(r()*(235)),Math.floor(r()*250),5+Math.floor(r()*7)]);
-     L.sort((a,b)=>a[1]-b[1]).forEach(([x,y,rr])=>blob(c,x,y,rr,1));R.sort((a,b)=>a[1]-b[1]).forEach(([x,y,rr])=>blob(c,x,y,rr,-1));
-     c.noise(0,0,230,260,"T",.04,4,"t");c.noise(400,0,240,260,"T",.04,6,"t")},
+     /* hậu cảnh xa: tán thấp, mờ trong khói chiều (xanh tím), thấy qua cổng */
+     for(let i=0;i<26;i++)leafy(c,r,176+Math.floor(r()*290),216+Math.floor(r()*18),16+Math.floor(r()*12),8+Math.floor(r()*5),16,r()<.5?1:-1,["T","t","G"]);
+     /* hàng cây cao thứ hai (nửa xa) hai bên, hơi nhạt hơn */
+     [[88,70,220],[160,40,200],[480,50,210],[560,20,200]].forEach(([x,top,bot])=>{trunk(c,r,x,bot+40,top+30,6,x<320?4:-4,x<320?1:-1);for(let j=0;j<7;j++)leafy(c,r,x+Math.floor((r()-.5)*70),top+Math.floor(r()*(bot-top)*.75),22+Math.floor(r()*14),14+Math.floor(r()*8),30,x<320?1:-1,["n","G","g"])});
+     /* cây cao lớn ở hai bên: thân thẳng, vài cành chính, tán nhiều tầng có khe trời, viền sáng phía mặt trời */
+     const big=[[26,-6,1],[118,5,1],[196,-3,1],[438,4,-1],[524,-5,-1],[606,3,-1]];
+     big.forEach(([x,lean,d],k)=>{const top=-6+k%3*22,bot=296;trunk(c,r,x,bot,top+60,9,lean,d);
+       for(let j=0;j<4;j++){const by=bot-60-j*46-Math.floor(r()*14),ex=x+lean*(1-(by-top)/(bot-top))+d*-1*(18+Math.floor(r()*26));c.line(x+lean*.3,by,Math.round(ex),by-26-Math.floor(r()*18),"T",3)}
+       for(let j=0;j<11;j++)leafy(c,r,x+Math.floor((r()-.5)*96),top+Math.floor(r()*190),24+Math.floor(r()*18),15+Math.floor(r()*10),44,d)});
+     /* thảm lá thả xuống + cành thò vào khung để phá hình tròn */
+     for(let i=0;i<22;i++){const x=Math.floor(r()*232)+(i%2?408:0),y=40+Math.floor(r()*190);leafy(c,r,x,y,10+Math.floor(r()*8),6+Math.floor(r()*5),12,i%2?-1:1)};
+     c.noise(0,0,236,262,"T",.035,4,"t");c.noise(404,0,236,262,"T",.035,6,"t")},
    /* nhà mái cam phía sau + hai cột đèn đôi */
    rect(216,238,60,14,"q"),rect(220,242,52,6,"Q"),poly([210,238,224,226,268,226,282,238],"z"),hline(224,226,44,"H"),hline(212,236,70,"Z"),
    (c)=>{for(let x=214;x<282;x+=4)c.px(x,237,"Z")},
@@ -196,7 +213,7 @@ scene("gate",{w:640,h:360,layers:true},
    [112,195,400,486].forEach(cx=>dou(c,R(cx),Y(154)+2,Y(172)));
    c.rect(R(88),Y(168)+4,R(512)-R(88),Y(178)-Y(168),"q");c.hline(R(88),Y(168)+4,R(512)-R(88),"x");c.hline(R(88),Y(178)+3,R(512)-R(88),"X");
    /* --- bảng đỏ viền vàng kép (chữ vẽ trong cutscene) --- */
-   c.rect(R(222),Y(171),R(378)-R(222),Y(200)-Y(171),"j");c.box(R(222),Y(171),R(378)-R(222),Y(200)-Y(171),"J");c.box(R(222)+2,Y(171)+2,R(378)-R(222)-4,Y(200)-Y(171)-4,"J");
+   c.rect(R(210),Y(171),R(390)-R(210),Y(212)-Y(171),"j");c.box(R(210),Y(171),R(390)-R(210),Y(212)-Y(171),"J");c.box(R(210)+3,Y(171)+3,R(390)-R(210)-6,Y(212)-Y(171)-6,"J");
    /* --- bốn trụ tròn màu kem: thân có bóng trụ, đầu cột nhiều lớp, chân đá --- */
    [[112,16],[195,20],[400,18],[486,16]].forEach(([cx,w])=>{const x0=R(cx-w/2),ww=Math.max(7,Math.round(w*.68)),yT=Y(182),yB=Y(324);
      c.rect(x0,yT,ww,yB-yT,"q");c.vline(x0+1,yT,yB-yT,"x");c.vline(x0+2,yT,yB-yT,"x");c.vline(x0+ww-1,yT,yB-yT,"X");c.vline(x0+ww-2,yT,yB-yT,"Q");c.vline(x0+ww-3,yT,yB-yT,"Q");
