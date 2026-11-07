@@ -33,6 +33,7 @@ Offline: đặt `phaser.min.js` (3.80.1) vào `vendor/`. Chia sẻ 1 file: `pyth
 Cuốn sách, ghi chú bên lề, thầy Lâm, "Người lái đò", An/Emma/Khoa, cô Hạnh, bác Tư và mọi lời thoại là **hư cấu**. Dữ kiện về di tích phải được ban quản lý đối chiếu trước khi khóa nội dung; không đặt câu đố ở khu mộ/nơi thờ tự; không gian Khmer (chương 7) cần cộng đồng duyệt.
 
 ## Intro cinematic (cập nhật)
+- **Phần dòng sông** nay gồm 3 cảnh chèo thuyền vẽ pixel (6 lớp thị sai + xuồng người chèo 8 khung): Bến Tre (riv0–riv1) → Xẻo Quýt (riv2) → chợ nổi Ngã Năm (riv3). Dựng lại: `python tools/art_boats.py && node tools/build_img.js` (cần Pillow, numpy). Bộ vẽ chung: `tools/pxkit.py`; cảnh/ánh sáng trong `BO` + `dBoat` ở `js/cutscene.js`.
 - Tranh sông / đường quê / cổng di tích vẽ bằng **pxl** (`assets/art/art.px.js`, lớp thị sai + hoạt hoạ người chèo xuồng + cánh sen). Dựng lại: `node <pxl>/bin/pxl.js build assets/art/art.px.js --out assets/art/out && node tools/build_img.js`.
 - Nhịp phụ đề tính tự động từ độ dài câu (`CPS`, `rt`, `build` trong `js/cutscene.js`); hộp thoại gõ chữ ~24 ký tự/giây (`TYPE` trong `js/state.js`).
 - Phông: Be Vietnam Pro / Playfair Display / Patrick Hand (đủ dấu tiếng Việt), nạp kèm chữ mẫu có dấu trước khi chiếu.
