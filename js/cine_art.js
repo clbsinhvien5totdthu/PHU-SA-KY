@@ -74,20 +74,23 @@ function buildLib(){
   /* sổ tay của An */
   R(80,126,28,6,'#f1e2b4');R(80,126,28,1,'#fff',.4);R(80,131,28,1,'#8b5a2b',.8);R(80,126,3,6,'#7a4a24');R(92,128,10,1,'#3d4f7a',.7);R(86,129,14,1,'#3d4f7a',.5);
   R(100,124,12,1,'#222');R(110,123,2,2,'#c33');
-  /* cuốn sách cũ đang mở */
+  /* laptop của An: nhìn từ phía sau nắp máy (màn hình quay về phía An), mép trên ăn sáng ngược */
+  R(51,131,36,2,'#6f7782');R(51,131,36,1,'#c9d0d8',.5);R(53,114,32,17,'#4a505b');R(53,114,32,1,'#ffcf8a',.9);R(53,114,1,17,'#ffcf8a',.35);R(84,114,1,17,'#ffcf8a',.25);
+  R(53,129,32,2,'#2f343d');R(66,121,5,5,'#aeb7c2',.75);R(67,122,3,3,'#e8eef5',.6);
+  /* thùng sách mới chuyển */
+  R(268,117,50,24,'#b98250');R(268,117,50,2,'#e0b080',.8);R(268,139,50,2,'#000',.3);R(268,117,1,24,'#000',.25);
+  poly(R,[[266,117],[274,108],[320,108],[320,117]],'#d9a46c');R(274,108,46,1,'#f2cf9a',.7);
+  const bk=['#8b2a1c','#1d3558','#c3a06a','#2f5a3a','#8a4b66'];for(let i=0;i<7;i++)R(278+i*5,100+(i*7%5),4,12,bk[i%5]);
+  R(289,117,7,24,'#e8d6a6',.55);R(298,123,14,9,'#f6ecd0');R(300,125,10,1,'#6b4220',.6);R(300,127,8,1,'#6b4220',.5);R(300,129,9,1,'#6b4220',.4);
+ },-60,100);
+ /* cuốn sách cũ: lớp riêng, chỉ hiện từ khi cô Hạnh đặt nó lên bàn (cú máy 'book') */
+ const bookL=P(440,100,R=>{
   R(128,131,64,6,'#1d3558');R(128,131,64,1,'#3b5a8c');R(128,136,64,1,'#000',.4);
   poly(R,[[131,122],[159,124],[159,131],[130,131]],'#e8d6a6');poly(R,[[161,124],[189,122],[190,131],[161,131]],'#f3e6bd');
   poly(R,[[140,123],[159,125],[159,131],[139,131]],'#f6ecc8',.5);
   for(let i=0;i<4;i++){R(134+i,125+i,18-i,1,'#c3a06a',.55);R(166,126+i,18,1,'#c3a06a',.5)}
   R(136,127,9,1,'#6b3a14',.8);R(147,127,5,1,'#3d4f7a',.7);R(168,128,12,1,'#6b3a14',.7);R(172,130,8,1,'#3d4f7a',.6);
   R(159,123,2,15,'#8b2a1c');R(159,123,1,15,'#c9605f',.6);
-  /* cánh sen ép khô */
-  disc(R,181,134,2,'#d6789a');R(179,134,5,1,'#f2a6c0',.8);R(180,133,3,1,'#fff',.35);
-  /* thùng sách mới chuyển */
-  R(268,117,50,24,'#b98250');R(268,117,50,2,'#e0b080',.8);R(268,139,50,2,'#000',.3);R(268,117,1,24,'#000',.25);
-  poly(R,[[266,117],[274,108],[320,108],[320,117]],'#d9a46c');R(274,108,46,1,'#f2cf9a',.7);
-  const bk=['#8b2a1c','#1d3558','#c3a06a','#2f5a3a','#8a4b66'];for(let i=0;i<7;i++)R(278+i*5,100+(i*7%5),4,12,bk[i%5]);
-  R(289,117,7,24,'#e8d6a6',.55);R(298,123,14,9,'#f6ecd0');R(300,125,10,1,'#6b4220',.6);R(300,127,8,1,'#6b4220',.5);R(300,129,9,1,'#6b4220',.4);
  },-60,100);
  /* nhân vật (bóng ngược sáng) */
  const rim1='#ffcf8a',rim2='#c98a5a',ink='#0b0c18';
@@ -97,7 +100,7 @@ function buildLib(){
  const hanh=sil(64,64,204,76,R=>{
   disc(R,236,80,4,ink);disc(R,236,92,8,ink);R(232,98,8,8,ink);
   poly(R,[[206,138],[210,114],[222,104],[250,104],[262,114],[266,138]],ink)},'l',rim1,rim2);
- return{wall,wallBlur,desk,an,hanh}}
+ return{wall,wallBlur,desk,bookL,an,hanh}}
 
 /* ---------- Cửa ra vào (góc ngược): Emma và Khoa bước vào ---------- */
 function buildDoor(){
@@ -121,14 +124,14 @@ function buildDoor(){
   const hl=[[-8,8],[-9,24],[-12,40],[-7,42],[-6,22]];poly(R,hl,ink);poly(R,mir(hl),ink);
   R(-2,19,4,4,ink);poly(R,[[-4,22],[4,22],[12,26],[13,40],[10,54],[-10,54],[-13,40],[-12,26]],ink);
   const ar=[[-12,26],[-16,34],[-17,52],[-13,52],[-11,36]];poly(R,ar,ink);poly(R,mir(ar),ink);
-  poly(R,[[-10,52],[10,52],[14,68],[-14,68]],ink);R(-8,68,6,17,ink);R(2,68,6,17,ink)},'b',c1,c2);
+  poly(R,[[-10,52],[10,52],[14,68],[-14,68]],ink);R(-8,68,7,16,ink);R(1,68,7,16,ink);R(-9,83,9,3,ink);R(1,83,9,3,ink)},'b',c1,c2);
  const khoa=sil(44,86,-22,0,R=>{
   /* tóc dựng, ba lô, tay cầm máy ghi âm */
   disc(R,0,12,8,ink);R(-6,3,12,3,ink);R(-5,1,3,3,ink);R(0,0,3,3,ink);R(4,2,3,3,ink);
   R(-2,19,4,4,ink);poly(R,[[-4,22],[4,22],[13,26],[14,40],[12,56],[-12,56],[-14,40],[-13,26]],ink);
   poly(R,[[-13,27],[-18,29],[-19,46],[-13,48]],ink);
   poly(R,[[-13,26],[-17,34],[-17,52],[-13,52]],ink);poly(R,[[13,26],[17,34],[18,46],[14,46]],ink);R(15,41,5,9,ink);
-  R(-9,56,7,29,ink);R(2,56,7,29,ink)},'b',c1,c2);
+  R(-10,56,9,28,ink);R(1,56,9,28,ink);R(-11,83,11,3,ink);R(1,83,11,3,ink)},'b',c1,c2);
  return{wall,wallBlur,emma,khoa}}
 
 /* ---------- Lớp từ ảnh pixel có sẵn (img.js) ---------- */
@@ -142,4 +145,5 @@ const stripC={};
 function strip(key,n){if(stripC[key])return stripC[key];const im=IM[key];if(!im||!im.complete||!im.width)return null;const fw=im.width/n,cv=mkc(im.width*K,im.height*K),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,0,cv.width,cv.height);return stripC[key]={cv,fw,fh:im.height,n}}
 
 let LIB,DOOR;
-return{VW,VH,K,FILT,strip,get lib(){return LIB||(LIB=buildLib())},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();
+const drop=pre=>{for(const id in imgCache)if(id.startsWith(pre))delete imgCache[id]},dropStrip=k=>{delete stripC[k]};
+return{VW,VH,K,FILT,strip,drop,dropStrip,get lib(){return LIB||(LIB=buildLib())},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();

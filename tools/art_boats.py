@@ -120,7 +120,7 @@ def layer_water_A():
     EXT = [(x - 14, y) if x < 352 else (x + 14, y) for x, y in WATER_A]
     m0 = cv.mask(WATER_A)
     m = cv.mask(EXT)
-    cv.grad(m, (0, 143), (0, 360), ['#ecdcae', '#e0c88c', '#cfae68', '#b8914c', '#a07e47', '#8a6a37', '#7a5c2f'], spread=1.15)
+    cv.grad(m, (0, 143), (0, 360), ['#c3cbc9', '#c2ae96', '#ad8560', '#946a48', '#7d5538', '#684630', '#573a28'], spread=1.15)
     ys = np.arange(H)
     xl = np.array([np.nonzero(m[y])[0].min() if m[y].any() else 0 for y in ys])
     xr = np.array([np.nonzero(m[y])[0].max() if m[y].any() else 0 for y in ys])
@@ -132,12 +132,12 @@ def layer_water_A():
         for x in range(int(xl[y]), int(min(xl[y] + bw, W))):
             k = 1 - (x - xl[y]) / bw
             if BAY[y & 3][x & 3] < max(k, 0) ** 1.1 * .95:
-                cv.px(x, y, '#473923' if k > .45 else '#6a5c37')
+                cv.px(x, y, '#3a2a1c' if k > .45 else '#5a4630')
         bw2 = 14 + (y - 143) * .33
         for x in range(int(max(xr[y] - bw2, 0)), int(xr[y]) + 1):
             k = 1 - (xr[y] - x) / bw2
             if BAY[y & 3][x & 3] < max(k, 0) ** 1.1 * .95:
-                cv.px(x, y, '#473923' if k > .45 else '#6a5c37')
+                cv.px(x, y, '#3a2a1c' if k > .45 else '#5a4630')
     # bóng tàu lá đổ chéo trên mặt nước (mảng nâu sẫm, đứt quãng)
     for (cx, cy, rx, ry) in [(120, 322, 96, 16), (230, 262, 62, 9), (290, 214, 40, 6), (410, 318, 44, 14), (330, 340, 70, 10)]:
         blobd(cv, cx, cy, rx, ry, '#5a4a2a', .8, m)
@@ -146,8 +146,8 @@ def layer_water_A():
         y = r.uniform(158, 352); k = (y - 143) / 217
         cx = r.uniform(60, 470) if y > 220 else r.uniform(300, 400)
         rx = 12 + 60 * k * r.uniform(.5, 1.2); ry = 1.5 + 6 * k * r.uniform(.6, 1.1)
-        blobd(cv, cx, y, rx, ry, '#f3ca80', .85, m)
-        blobd(cv, cx + 3, y - 1, rx * .55, ry * .6, '#f9e4b0', .85, m)
+        blobd(cv, cx, y, rx, ry, '#d9b88a', .6, m)
+        blobd(cv, cx + 3, y - 1, rx * .55, ry * .6, '#ecd6b0', .6, m)
     # gợn nước ngang: xa thì ngắn mịn, gần thì dài và tương phản
     for i in range(3200):
         y = int(145 + (r.random() ** .75) * 213); k = (y - 143) / 217
@@ -155,7 +155,7 @@ def layer_water_A():
         if not m[min(y, H - 1)][min(x, W - 1)]:
             continue
         ln = int(2 + k * 30 * r.random() + 1)
-        c = r.choice(['#f9e4b0', '#f3ca80', '#f3ca80', '#6a5c37', '#473923', '#8a6c3a', '#c0994f'])
+        c = r.choice(['#e8d2b0', '#d2b088', '#d2b088', '#5a3c2a', '#3f2a1e', '#7d5538', '#b48e68'])
         cv.rect(x, y, ln, 1, c)
     for i in range(300):
         y = r.randint(150, 358); x = r.randint(0, 520)
@@ -403,7 +403,7 @@ def layer_far_B():
 def layer_water_B():
     cv = Cv(); r = rngf(29)
     m = cv.mask(WATER_B)
-    cv.grad(m, (0, 246), (0, 360), ['#8a8a3c', '#a58a3a', '#8a7a34', '#6b6a2c', '#3f4a1c'], spread=1.2)
+    cv.grad(m, (0, 246), (0, 360), ['#7f9a86', '#5f7f68', '#486a52', '#36533f', '#243c2c'], spread=1.2)
     ml = cv.mask([(0, 206), (330, 258), (250, 360), (0, 360)])
     cv.grad(ml, (0, 206), (0, 360), ['#1d5a22', '#143f18', '#0c2a10'], spread=1.0)
     # phản chiếu thân tràm & trời: sọc dọc sáng/tối
@@ -418,7 +418,7 @@ def layer_water_B():
         if not m[y][x]:
             continue
         k = (y - 246) / 114
-        cv.rect(x, y, int(2 + k * 16 * r.random()), 1, r.choice(['#e6c466', '#f3dc8a', '#d3b04a', '#5a5a24', '#3f4a1c', '#b0c789']))
+        cv.rect(x, y, int(2 + k * 16 * r.random()), 1, r.choice(['#c2dac0', '#dcead0', '#9cbc9c', '#2e4a34', '#1f3a28', '#b0c789']))
     for i in range(120):
         y = r.randint(250, 356); x = r.randint(250, 639)
         if m[y][x]:
@@ -492,28 +492,45 @@ def hull_side(cv, x0, y0, x1, y1, w0, w1, col, rim='#8a7a50', inner='#5a4a2a'):
 
 
 def anim_row_B(frames=8):
-    """Xuồng gỗ dài (khung 340x124): người nón lá chống/chèo ở mũi, ba khách ngồi hướng ra máy; mái chèo đưa nhịp."""
+    """Xuồng gỗ dài (khung 340x124): người nón lá đứng chèo ở mũi, khách NGỒI TRONG lòng xuồng (mạn gần che nửa thân dưới), mái chèo đưa nhịp."""
     fw, fh = 340, 124
     strip = Image.new('RGBA', (fw * frames, fh), (0, 0, 0, 0))
+    N = 24; X0, Y0, X1, Y1, W0, W1 = 8, 42, 332, 78, 13, 30
     for f in range(frames):
         cv = Cv(fw, fh); ph = f / frames * 2 * math.pi
         sw = math.sin(ph)
         bob = round(math.sin(ph * 2) * .6)
-        y0, y1 = 42 + bob, 78 + bob
-        # bóng thuyền
-        cv.dpoly([(12, 62), (330, 100), (330, 112), (12, 76)], '#1d3a14', lambda x, y: .55)
-        top, bot = hull_side(cv, 8, y0, 332, y1, 13, 30, '#3a2f1c')
+        y0, y1 = Y0 + bob, Y1 + bob
+        # bóng thuyền bám theo đáy xuồng (không còn dải ô vuông)
+        sh_top = []; sh_bot = []
+        for i in range(N + 1):
+            t = i / N; w = W0 + (W1 - W0) * t
+            xx = X0 + (X1 - X0) * t; yy = y0 + (y1 - y0) * t
+            sh_top.append((xx + 2, yy + w * .55)); sh_bot.append((xx + 6, yy + w * .65 + 5 + 7 * t))
+        cv.dpoly(sh_top + sh_bot[::-1], '#16301a', lambda x, y: .5)
+        top, bot = hull_side(cv, X0, y0, X1, y1, W0, W1, '#6a4d2a', rim='#b08a52', inner='#3a2a14')
         def at(t):
             return top[int(t * 24)]
-        # khách (từ xa -> gần): ngồi trên ván, hướng ra máy
+        def wall_y(t):                          # mép trên của mạn gần tại vị trí t
+            i = int(t * 24); w = W0 + (W1 - W0) * i / 24
+            return top[i][1] + w * .38
+        # khách (từ xa -> gần): ngồi trong xuồng, chỉ thấy từ ngực trở lên
         for t, sh, hat, lh, sc in [(.08, '#c9433a', False, False, 1.0), (.17, '#f1ede0', False, False, 1.02), (.52, '#c9433a', False, True, 1.3),
                                    (.7, '#58b8c8', False, True, 1.36), (.9, '#c0509a', False, True, 1.42)]:
             x, y = at(t)
-            person(cv, x, y + 12 * sc, sc, sh, hat=hat, hair='#e0c070' if t > .85 else '#1a1410', long_hair=lh, arm=(t > .4))
-        # người đứng ở mũi: áo đen, nón lá, nghiêng người theo nhịp chèo
+            person(cv, x, wall_y(t) + 3 * sc, sc, sh, hat=hat, hair='#e0c070' if t > .85 else '#1a1410', long_hair=lh, arm=False)
+        # người chèo đứng ở mũi: áo đen, nón lá, nghiêng người theo nhịp chèo
         x, y = at(.31)
         lean = sw * 2.2
-        person(cv, x + lean, y + 14, 1.3, '#1c1c24', hat=True, stand=True, hat_c='#e0cf9e', hat_d='#b09c66')
+        person(cv, x + lean, wall_y(.31) + 4, 1.3, '#1c1c24', hat=True, stand=True, hat_c='#e0cf9e', hat_d='#b09c66')
+        # mạn gần vẽ SAU người: ván gỗ sáng hơn, có đường viền và vệt nước
+        wt = [(top[i][0], top[i][1] + (W0 + (W1 - W0) * i / 24) * .38) for i in range(N + 1)]
+        wb = [(bot[i][0], bot[i][1] - 3) for i in range(N + 1)]
+        cv.poly(wt + wb[::-1], '#6a4d2a')
+        for i in range(N):
+            cv.line(*wt[i], *wt[i + 1], '#c4a066', 1)
+            cv.line(wt[i][0], wt[i][1] + 2, wt[i + 1][0], wt[i + 1][1] + 2, '#4a3419', 1)
+            cv.line(wb[i][0], wb[i][1] - 1, wb[i + 1][0], wb[i + 1][1] - 1, '#3a2a14', 1)
         hx, hy = x + 12 + sw * 5, y - 6
         ang = math.radians(60 + sw * 22)
         ex, ey = hx + math.cos(ang) * 64, hy + math.sin(ang) * 40 + 22
@@ -924,12 +941,12 @@ def beo_carpet(cv, r, y0=214, y1=362, ymin=0, ymax=999):
 def layer_water_B():
     cv = Cv(); r = rngf(29)
     m = cv.mask(WATER_B)
-    cv.grad(m, (0, 246), (0, 360), ['#8a8a3c', '#a58a3a', '#8a7a34', '#6b6a2c', '#3f4a1c'], spread=1.2)
+    cv.grad(m, (0, 246), (0, 360), ['#7f9a86', '#5f7f68', '#486a52', '#36533f', '#243c2c'], spread=1.2)
     ml = cv.mask([(0, 206), (330, 258), (250, 360), (0, 360)])
     cv.grad(ml, (0, 206), (0, 360), ['#1d4a1c', '#143418', '#0c2a10'], spread=1.0)
     for i in range(60):                                         # phản chiếu thân tràm + trời
         x = r.randint(310, 639); y = r.randint(252, 340); ln = r.randint(4, 14)
-        c = r.choice(['#d3e0a0', '#b0c789', '#e6e0bc', '#1d5a22', '#6b6a2c'])
+        c = r.choice(['#d3e0b8', '#b0c7a0', '#e6ecd0', '#1d5a22', '#35523a'])
         for yy in range(y, y + ln):
             if m[min(yy, H - 1)][x]:
                 cv.px(x, yy, c)
@@ -937,7 +954,7 @@ def layer_water_B():
         y = r.randint(250, 359); x = r.randint(300, 639)
         if m[y][x]:
             k = (y - 246) / 114
-            cv.rect(x, y, int(2 + k * 14 * r.random()), 1, r.choice(['#e6c466', '#f3dc8a', '#d3b04a', '#5a5a24', '#3f4a1c', '#b0c789']))
+            cv.rect(x, y, int(2 + k * 14 * r.random()), 1, r.choice(['#c2dac0', '#dcead0', '#9cbc9c', '#2e4a34', '#1f3a28', '#b0c789']))
     # thảm bèo (phía xa -> gần, cỡ lá lớn dần), vài mảng trôi lẻ trên vùng nước xuồng chạy
     beo_carpet(cv, r, 214, 300)
     for (x, y) in [(352, 264), (372, 300), (402, 330), (338, 292)]:
