@@ -109,16 +109,16 @@ function pixWater(Z,cam,T,e){const[cx,sp,ya,yb,col]=Z.sh,f=Math.floor(T*6),px=(a
    Tranh vẽ pixel ở 640x360 theo 6 lớp (sky · far · water · mid · boats · fore) bằng tools/art_boats.py; mỗi cảnh có một xuồng hoạt hoạ 8 khung (row_*).
    sun = vị trí nguồn sáng (toạ độ thế giới) · wy = dải nước nhún sóng · sh = vùng nắng lấp lánh trên nước · row = xuồng hoạt hoạ (x,y góc trên-trái khung; ring = chỗ mái chèo chạm nước). */
 const BO={
- bt:{bg:'#9cc5dc',qf:1.45,sun:[176,14],sc:'255,236,176',sr:70,sa:.16,wy:[71,180],amp:1,
+ bt:{bg:'#9cc5dc',qf:1.45,sun:[215,38],sc:'255,236,176',sr:70,sa:.16,wy:[71,180],amp:1,
   beams:{a0:Math.PI*.5-.62,a1:Math.PI*.5+.5,n:9,col:'255,236,170',a:.05},mist:[66,100,'255,238,190',.07],
-  sh:[176,110,84,178,'255,226,160'],row:{k:'row_bt',x:159,y:103,sx:2,ring:[14.7,44.5],go:[12,-9,.84]},over:1,birds:3,dust:'255,236,170',
+  sh:[205,80,76,178,'255,226,160'],row:{k:'row_bt',x:121,y:100,sx:2,ring:[14.7,44.5],go:[12,-9,.84]},over:1,birds:3,dust:'255,236,170',
   dark:.0},
- xq:{bg:'#7fc4e4',qf:1.4,sun:[40,-8],sc:'255,248,190',sr:90,sa:.2,wy:[100,180],amp:.7,
+ xq:{bg:'#7fc4e4',qf:1.4,sun:[36,-4],sc:'255,248,190',sr:90,sa:.2,wy:[100,180],amp:.7,
   beams:{a0:Math.PI*.5-.95,a1:Math.PI*.5-.05,n:8,col:'255,250,190',a:.06},mist:[96,126,'230,255,200',.06],
-  sh:[290,80,124,178,'255,244,170'],row:{k:'row_xq',x:159,y:102.5,sx:1.5,ring:[73,48.5],go:[-58,-4,.9]},birds:0,dust:'230,255,190'},
- nn:{bg:'#62b6dc',qf:1.3,sun:[238,70],sc:'255,226,160',sr:80,sa:.32,wy:[75,180],amp:1.1,
+  sh:[250,120,104,178,'255,244,170'],row:{k:'row_xq',x:180,y:100,sx:2,ring:[14.7,44.5],go:[12,-9,.84]},birds:0,dust:'230,255,190'},
+ nn:{bg:'#62b6dc',qf:1.3,sun:[238,73],sc:'255,226,160',sr:80,sa:.32,wy:[84,180],amp:1.1,
   beams:null,mist:[60,112,'255,226,170',.12],
-  sh:[240,110,78,178,'255,236,190'],row:{k:'row_nn',x:226,y:119,sx:3,ring:[56.5,45.5],go:[44,-3,.9]},birds:9,dust:'255,236,190'}};
+  sh:[240,110,86,178,'255,236,190'],row:{k:'row_nn',x:226,y:119,sx:3,ring:[56.5,45.5],go:[44,-3,.9]},birds:9,dust:'255,236,190'}};
 /* tia nắng mềm xuyên tán lá / mây: các nan quạt toả từ nguồn sáng, thở chậm */
 function beams(wx,wy,T,o,k){x.save();x.setTransform(1,0,0,1,0,0);x.globalCompositeOperation='lighter';x.translate(wx,wy);
  for(let i=0;i<o.n;i++){const ang=mix(o.a0,o.a1,(i+.5)/o.n)+Math.sin(T*.12+i*1.7)*.025,w=.014+.02*hh(i+3),a=o.a*(.5+.5*hh(i+7))*(.55+.45*Math.sin(T*.4+i*2.1))*(1+k),L=Math.hypot(W,H)*1.1;
