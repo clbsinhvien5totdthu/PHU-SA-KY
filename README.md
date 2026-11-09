@@ -11,7 +11,8 @@ Offline: đặt `phaser.min.js` (3.80.1) vào `vendor/`. Chia sẻ 1 file: `pyth
 | `css/style.css` | Toàn bộ giao diện (HUD, hộp thoại, cutscene) |
 | `js/psk.js` | `PSK`: cấu hình + bus sự kiện `ready · start · step · zone · end` |
 | `js/data/` | **Nội dung**: `quests.js` (nhiệm vụ, thoại), `characters.js` (hồ sơ nhân vật), `zones.js` (tên khu vực) |
-| `js/map.js`, `js/data/mapdata.js` | Nạp lưới 230×176 ô sinh bởi `tools/build_map.py` từ sơ đồ chuẩn (đừng sửa tay mapdata.js) |
+| `js/map.js`, `js/data/mapdata.js` | Nạp lưới 460×352 ô sinh bởi `tools/build_map.py` từ sơ đồ chuẩn (đừng sửa tay mapdata.js) |
+| `assets/art/out/sprites/an_w0..5.png`, `an_front.png` | An có balo (nhân vật chính: 6 khung đi xuống, khung 0 = đứng yên, thu 1/2 trong `scene.js`; hướng khác tạm dùng khung đứng yên) và An không balo (ngồi thư viện, `cine_art.js`) |
 | `js/scene.js` | Phaser scene: sprite sinh bằng code, đối tượng, camera |
 | `js/cutscene.js`, `js/hud.js`, `js/ui.js`, `js/portraits.js` | Hệ thống tương ứng |
 | `js/plugins/` | Tính năng gắn thêm qua `PSK.on(...)` (xem `_template.js`) |

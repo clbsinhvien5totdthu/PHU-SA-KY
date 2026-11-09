@@ -52,8 +52,216 @@ sprite("_chua",{w:44,h:34},
  poly([8,10,22,0,36,10,32,11,22,4,12,11],"R"),poly([12,11,22,4,32,11],"r"),px(22,0,"q"),px(22,1,"q"),line(0,19,-2,16,"R"),line(44,19,46,16,"R"))
 sprite("_nhaS",{w:30,h:26},vline(4,15,11,"Z"),vline(14,15,11,"Z"),vline(25,15,11,"Z"),rect(2,13,26,2,"B"),rect(4,7,22,6,"D"),rect(12,8,6,5,"z"),poly([0,8,15,0,30,8],"h"),poly([3,8,15,3,27,8],"j"))
 sprite("_chuaS",{w:30,h:24},rect(5,12,20,10,"w"),rect(5,12,20,2,"R"),rect(13,15,4,7,"Z"),poly([0,13,15,5,30,13,27,14,15,8,3,14],"R"),poly([6,7,15,0,24,7,21,8,15,3,9,8],"R"),px(15,0,"q"))
-sprite("_sampan",{w:40,h:16},poly([0,6,40,4,36,14,5,14],"V"),hline(1,6,38,"q"),poly([2,7,38,6,35,12,6,12],"v"),
- rect(14,3,12,7,"s"),poly([10,4,20,-4,30,4],"u"),hline(10,4,20,"t"),rect(17,5,6,5,"R"))
+/* ===== NGƯỜI & XUỒNG vẽ lại: một camera lỗ kim cho xuồng chèo (nhìn sau chếch xuống) + người nhìn nghiêng cho xuồng chợ ===== */
+const RW_CX=74,RW_YH=-62,RW_CH=3.6,RW_F=500,RW_Z0=10            // tâm khung, đường chân trời, độ cao máy, tiêu cự, khoảng cách tới mũi gần
+const rwP=(u,v,h)=>{const s=RW_F/(RW_Z0+v);return[RW_CX+u*s,RW_YH+(RW_CH-h)*s,s]}
+const RW_L=5.6,RW_BEAM=.95
+const rwHw=(t)=>.5*RW_BEAM*Math.pow(Math.sin(Math.PI*Math.pow(Math.min(1,Math.max(0,t)),.85)),.45)   // nửa bề ngang theo chiều dài
+const rwSheer=(t)=>.30+.30*Math.pow(Math.abs(2*t-1),2.4)                                           // độ cao mạn so với mặt nước (hai đầu cong vút)
+const rwT=(n)=>Array.from({length:n+1},(_,i)=>i/n)
+const rwR=Math.round
+const rwPoly=(c,pts,col)=>c.poly(pts.flatMap(([x,y])=>[rwR(x),rwR(y)]),col)
+const rwLn=(c,a,b,col,w=1)=>c.line(rwR(a[0]),rwR(a[1]),rwR(b[0]),rwR(b[1]),col,w)
+const rwMix=(a,b,t)=>a+(b-a)*t
+const rwEase=(u)=>u*u*(3-2*u)
+
+/* thân xuồng: gunwale (mạn) trái/phải, đường mớn nước, ván đáy */
+const rwGun=(sg,t0,t1,n=22)=>rwT(n).map(i=>{const t=rwMix(t0,t1,i);return rwP(sg*rwHw(t)*1.08,t*RW_L,rwSheer(t))})
+const rwWat=(sg,t0,t1,n=22)=>rwT(n).map(i=>{const t=rwMix(t0,t1,i);return rwP(sg*rwHw(t)*.86,t*RW_L,0)})
+const rwFlo=(sg,t0,t1,n=22)=>rwT(n).map(i=>{const t=rwMix(t0,t1,i);return rwP(sg*rwHw(t)*.50,t*RW_L,.10)})
+
+const rwHull=(c,o)=>{
+ /* bóng và vệt nước dưới thân */
+ const sh=[...rwWat(-1,0,1),...rwWat(1,0,1).reverse()].map(([x,y])=>[x+0,y+1])
+ rwPoly(c,sh.map(([x,y])=>[x,y+2]),"N")
+ /* vỏ ngoài phía gần (nhìn thấy từ sau): sơn xanh, mép mạn vàng */
+ for(const sg of[-1,1]){const g=rwGun(sg,0,.46,14),w=rwWat(sg,0,.46,14);rwPoly(c,[...g,...w.reverse()],o.skin)
+  /* ván be / ván đáy: đường nối ngang thân, tối bên khuất sáng */
+  const mid=rwT(14).map(i=>{const t=rwMix(0,.46,i);const a=rwP(sg*rwHw(t)*1.08,t*RW_L,rwSheer(t)),b=rwP(sg*rwHw(t)*.86,t*RW_L,0);return[rwMix(a[0],b[0],.55),rwMix(a[1],b[1],.55)]})
+  for(let i=0;i<mid.length-1;i++)rwLn(c,mid[i],mid[i+1],o.skinSh)
+  for(let i=0;i<g.length-1;i++)rwLn(c,g[i],g[i+1],o.rim)}
+ /* mũi lái nhọn gần camera: hai mạn gặp nhau */
+ const tip=rwP(0,0,rwSheer(0)),tw=rwP(0,0,0);rwLn(c,tip,tw,o.skinSh,2)
+ /* lòng xuồng: thành trong tối, ván đáy sáng hơn */
+ const loop=[...rwGun(-1,0,1),...rwGun(1,0,1).reverse()]
+ rwPoly(c,loop,"D")
+ rwPoly(c,[...rwFlo(-1,.05,.98),...rwFlo(1,.05,.98).reverse()],"t")
+ /* thành trong bên mạn: tối hơn phía khuất sáng */
+ for(const sg of[-1,1]){const g=rwGun(sg,.04,.98),f=rwFlo(sg,.04,.98);rwPoly(c,[...g,...f.reverse()],sg>0===(o.light>0)?"B":"D")}
+ rwPoly(c,[...rwFlo(-1,.05,.98),...rwFlo(1,.05,.98).reverse()],"t")
+ /* ván đáy dọc: ba đường nối */
+ for(const k of[-.33,0,.33]){const pts=rwT(22).map(i=>{const t=rwMix(.06,.97,i);return rwP(k*rwHw(t)*1.0,t*RW_L,.10)});for(let i=0;i<pts.length-1;i++)rwLn(c,pts[i],pts[i+1],"h")}
+ /* cong (sườn xương cá): cứ 0,5 m một thanh ngang, vắt từ mạn này sang mạn kia */
+ for(let v=.55;v<RW_L-.3;v+=.5){const t=v/RW_L,a=rwP(-rwHw(t)*1.04,v,rwSheer(t)-.04),b=rwP(-rwHw(t)*.5,v,.10),d=rwP(rwHw(t)*.5,v,.10),e=rwP(rwHw(t)*1.04,v,rwSheer(t)-.04)
+  rwLn(c,a,b,"Z");rwLn(c,b,d,"j");rwLn(c,d,e,"Z")}
+ /* viền mạn: vàng đồng, lớp sáng phía có nắng */
+ for(const sg of[-1,1]){const g=rwGun(sg,0,1);for(let i=0;i<g.length-1;i++)rwLn(c,g[i],g[i+1],sg===o.light?"y":o.rim,1)}
+ /* mũi xa */
+ const bt=rwP(0,RW_L,rwSheer(1));c.px(rwR(bt[0]),rwR(bt[1]),"y")
+}
+
+/* ----- người chèo: bộ xương 3D -> chiếu -> thân/tay/chân vẽ bằng đoạn thẳng có bề dày (mét * px/mét) ----- */
+const rwLimb=(c,a,b,wm,col,sh)=>{const s=(a[2]+b[2])/2;c.line(rwR(a[0]),rwR(a[1]),rwR(b[0]),rwR(b[1]),col,Math.max(1,rwR(wm*s)))}
+
+const rwPerson=(c,o,p,ph)=>{
+ const vr=.92,bob=.035*(1-p),lean=.14*p
+ const dip=.07*p,hipH=.93-bob,shH=1.43-bob-dip
+ const J={
+  fL:rwP(-.14,vr-.05,.10),fR:rwP(.14,vr+.03,.10),
+  hL:rwP(-.10,vr+.04*p,hipH),hR:rwP(.10,vr+.04*p,hipH),
+  kL:rwP(-.15,vr+.09+.05*(1-p),.52),kR:rwP(.15,vr+.11+.05*(1-p),.52),
+  sL:rwP(-.185,vr+.05+lean,shH),sR:rwP(.185,vr+.05+lean,shH),
+  nk:rwP(0,vr+.06+lean,shH+.06)}
+ /* chân: quần ống rộng tối, bàn chân trần trên ván */
+ for(const sd of["L","R"]){const f=J["f"+sd],k=J["k"+sd],h=J["h"+sd]
+  rwLimb(c,k,f,.14,"Z");rwLimb(c,h,k,.17,"z")
+  c.rect(rwR(f[0]-3),rwR(f[1]-1),6,2,"s");c.px(rwR(f[0]-3),rwR(f[1]-1),"E")}
+ /* thân: áo bà ba (ngược nắng nên nghiêng về tông tối), eo thắt, vạt áo xoè nhẹ */
+ const mx=(J.sL[0]+J.sR[0])/2,sy=J.sL[1],hy=J.hL[1]+8
+ rwPoly(c,[[J.sL[0]-1,sy],[J.sR[0]+1,sy],[J.hR[0]+3,hy],[J.hL[0]-3,hy]],o.top)
+ rwPoly(c,o.light>0?[[mx,sy],[J.sL[0]-1,sy],[J.hL[0]-3,hy],[mx,hy]]:[[mx,sy],[J.sR[0]+1,sy],[J.hR[0]+3,hy],[mx,hy]],o.topShade)
+ rwLn(c,[mx,sy+2],[mx,hy-1],o.topShade);c.hline(rwR(J.hL[0]-3),hy,rwR(J.hR[0]-J.hL[0]+7),o.topShade)
+ /* gáy + búi tóc dưới vành nón */
+ const nk=J.nk
+ c.rect(rwR(nk[0]-2),rwR(nk[1]-3),5,4,"s");c.hline(rwR(nk[0]-2),rwR(nk[1]-3),5,"E")
+ c.circ(rwR(nk[0]),rwR(nk[1]-6),4,"k");c.px(rwR(nk[0]+1),rwR(nk[1]-8),"o");c.px(rwR(nk[0]-2),rwR(nk[1]-5),"o")
+ /* khăn rằn quanh cổ: ô vuông so le */
+ for(let i=-4;i<=4;i++)for(let j=0;j<3;j++)c.px(rwR(nk[0]+i),rwR(nk[1]+j),(i+j)&1?"w":"m")
+ /* tay: vai -> khuỷu -> cán chèo; mép tay áo tối để tách khỏi thân */
+ for(const sg of[-1,1]){const sh=sg<0?J.sL:J.sR,hand=rwP(-sg*.10,o.vh,o.hh),el=rwP(sg*.28,vr+.15+lean,1.14-bob*.5)
+  rwLimb(c,sh,el,.105,o.top);rwLimb(c,el,hand,.085,o.top)
+  rwLn(c,[el[0]-sg*2,el[1]+2],[hand[0],hand[1]+1],o.topShade);c.circ(rwR(hand[0]),rwR(hand[1]),1,"s")}
+ /* nón lá: vành tròn đáy, chóp nhọn, đường nan toả từ chóp */
+ const hv=vr+.08+lean,hc=rwP(0,hv,1.66-dip),ap=rwP(0,hv,1.98-dip)
+ const rx=rwR(.34*hc[2]),ry=Math.max(2,rwR(.11*hc[2]))
+ c.ellipse(rwR(hc[0]),rwR(hc[1]+1),rx,ry,"j")
+ rwPoly(c,[[hc[0]-rx,hc[1]],[ap[0],ap[1]],[hc[0]+rx,hc[1]]],"t")
+ rwPoly(c,o.light>0?[[hc[0]+1,hc[1]],[ap[0],ap[1]],[hc[0]+rx,hc[1]]]:[[hc[0]-1,hc[1]],[ap[0],ap[1]],[hc[0]-rx,hc[1]]],"u")
+ c.ellipse(rwR(hc[0]),rwR(hc[1]),rx,ry,"h");rwPoly(c,[[hc[0]-rx+1,hc[1]],[ap[0],ap[1]],[hc[0]+rx-1,hc[1]]],"t")
+ rwPoly(c,o.light>0?[[hc[0]+1,hc[1]],[ap[0],ap[1]],[hc[0]+rx-1,hc[1]]]:[[hc[0]-1,hc[1]],[ap[0],ap[1]],[hc[0]-rx+1,hc[1]]],"u")
+ for(let k=-3;k<=3;k++)rwLn(c,[hc[0]+k*(rx/3.4),hc[1]],[ap[0]+k*.15,ap[1]+4],"p")
+ c.hline(rwR(hc[0]-rx+1),rwR(hc[1]+ry),2*rx-1,"j");c.px(rwR(ap[0]),rwR(ap[1]),"q")
+ return J}
+
+/* mái chèo: cán xỏ qua cọc chèo trên mạn; tay đẩy ra trước -> lưỡi quét ra sau trong nước, rồi nhấc lưỡi, đưa tay về */
+const rwOars=(c,o,p,drive)=>{
+ const vp=1.40,hp=.55
+ for(const sg of[-1,1]){
+  const t=vp/RW_L,piv=rwP(sg*(rwHw(t)*1.06),vp,hp)
+  const hand=rwP(-sg*.10,o.vh,o.hh)
+  const kk=1.3
+  const bu=sg*rwHw(t)*1.06+(sg*rwHw(t)*1.06+sg*.10)*kk,bv=vp+(vp-o.vh)*kk,bh=drive?hp+(hp-o.hh)*kk:hp+(hp-o.hh)*kk+.30
+  const bl=rwP(bu,bv,bh)
+  /* cọc chèo */
+  rwLn(c,rwP(sg*rwHw(t)*1.06,vp,rwSheer(t)-.02),piv,"Z",1);c.px(rwR(piv[0]),rwR(piv[1]-1),"B")
+  /* cán */
+  rwLn(c,hand,piv,"t",2);rwLn(c,piv,bl,"h",2)
+  c.px(rwR(hand[0]),rwR(hand[1]-1),"u")
+  /* lưỡi */
+  const ax=bl[0]-piv[0],ay=bl[1]-piv[1],m=Math.hypot(ax,ay)||1,ux=ax/m,uy=ay/m,w=Math.max(2,rwR(.09*bl[2]))
+  const e=[bl[0]+ux*rwR(.5*bl[2]),bl[1]+uy*rwR(.2*bl[2])]
+  rwPoly(c,[[bl[0]-uy*w,bl[1]+ux*w],[bl[0]+uy*w,bl[1]-ux*w],[e[0]+uy*w,e[1]-ux*w],[e[0]-uy*w,e[1]+ux*w]],drive?"j":"t")
+  rwLn(c,bl,e,drive?"B":"u",1)
+  /* gợn nước quanh lưỡi chèo đang ăn nước */
+  if(drive){const r1=rwR(3+p*5);c.hline(rwR(e[0]-r1),rwR(e[1]+2),r1*2,"K");c.hline(rwR(e[0]-r1+2),rwR(e[1]+3),r1*2-4,"I")}
+  else c.px(rwR(e[0]),rwR(e[1]+4),"W")
+ }}
+
+const rwRim=(c,o)=>{const key="RruwcEshtpujq",lit=[]
+ for(let y=1;y<c.h-1;y++)for(let x=1;x<c.w-1;x++){if(!c.is(x,y,key))continue
+  if(c.is(x+o.light,y,"."))lit.push([x,y,"Y"]);else if(c.is(x,y-1,"."))lit.push([x,y,"y"])}
+ lit.forEach(([x,y,k])=>c.px(x,y,k))}
+const rwRowBody=(o0)=>(c)=>{
+ const o=Object.assign({skin:'v',skinSh:'V',rim:'q'},o0)
+ const ph=((c.frame-2+8)%8)/8,drive=ph<.5,u=drive?ph*2:(ph-.5)*2,e=rwEase(u),p=drive?e:1-e
+ o.vh=.95+.60*p;o.hh=drive?1.02-.03*p:1.0+.10*Math.sin(Math.PI*u)
+ rwHull(c,o)
+ if(o.pre)o.pre(c)
+ rwOars(c,o,p,drive)
+ rwPerson(c,o,p,ph)
+ /* vệt nước rẽ ở mũi gần */
+ const tw=rwP(0,-.05,0);c.hline(rwR(tw[0]-9),rwR(tw[1]+2),18,"K");c.hline(rwR(tw[0]-6),rwR(tw[1]+3),12,"I");c.hline(rwR(tw[0]-13),rwR(tw[1]+1),5,"L");c.hline(rwR(tw[0]+9),rwR(tw[1]+1),5,"L")
+ rwRim(c,o)
+}
+/* ===================== NGƯỜI NHÌN NGHIÊNG (Chợ nổi Ngã Năm) =====================
+   sideFig: người quay mặt sang phải, chân đặt tại (x,y), f = hệ số tỉ lệ (1 ≈ 25 px cao gồm nón).
+   Tỉ lệ: nón lá = 1/4 chiều cao (rất rộng), đầu ~ 1/6, thân áo bà ba dài tới đùi, quần ống rộng.
+   Ánh sáng từ phải-sau (mặt trời thấp bên phải): mặt phải hơi sáng, mép vàng ở vai/nón. */
+const sideFig=(c,x,y,f,o)=>{
+ const m=(v)=>Math.round(v*f),W=(v)=>Math.max(1,Math.round(v*f))
+ const lean=(o.lean||0),sit=o.sit?1:0
+ const hipY=y-m(11-sit*5),shY=y-m(23-sit*4),hx=x+m(lean*.3),sx=x+m(lean)
+ /* chân */
+ if(!sit){c.line(hx-m(1),hipY,x-m(3),y,"z",W(3));c.line(hx+m(1),hipY,x+m(3),y,"Z",W(3));c.rect(x-m(4),y-1,W(3),Math.max(1,m(1.5)),"s");c.rect(x+m(2),y-1,W(3),Math.max(1,m(1.5)),"E")}
+ else{c.line(hx,hipY,x+m(6),hipY+m(1),"Z",W(3.4));c.line(x+m(6),hipY+m(1),x+m(5),y,"z",W(3));c.rect(x+m(4),y-1,W(3),Math.max(1,m(1.4)),"s")}
+ /* thân + vạt áo */
+ const bw=m(4.6)
+ c.poly([hx-bw,hipY+m(1),hx+bw,hipY+m(1),sx+m(3.4),shY,sx-m(3.4),shY].map(rwR),o.top)
+ c.poly([hx-bw,hipY+m(1),hx-m(1),hipY+m(1),sx-m(1),shY,sx-m(3.4),shY].map(rwR),o.topShade)
+ if(f>.8)c.hline(hx-bw,hipY+m(1),bw*2,o.topShade)
+ /* cổ + khăn rằn + đầu nhìn nghiêng */
+ const hdX=sx+m(1.2),hdY=shY-m(4.6)
+ c.rect(sx-m(.8),shY-m(2.4),W(2.4),m(2.6),"s")
+ if(f>.7)for(let i=0;i<3;i++)for(let j=0;j<2;j++)c.px(sx-m(2)+i,shY-m(1.4)+j,(i+j)&1?"w":"m")
+ else c.hline(sx-m(2),shY-m(1),W(4),"w")
+ c.circ(hdX,hdY,Math.max(1,m(2.8)),"s");c.px(hdX+m(2),hdY,"E");if(f>.9){c.px(hdX+m(1.2),hdY-m(.4),"z")}
+ c.circ(hdX-m(1.6),hdY-m(.4),Math.max(1,m(2.3)),"k")                      /* tóc búi sau gáy */
+ /* nón lá: chóp ở giữa, vành rộng, nghiêng nhẹ theo chiều đi */
+ const bx=hdX-m(.5),by=hdY-m(1.8)
+ c.poly([bx-m(9),by+m(1.4),bx+m(.8),by-m(6),bx+m(9.5),by+m(1.4)].map(rwR),"t")
+ c.poly([bx+m(.8),by-m(6),bx+m(9.5),by+m(1.4),bx+m(1),by+m(1.4)].map(rwR),"u")
+ c.hline(bx-m(9),by+m(1.4),m(19),"j")
+ if(f>.9){c.line(hdX+m(1.2),by+m(2),hdX+m(1.5),hdY+m(1.8),"j")}
+ /* tay + cán chèo / mái dầm */
+ if(o.hand){const hx2=x+m(o.hand[0]),hy2=y-m(o.hand[1]);c.line(sx,shY+m(1.4),hx2,hy2,o.top,W(2.2));c.circ(hx2,hy2,Math.max(1,m(1.1)),"s")}
+ /* viền sáng ngược nắng bên phải */
+ for(let yy=shY-m(8);yy<y;yy++)for(let xx=x-m(12);xx<x+m(14);xx++){if(c.is(xx,yy,"RrvVbtu")&&c.is(xx+1,yy,"."))c.px(xx,yy,"Y")}
+}
+
+/* xuồng chợ nhìn nghiêng, mũi hướng phải: hai đầu cong vút, mạn viền vàng, ván ghép ngang; cọc bẹo + hàng hoá đặt ở đầu mũi */
+const sideHull=(c,x0,x1,yw,o)=>{const n=x1-x0,hh=o.h||12,sh=o.sh||7,top=(t)=>yw-hh-sh*Math.pow(Math.abs(2*t-1),2.0),bot=(t)=>yw+1-Math.max(2,hh*.4)*Math.pow(Math.abs(2*t-1),3.2)
+ const A=[],B=[];for(let i=0;i<=n;i++){const t=i/n;A.push([x0+i,top(t)]);B.push([x0+i,bot(t)])}
+ c.poly([...A,...B.reverse()].flatMap(([a,b])=>[rwR(a),rwR(b)]),o.hull)
+ for(let i=0;i<=n;i++){const t=i/n,a=top(t),b=bot(t);c.vline(x0+i,rwR(a),hh>8?2:1,o.rim);if(hh>8){c.vline(x0+i,rwR(a+2),rwR((b-a)*.4),o.hull2);c.vline(x0+i,rwR(b-2),2,o.hull3)}else c.vline(x0+i,rwR(b-1),1,o.hull3)}
+ if(hh>8)for(let i=0;i<=n;i+=7){const t=i/n;c.vline(x0+i,rwR(top(t)+3),rwR((bot(t)-top(t))*.6),o.hull3)}
+ if(hh>8)c.hline(x0+2,rwR(yw+2),n-3,"N")
+}
+
+/* cảnh người chèo xuồng bán hàng: đứng ở lái (trái), một mái dầm dài khua ra sau */
+const NNFRAME=(c)=>{
+ const k=c.phase*Math.PI*2,sw=Math.sin(k),x0=10,x1=138,yw=70
+ /* bóng nước + sóng tách đầu mũi */
+ c.hline(x0+8,yw+4,x1-x0-14,"M");c.hline(x0+16,yw+5,x1-x0-30,"N")
+ c.hline(x1-6,yw+1,12,"K");c.hline(x1-2,yw+2,8,"I")
+
+ /* hàng hoá: giỏ + trái cây chất ở giữa-mũi */
+ const r=c.rng(4),FR=[["R","y","8"],["q","y","9"],["F","P","8"],["8","9","<"]]
+ c.rect(60,yw-16,52,5,"D");c.hline(60,yw-16,52,"t")
+ for(let i=0;i<24;i++){const fx=62+Math.floor(r()*48),fy=yw-17-Math.floor(r()*9),F=FR[(i>>2)%4];c.circ(fx,fy,2,F[i%3])}
+ /* trái treo cây bẹo */
+ c.vline(112,yw-48,36,"Z");c.vline(113,yw-48,36,"m");const G=["R","y","8"];for(let i=0;i<3;i++){c.line(112,yw-44+i*9,108-i%2*3,yw-40+i*9,"Z");c.circ(108-i%2*3,yw-38+i*9,2,G[i])}
+ /* người chèo */
+ const lean=2+Math.round(sw*2),hand=[7+Math.round(sw*3),19]
+ /* mái dầm: từ tay xuống nước phía sau lái, góc đổi theo nhịp */
+ const hxw=x0+22+Math.round(sw*3),hyw=yw-19,bl=[x0-4+Math.round(sw*7),yw+8]
+ sideFig(c,x0+24,yw-6,1.15,{top:"R",topShade:"r",lean,hand:[3,20]})
+ /* thân xuồng vẽ SAU để mạn gần che nửa dưới người và hàng */
+ sideHull(c,x0,x1,yw,{hull:"Z",hull2:"B",hull3:"z",rim:"q"})
+ /* mái dầm khua ra ngoài lái, nằm ngoài thân xuồng */
+ c.line(hxw+6,hyw-8,bl[0],bl[1],"j",2);c.line(hxw+6,hyw-8,hxw+8,hyw-12,"u",2)
+ c.poly([bl[0]-3,bl[1]-2,bl[0]+3,bl[1]-2,bl[0]+4,bl[1]+4,bl[0]-4,bl[1]+4].map(rwR),"t");c.hline(bl[0]-4,bl[1]+5,9,"K");c.hline(bl[0]-6,bl[1]+6,13,"I")
+}
+/* xuồng nhỏ nhìn nghiêng (cảnh xa): hai đầu cong, một người ngồi đội nón lá */
+sprite("_sampan",{w:46,h:22},(c)=>{
+ c.rect(34,9,6,6,"D");c.hline(34,9,6,"t");c.circ(36,8,1,"R");c.circ(38,8,1,"y")
+ sideFig(c,17,18,.56,{top:"R",topShade:"r",sit:true,hand:[9,9]})
+ sideHull(c,2,44,19,{h:6,sh:3,hull:"V",hull2:"v",hull3:"V",rim:"q"})
+ c.hline(5,20,34,"N")})
+sprite("_sampanS",{w:30,h:14},(c)=>{
+ sideFig(c,11,11,.36,{top:"v",topShade:"V",sit:true})
+ sideHull(c,1,29,12,{h:4,sh:2,hull:"Z",hull2:"B",hull3:"z",rim:"t"})
+ c.hline(3,13,24,"N")})
+
 sprite("_ghe",{w:84,h:40},poly([0,22,84,18,76,38,10,38],"V"),hline(2,22,80,"q"),poly([3,24,82,20,75,34,11,34],"v"),
  poly([14,22,22,8,64,6,74,20],"h"),poly([18,20,26,11,62,9,70,19],"j"),(c)=>{for(let x=16;x<72;x+=4)c.line(x,20,x+2,9,"h")},
  rect(26,20,30,10,"Z"),rect(30,21,8,9,"R"),circ(10,18,4,"D"),circ(17,19,4,"B"),circ(14,14,4,"D"),circ(23,17,3,"u"),px(14,13,"u"))
@@ -127,34 +335,6 @@ scene("ben_tre",{w:640,h:360,layers:true},
    const r=c.rng(90);for(let i=0;i<14;i++){const x=Math.round(r()*640),b=368,h=30+r()*60;if(x>150&&x<500)continue;c.line(x,b,x+Math.round((r()-.5)*14),Math.round(b-h),r()<.5?"6":"5")}},
   stamp("_luc",14,326),stamp("_luc",60,344,{flip:"x"}),stamp("_luc",578,334),stamp("_luc",532,350,{flip:"x"}),stamp("_luc",250,352),stamp("_luc",400,346,{flip:"x"})))
 
-/* xuồng chèo: nhìn từ phía sau chếch trên, người đứng chèo hai mái bắt chéo, nón lá + khăn rằn.
-   150x140 (sau viền), 8 khung tuần hoàn. Mũi mái chèo chạm nước ≈ (29,89) lúc kéo. */
-const HP=[[0,0],[9,10],[18,30],[26,58],[32,84],[34,102],[30,112]]
-const hull=(cx,top,ins)=>{const L=HP.map(([x,y])=>[cx-x+ins*Math.sign(x||1),top+y+(y?ins:ins)]),R=HP.map(([x,y])=>[cx+x-ins*Math.sign(x||1),top+y+ins]).reverse();return[...L,...R].flat()}
-const rowBody=(o)=>(c)=>{
- const k=c.phase*Math.PI*2,sw=Math.sin(k),bob=Math.round(Math.sin(k*2)*.8),cx=74,top=14
- if(o.under)o.under(c,cx,top,k)
- c.poly(hull(cx,top,0),"V");c.poly(hull(cx,top,2),"q");c.poly(hull(cx,top,4),"D")
- for(let y=top+22;y<top+110;y+=7)c.hline(cx-Math.round(HP.reduce((a,[hx,hy])=>hy<=y-top?hx:a,0))+5,y,Math.round(HP.reduce((a,[hx,hy])=>hy<=y-top?hx:a,0))*2-10,"B")
- c.rect(cx-26,top+58,52,3,"t");c.rect(cx-28,top+92,56,3,"t")                  /* ván ngang */
- c.rect(cx-9,top+98,18,8,"Z");c.rect(cx-8,top+96,16,4,"w");c.px(cx-4,top+97,"R")
- if(o.pre)o.pre(c,cx,top)
- /* người chèo (nhìn lưng) */
- const by=bob,lean=Math.round(sw*1.5)
- c.line(cx-4,top+74,cx-5,top+90,"Z",4);c.line(cx+4,top+74,cx+5,top+90,"Z",4);c.rect(cx-8,top+88,6,3,"s");c.rect(cx+3,top+88,6,3,"s")
- c.poly([cx-11+lean,top+46+by, cx+11+lean,top+46+by, cx+9,top+76, cx-9,top+76],"R");c.poly([cx+2+lean,top+46+by,cx+11+lean,top+46+by,cx+9,top+76,cx+3,top+76],"r")
- c.poly([cx-9+lean,top+43+by,cx+9+lean,top+43+by,cx+8+lean,top+48+by,cx-8+lean,top+48+by],"q");c.hline(cx-8+lean,top+45+by,16,"r")   /* khăn rằn */
- c.circ(cx+lean,top+40+by,5,"s");c.rect(cx-5+lean,top+36+by,10,3,"z")
- c.poly([cx+lean,top+16+by,cx-22+lean,top+38+by,cx+22+lean,top+38+by],"u");c.poly([cx+lean,top+16+by,cx+6+lean,top+27+by,cx+22+lean,top+38+by,cx+lean,top+38+by],"t");c.hline(cx-22+lean,top+38+by,45,"j");c.line(cx+lean,top+16+by,cx+lean,top+38+by,"p")
- /* hai mái chèo: tay đẩy ra trước (lên) -> mái quét ra sau trong nước, rồi nhấc mái, đưa tay về. Chạm nước ở khung 2 */
- const ph=((c.frame-2+8)%8)/8,pw=ph<.5,u=pw?ph*2:(ph-.5)*2,e=u*u*(3-2*u)
- const hy=top+68+by+Math.round(pw?8-16*e:-8+16*e),hxo=Math.round(Math.sin(k)*1.5)
- const oar=(sign)=>{const pxv=cx+sign*33,pyv=top+78,hxv=cx+sign*7+sign*hxo,dx=pxv-hxv,dy=pyv-hy,tx=Math.round(pxv+dx*.62),ty=Math.round(pyv+dy*1.35)-(pw?0:3)
-  c.line(hxv,hy,pxv,pyv,"t",2);c.line(pxv,pyv,tx,ty,"j",2)
-  if(pw)c.poly([tx-3,ty-3,tx+3,ty-3,tx+4,ty+8,tx-4,ty+8],"t");else c.poly([tx-1,ty-4,tx+1,ty-4,tx+2,ty+6,tx-2,ty+6],"t")
-  c.vline(tx,ty-3,10,"j");c.line(hxv,hy,cx+sign*8+lean,top+52+by,"s",2);c.circ(hxv,hy,1,"s")}
- oar(-1);oar(1)}
-anim("row_ben_tre",{w:148,h:138,frames:8,fps:8,outline:"o"},rowBody({}))
 
 
 /* ====================================================================================
@@ -194,7 +374,6 @@ const lamtram=(c,x,y,s,seed,cl)=>{const r=c.rng(seed),n=Math.max(3,Math.round(3+
  for(let i=0;i<n;i++){const d=r()<.5?-1:1,L=s*(8+r()*12),ex=x+d*L*(.4+r()*.5),ey=y+L*(.5+r()*.5)
   c.line(Math.round(x),Math.round(y),Math.round(ex),Math.round(ey),cl[0]);const m=Math.max(3,Math.round(L/2.6))
   for(let j=1;j<=m;j++){const t=j/m,px=lerp(x,ex,t),py=lerp(y,ey,t);c.px(Math.round(px),Math.round(py+1),(d<0&&r()<.6)?cl[3]:cl[2]);if(r()<.5)c.px(Math.round(px+d),Math.round(py+2),cl[1])}}}
-sprite("_sampanS",{w:28,h:10},poly([0,4,28,3,25,9,3,9],"V"),hline(1,4,26,"q"),poly([2,5,26,4,24,8,4,8],"v"),rect(10,2,8,4,"s"),poly([7,3,14,-2,21,3],"u"),hline(7,3,14,"t"))
 
 /* thân tràm: lấy mẫu trên thảm bèo / bờ xa, nhỏ dần về phía chân trời (hạt giống cố định) */
 const TRAMS=(()=>{const f=(n,seed,test)=>{const o=[];let g=seed;const r=()=>{g=(g*1664525+1013904223)>>>0;return g/4294967296}
@@ -308,9 +487,10 @@ const mboat=(c,x,y,s,o)=>{const L=Math.round(58*s),h=Math.max(3,Math.round(8*s))
   c.hline(cx-tw,deck-1,tw*2+1,"Z")}
  if(o.fruit){const F=FRUIT[o.fruit%5],px=o.tarp?x0+Math.round(L*.08):x0+Math.round(L*.2),n=Math.max(4,Math.round(9*s)),rad=Math.max(1,Math.round(1.7*s))
   for(let i=0;i<n;i++){const fx=px+Math.round(r()*L*(o.tarp?.22:.45)),fy=deck-Math.round(r()*h*.9)-1;c.circ(fx,fy,rad,F[Math.floor(r()*3)])}}
- if(o.vendor){const vx=x0+Math.round(L*(o.tarp?.84:.72)),vh=Math.max(5,Math.round(11*s)),col=o.vendor
-  c.rect(vx-Math.round(2*s),deck-vh,Math.max(3,Math.round(5*s)),vh,col);c.circ(vx,deck-vh-Math.round(2*s),Math.max(1,Math.round(1.8*s)),"s")
-  const hw=Math.max(3,Math.round(6*s));c.poly([vx-hw,deck-vh-Math.round(1.4*s),vx,deck-vh-Math.round(6*s),vx+hw,deck-vh-Math.round(1.4*s)],"u");c.hline(vx-hw,deck-vh-Math.round(1.4*s),hw*2,"t")}
+ if(o.vendor){const vx=x0+Math.round(L*(o.tarp?.84:.72)),col=o.vendor,vf=.78*s
+  if(vf>=.5)sideFig(c,vx,deck,vf,{top:col,topShade:({R:"r",v:"V","<":">",q:"j"})[col]||"r",sit:vf<.7})
+  else{const vh=Math.max(5,Math.round(11*s));c.rect(vx-Math.round(2*s),deck-vh,Math.max(3,Math.round(5*s)),vh,col);c.circ(vx,deck-vh-Math.round(2*s),Math.max(1,Math.round(1.8*s)),"s")
+   const hw=Math.max(3,Math.round(6*s));c.poly([vx-hw,deck-vh-Math.round(1.4*s),vx,deck-vh-Math.round(6*s),vx+hw,deck-vh-Math.round(1.4*s)],"u");c.hline(vx-hw,deck-vh-Math.round(1.4*s),hw*2,"t")}}
  if(o.pole){const px=x0+Math.round(L*.1),pl=Math.round(50*s);c.vline(px,deck-pl,pl,"Z");if(s>.6)c.vline(px+1,deck-pl,pl,"m")
   const G=[[",",":"],["8","9"],["R","y"],["W","y"],["F","P"]];for(let i=0;i<4;i++){const hy=deck-pl+Math.round((3+i*7.5)*s),side=i%2?1:-1,hr=Math.max(1,Math.round(1.9*s)),hx=px+side*Math.round(4*s);c.line(px,hy,hx,hy+Math.round(2*s),"D");c.circ(hx,hy+Math.round(3.5*s),hr,G[(i+o.pole)%5][0]);if(hr>1)c.px(hx-1,hy+Math.round(3*s),G[(i+o.pole)%5][1])}
   c.poly([px+1,deck-pl,px+Math.round(8*s)+1,deck-pl+Math.round(2*s),px+1,deck-pl+Math.round(4*s)],"R")}}
@@ -379,16 +559,14 @@ scene("nga_nam",{w:640,h:360,layers:true},
   stamp("_luc",570,330),stamp("_luc",610,344,{flip:"x"}),stamp("_luc",404,350),stamp("_luc",8,300)))
 
 
-/* xuồng Xẻo Quýt: nhìn từ phía sau, xuôi dọc lạch về phía chân trời (cùng khung với xuồng Bến Tre).
-   Thân gỗ sẫm, áo bà ba chàm; mũi xuồng chất bó cây tràm và cái nơm úp. Không bao giờ vượt ra ngoài mặt nước. */
-anim("row_xeo_quyt",{w:148,h:138,frames:8,fps:8,outline:"o",swap:{V:"Z",q:"t",R:"v",r:"V"}},rowBody({under:(c,cx,top,k)=>{
- /* bóng thân xuồng trên nước + hai vệt sóng tách hai bên mũi, nhấp nhô theo nhịp chèo */
- const w=Math.round(Math.sin(k*2)*1)
- c.ellipse(cx,top+106,40,6,"N");c.ellipse(cx,top+107,34,4,"M")
- c.hline(cx-46,top+108+w,16,"L");c.hline(cx+30,top+108-w,16,"L");c.hline(cx-40,top+112,10,"K");c.hline(cx+30,top+112,10,"K")},pre:(c,cx,top)=>{
- /* bó tràm: các thanh trắng nằm dọc, buộc dây ở giữa */
- for(let i=-3;i<=3;i++){c.line(cx+i*3,top+24,cx+i*3+Math.round(i*.5),top+52,i%2?"A":"G",2)}
- c.rect(cx-11,top+36,22,2,"l");c.rect(cx-11,top+35,22,1,"i")
- /* nơm úp: nón đan, sườn nan */
- c.poly([cx+14,top+58,cx+30,top+58,cx+27,top+46,cx+17,top+46],"u");c.poly([cx+17,top+46,cx+27,top+46,cx+22,top+40],"t")
- c.vline(cx+22,top+40,18,"j");c.hline(cx+14,top+58,17,"j")}}))
+
+const RW_XQ={light:-1,top:"v",topShade:"V",skin:"Z",skinSh:"z",rim:"t",pre:(c)=>{
+ /* bó tràm trắng nằm dọc ván đáy, buộc dây giữa; nơm đan úp cạnh mạn */
+ for(let i=-2;i<=2;i++){const a=rwP(i*.07+.10,2.0,.16),b=rwP(i*.06+.10,3.5,.16);rwLn(c,a,b,i%2?"A":"G",2)}
+ const m1=rwP(.10,2.7,.19),m2=rwP(.10,2.76,.19);rwLn(c,[m1[0]-6,m1[1]],[m1[0]+6,m1[1]],"l",1)
+ const n0=rwP(-.22,2.0,.12),n1=rwP(-.22,2.0,.80);const bw=rwR(.20*n0[2]);rwPoly(c,[[n0[0]-bw,n0[1]],[n0[0]+bw,n0[1]],[n1[0],n1[1]]],"u");rwLn(c,[n0[0]+2,n0[1]],n1,"t");rwLn(c,[n0[0]-bw,n0[1]],n0,"j")}}
+anim("row_ben_tre",{w:148,h:122,frames:8,fps:8,outline:"o"},rwRowBody({light:1,top:"R",topShade:"r"}))
+anim("row_xeo_quyt",{w:148,h:122,frames:8,fps:8,outline:"o"},rwRowBody(RW_XQ))
+
+anim("row_nga_nam",{w:146,h:96,frames:8,fps:8,outline:"o"},NNFRAME)
+

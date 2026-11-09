@@ -3,12 +3,12 @@
 const fs=require('fs'),path=require('path');
 const root=path.join(__dirname,'..'),out=path.join(root,'assets/art/out');
 const BL=['sky','far','water','mid','boats','fore'];
-const LAYERS={bt:['sky','far','water','mid','boats','over','fore'],xq:BL,nn:BL,road:['sky','far','mid','ground','fore'],gate:['sky','trees','gate','ground','people','fore']};
-const DIRS={bt:'ben_tre',xq:'xeo_quyt',nn:'nga_nam',road:'road',gate:'gate'};
+const LAYERS={bt:['sky','far','water','mid','boats','over','fore'],xq:BL,nn:BL,road:['sky','far','mid','ground','fore'],gate:['sky','trees','gate','ground','people','fore'],lib:['wall','desk','book']};
+const DIRS={bt:'ben_tre',xq:'xeo_quyt',nn:'nga_nam',road:'road',gate:'gate',lib:'library'};
 const files={};
 for(const [scene,ls] of Object.entries(LAYERS)){const dir=DIRS[scene];for(const l of ls)files[scene+'_'+l]=path.join(out,'scenes',dir,l+'.png')}
 files.row_bt=path.join(out,'anims/row_ben_tre.png');files.row_xq=path.join(out,'anims/row_xeo_quyt.png');files.row_nn=path.join(out,'anims/row_nga_nam.png');for(const k of ['an','emma','khoa','big_an'])files['ride_'+k]=path.join(out,'anims/ride_'+k+'.png');   /* người đạp xe: nguồn assets/art/ride.px.js */
-files.petal=path.join(out,'sprites/petal.png');
+files.hanh=path.join(out,'sprites/hanh.png');files.petal=path.join(out,'sprites/petal.png');files.an_front=path.join(out,'sprites/an_front.png');files.an_idle=path.join(out,'sprites/an_idle.png');for(let i=0;i<6;i++)files['an_w'+i]=path.join(out,'sprites/an_w'+i+'.png');
 const b64=f=>'data:image/png;base64,'+fs.readFileSync(f).toString('base64');
 let js='/* Tranh pixel art cho cinematic (vẽ bằng pxl, nguồn: assets/art/art.px.js · sinh bởi tools/build_img.js, đừng sửa tay) */\nconst IMG={'+Object.entries(files).map(([k,f])=>k+":'"+b64(f)+"'").join(',')+'};\n';
 js+='const IM={};for(const k in IMG){IM[k]=new Image();IM[k].src=IMG[k]}\n';

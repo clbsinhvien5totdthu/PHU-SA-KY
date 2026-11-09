@@ -23,7 +23,7 @@ function blurred(L,px){const cv=mkc(L.cv.width,L.cv.height),g=cv.getContext('2d'
  return{cv,ox:L.ox,oy:L.oy,w:L.w,h:L.h}}
 /* Bóng người (silhouette) có viền sáng ngược sáng. dir: 'l' | 'r' | 'b' (cả hai bên) */
 function sil(w,h,ox,oy,draw,dir,c1,c2){
- const m=mkc(w,h),mg=m.getContext('2d');mg.translate(-ox,-oy);draw((a,b,c,d,col,al=1)=>{mg.globalAlpha=al;mg.fillStyle=col;mg.fillRect(a,b,c,d)});
+ const m=mkc(w,h),mg=m.getContext('2d',{willReadFrequently:true});mg.translate(-ox,-oy);draw((a,b,c,d,col,al=1)=>{mg.globalAlpha=al;mg.fillStyle=col;mg.fillRect(a,b,c,d)});
  const id=mg.getImageData(0,0,w,h).data,on=(i,j)=>i>=0&&j>=0&&i<w&&j<h&&id[(j*w+i)*4+3]>60;
  const ds=dir==='b'?[-1,1]:[dir==='r'?1:-1];
  return P(w,h,R=>{draw(R);for(let j=0;j<h;j++)for(let i=0;i<w;i++){if(!on(i,j))continue;
@@ -42,7 +42,15 @@ function shelves(R,x0,x1,seed,rows){const r=rng(seed);
   R(x0,y0+34,x1-x0,3,'#7a4a24');R(x0,y0+34,x1-x0,1,'#c3a06a',.85);R(x0,y0+37,x1-x0,1,'#000',.4)}}
 
 /* ---------- Thư viện (góc chính, nhìn về phía cửa sổ) ---------- */
-function buildLib(){
+/* Thư viện vẽ bằng pxl (assets/art/library.px.js): lớp 440x220 gốc (-60,-20), 1 điểm ảnh = 1 px thế giới */
+const libOk=()=>['lib_wall','lib_desk','lib_book','hanh'].every(k=>IM[k]&&IM[k].complete&&IM[k].width);
+function pxLayer(key){const im=IM[key],cv=mkc(im.width*K,im.height*K),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,0,cv.width,cv.height);return{cv,ox:-60,oy:-20,w:im.width,h:im.height}}
+const HS=1.6;
+function buildLibPx(){
+ const wall=pxLayer('lib_wall'),desk=pxLayer('lib_desk'),bookL=pxLayer('lib_book'),im=IM.hanh,hx=Math.round(236-21*HS),hy=Math.round(132-45*HS);
+ const hanh=P(im.width*HS,im.height*HS,(R,g)=>{g.imageSmoothingEnabled=false;g.drawImage(im,hx,hy,im.width*HS,im.height*HS)},hx,hy);
+ return{wall,wallBlur:blurred(wall,26),desk,bookL,an:null,hanh,px:1}}
+function buildLib(){if(libOk())return buildLibPx();
  const wall=P(440,220,(R,g)=>{
   R(-60,-20,440,220,'#24150b');
   shelves(R,-60,116,5,[-31,6,43,80,117,154]);shelves(R,204,380,11,[-31,6,43,80,117,154]);
@@ -144,6 +152,22 @@ function img(key,y0=0,y1){const im=IM[key];if(!im||!im.complete||!im.width)retur
 const stripC={};
 function strip(key,n){if(stripC[key])return stripC[key];const im=IM[key];if(!im||!im.complete||!im.width)return null;const fw=im.width/n,cv=mkc(im.width*K,im.height*K),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,0,cv.width,cv.height);return stripC[key]={cv,fw,fh:im.height,n}}
 
+/* An (mặt trước, sprite pixel assets/art/out/sprites/an_front.png) ngồi sau laptop trong thư viện.
+   Ánh nắng cửa sổ ở phía phải-sau: chỉnh sprite ấm và hơi tối lại, thêm viền sáng ngược sáng bên phải và đỉnh đầu
+   (cùng kiểu với bóng Hạnh) để hoà vào cảnh. Chưa nạp xong ảnh -> trả về null, cảnh dùng tạm bóng cũ. */
+const AN_S=8/K,AN_X=Math.round(62-24*AN_S),AN_Y=Math.round(112-37*AN_S);   /* phóng ≈1,6 lần sao cho mỗi điểm ảnh sprite = đúng 8 px trong canvas K (không bị lệch nét) cho cân với cô Hạnh và laptop; tâm đầu ≈ x62, cằm (hàng điểm ảnh thứ 37 của sprite) ≈ y112 nằm sát trên nắp laptop (y114) để thấy trọn khuôn mặt */
+let ANL=null;
+function anFront(){if(ANL)return ANL;const im=IM.an_front;if(!im||!im.complete||!im.width)return null;
+ const w=im.width,h=im.height,m=mkc(w,h),mg=m.getContext('2d',{willReadFrequently:true});mg.drawImage(im,0,0);const id=mg.getImageData(0,0,w,h),d=id.data,on=(i,j)=>i>=0&&j>=0&&i<w&&j<h&&d[(j*w+i)*4+3]>60;
+ /* chỉnh màu + viền sáng ngược sáng ngay ở độ phân giải gốc, rồi mới phóng nearest một lần (nét điểm ảnh không bị răng cưa) */
+ const o2=mkc(w,h),og=o2.getContext('2d'),out=og.createImageData(w,h),od=out.data,rim=(i,j,r,g,b,al)=>{const o=(j*w+i)*4;od[o]=od[o]*(1-al)+r*al;od[o+1]=od[o+1]*(1-al)+g*al;od[o+2]=od[o+2]*(1-al)+b*al};
+ for(let j=0;j<h;j++)for(let i=0;i<w;i++){const o=(j*w+i)*4;if(d[o+3]<=60)continue;od[o]=Math.min(255,d[o]*.9+16);od[o+1]=Math.min(255,d[o+1]*.8+6);od[o+2]=d[o+2]*.66;od[o+3]=255}
+ for(let j=0;j<h;j++)for(let i=0;i<w;i++){if(!on(i,j))continue;
+  if(!on(i+1,j))rim(i,j,255,207,138,.9);else if(!on(i+2,j))rim(i,j,201,138,90,.45);
+  if(!on(i,j-1))rim(i,j,255,207,138,.6)}
+ og.putImageData(out,0,0);
+ ANL=P(w*AN_S,h*AN_S,(R,g)=>{g.imageSmoothingEnabled=false;g.drawImage(o2,AN_X,AN_Y,w*AN_S,h*AN_S)},AN_X,AN_Y);
+ return ANL}
 let LIB,DOOR;
 const drop=pre=>{for(const id in imgCache)if(id.startsWith(pre))delete imgCache[id]},dropStrip=k=>{delete stripC[k]};
-return{VW,VH,K,FILT,strip,drop,dropStrip,get lib(){return LIB||(LIB=buildLib())},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();
+return{VW,VH,K,FILT,strip,drop,dropStrip,anFront,get lib(){if(!LIB||(!LIB.px&&libOk()))LIB=buildLib();return LIB},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();

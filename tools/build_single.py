@@ -6,7 +6,8 @@ h=re.sub(r'<script src="((?!http)[^"]+)"></script>',lambda m:'<script>'+open(r+'
 v=r+'/vendor/phaser.min.js'
 if os.path.exists(v):  # nhúng Phaser để file chạy offline, không phụ thuộc CDN
     h=re.sub(r'<script src="https://[^"]*phaser[^"]*"></script>\s*<script>window\.Phaser\|\|[^\n]*</script>',lambda m:'<script>'+open(v,encoding='utf8').read().replace('</script','<\\/script')+'</script>',h)
-m=r+'/assets/audio/sang_mekong_delta.mp3'
-if os.path.exists(m):  # nhúng nhạc nền (base64) để file đơn vẫn có tiếng
-    import base64;h=h.replace("'assets/audio/sang_mekong_delta.mp3'","'data:audio/mpeg;base64,"+base64.b64encode(open(m,'rb').read()).decode()+"'")
+import base64
+for n in ('dong_song_anh_sang','sang_mekong_delta'):  # nhúng nhạc nền (base64) để file đơn vẫn có tiếng
+    m=r+'/assets/audio/'+n+'.mp3'
+    if os.path.exists(m):h=h.replace("'assets/audio/"+n+".mp3'","'data:audio/mpeg;base64,"+base64.b64encode(open(m,'rb').read()).decode()+"'")
 os.makedirs(r+'/dist',exist_ok=True);open(r+'/dist/phu_sa_ky.html','w',encoding='utf8').write(h);print('dist/phu_sa_ky.html')

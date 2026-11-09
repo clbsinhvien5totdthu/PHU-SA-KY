@@ -9,7 +9,9 @@
 | `tools/build_features.py` | Sinh `js/data/features.js` từ CSV (nhãn, cổng, sprite theo ID). |
 | `tools/check_map.js` | `node tools/check_map.js`: mọi bước nhiệm vụ, 7 cổng đều đi tới được từ Cổng số 1; mỗi hạng mục có lối đi trong ≤ 4 ô. |
 
-Công thức ô: `col = (x−40)÷8`, `row = (y−40)÷8` trên ảnh gốc 1920×1489, tức `x÷8`, `y÷8` trên ảnh đã cắt. Trong game `Q = 1/8`, `T = 16` px/ô.
+**Bản v3 (tỉ lệ gấp đôi):** lưới 460×352 ô, 1 ô = 4 px sơ đồ (`col = x÷4`, `row = y÷4` trên ảnh đã cắt khung), `Q = 1/4`, `SS = 3` (sprite công trình), `SC = 2` (hệ số nhân so với bản v2; toạ độ `p`/`zone` trong `quests.js` đã nhân đôi). Nền vẽ bằng Tilemap Phaser.
+
+Công thức ô bản v2 (cũ): `col = (x−40)÷8`, `row = (y−40)÷8` trên ảnh gốc 1920×1489, tức `x÷8`, `y÷8` trên ảnh đã cắt. Trong game `Q = 1/8`, `T = 16` px/ô.
 
 ## Quy tắc đã áp dụng
 - Giữ hướng nhìn của sơ đồ; không xoay, không mũi tên Bắc, không thước tỷ lệ, không toạ độ địa lý.
@@ -29,3 +31,23 @@ Công thức ô: `col = (x−40)÷8`, `row = (y−40)÷8` trên ảnh gốc 1920
 - Chưa khóa: diện tích toàn khu (gần 9 ha / khoảng 10 ha), diện tích Nhà trưng bày HCM, số khu chức năng (3 hay 4). Không dùng để suy ra footprint.
 - Phân biệt: Đền thờ (nhà bát giác cũ), Nhà sàn (mô hình 1:1 so với nguyên mẫu), nhà trưng bày về cụ Nguyễn Sinh Sắc và Nhà trưng bày Chủ tịch Hồ Chí Minh (khánh thành 19/5/2022) là các công trình khác nhau; nhãn `NHÀ TRƯNG BÀY` trên sơ đồ chưa xác định thuộc nhà nào.
 - Nguồn S1–S6, W1, U1 xem cẩm nang gốc (Cổng Du lịch Đồng Tháp, Sở VHTTDL Đồng Tháp). Sơ đồ: MAP_USER_02.
+
+## Bản v3: sông, cầu, viền trắng
+- Mạng nước (`MAIN`, `LOOP`, `POND` trong `tools/build_map.py`) đo tay theo đường tim + bề rộng trên sơ đồ, chạy liền một khối: kênh chính từ phía trên (cạnh Chùa Hòa Long) xuống dọc phía tây làng tới gần bãi xe; vòng kênh quanh cụm nhà tách ra phía trên, khép lại vào kênh chính phía dưới; ao nhỏ cạnh Nhà bát dần 1 nối vào kênh chính.
+- Cầu (`BR`): Cổng/cầu 48 (có trên sơ đồ); các cầu còn lại đặt ở chỗ lối đi trên sơ đồ cắt qua kênh (lối D–E, lối Cổng 2 lên làng, bốn lối sang rìa phải). Cầu ngoài Cổng/cầu 48 là suy ra từ lối đi, chưa có ký hiệu riêng trên sơ đồ → `provisional`.
+- Viền trắng (`PH` trong `mapdata.js`): Nhà kiểng, Chùa Hòa Long (4 khối), mảng chữ nhật số 51, khối số 50, bãi xe, hai điêu khắc, lô trống tây bắc. Thêm chỗ cần vẽ: thêm dòng vào `PH` của `build_map.py` rồi chạy lại. Mở game với `?debug` để hiện ID cạnh từng viền.
+- Kiểm tra: `node tools/check_map.js` (mọi bước nhiệm vụ và 7 cổng tới được từ Cổng số 1).
+
+## Bản v4: vẽ lại bằng pxl cho thơ mộng
+- **Nguồn tranh:** `assets/art/map.px.js` (pxl). Dựng: `node <pxl>/bin/pxl.js build assets/art/map.px.js --out assets/art/out && node tools/build_mapart.js` → `js/mapart.js` (data URI, mở file:// vẫn chạy).
+- **Ô nền 16×16** (`m_g*` cỏ, `m_gf*` cỏ hoa, `m_d*` cỏ cắt sọc khu mộ, `m_w*` nước, `m_p*` gạch lát, `m_plz` sân lát, `m_bd*` lề vàng, `m_rd*` đường nhựa, `m_pk_*` ván cầu) + **lớp phủ viền** (`m_bank_*` bờ nước, `m_wedge_*` mép nước, `m_pedge_*` viền lối đi, `m_rail_*` lan can cầu). `scene.js` ghép tileset theo tổ hợp loại ô + hướng viền.
+- **Công trình** `m_h_*` (exh, th, th2, dt, bql, san) vẽ đúng độ phân giải hiển thị, game đặt scale 1 (không còn "mixel" phóng 3×). Muốn thay bằng sprite tự vẽ: sửa/ghi đè `m_h_<mã>` hoặc bỏ nó đi để quay lại sprite cũ.
+- **Trang trí (`MAPDATA.DECOR`)** sinh bởi `build_map.py` mục 10, seed cố định, **chỉ là lớp thẩm mỹ, không phải dữ liệu từ sơ đồ**: cây (bàng, phượng, dừa, tre, liễu), bụi hoa giấy, thảm hoa, lau lách, sen, đèn lồng, ghế đá, đá cuội. Luật: không đè lối đi, cầu, công trình, cổng, viền trắng (PH); không đặt trong khu mộ cỏ đậm; thân cây chặn 1 ô nhưng `check_map.js` vẫn phải đạt. Muốn tắt: đặt `MAPDATA.DECOR=[]`.
+- **Khí quyển:** lớp nhân màu nắng chiều đổi theo đồng hồ trong game (17:30 ấm vàng → 18:40 tím hồng), ánh đèn lồng nhấp nháy mạnh dần, đom đóm quanh nước, cánh hoa rơi quanh phượng/liễu, vignette nhẹ.
+
+## Tối ưu hiệu năng (v4.1)
+- **Draw call:** gộp ảnh trang trí/công trình vào một atlas lúc chạy (`mpk`): draw call/khung 12 → 6, bindTexture 145 → 69 (đo trên cùng cảnh làng Hòa An).
+- **Hậu kỳ:** bỏ vignette/bloom của camera và lớp nhân màu cỡ cả map; thay bằng lớp phủ DOM alpha thường (`#tint`, `#vig`), rẻ hơn nhiều trên GPU yếu/điện thoại.
+- **Khởi động:** dựng tileset bằng khoá số, ít tổ hợp hơn và canvas tạm (trước đó ~2,7 s CPU ở bước này, nay không đáng kể). Canvas đọc ngược pixel trong cutscene dùng `willReadFrequently` để tránh "GPU stall due to ReadPixels".
+- **Mỗi khung:** minimap chỉ vẽ ~9 lần/giây; âm lượng nhạc chỉ ghi khi đổi đáng kể.
+- **Chế độ nhẹ:** tắt đom đóm, cánh hoa, lấp lánh nước, ánh đèn. Tự bật khi FPS < 38 trong 6 giây liên tiếp; hoặc mở thẳng với `?lite`. Console có dòng "[psk] chế độ nhẹ".
