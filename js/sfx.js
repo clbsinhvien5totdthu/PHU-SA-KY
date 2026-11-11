@@ -38,7 +38,7 @@ Object.keys(C).forEach(k=>{const f=C[k];C[k]=(...x)=>buf['cue_'+k]?play('cue_'+k
 /* Điều phối theo cú máy: cutscene.js gọi SFX.cue(tên cú máy, thời lượng, kiểu chuyển) mỗi lần cắt cảnh */
 const cue=(n,D=8,type='cut')=>{if(!init())return;clearCues();
  if(type==='flash')later(0,()=>C.impact(1));else if(type==='dissolve')C.whoosh(.9,.03);else if(type==='dip')C.whoosh(1.2,.025);
- const R={riv3:()=>C.swell(D),rd3:()=>C.swell(D),book:()=>later(3000,C.petal),notes:()=>{C.pen();later(2600,C.pen)},bk:()=>{later(600,C.pen);later(3200,C.pen)},
+ const R={lf03:()=>{[200,800,1400,2000,2600].forEach(k=>later(k,C.step))},lf04:()=>later(900,()=>C.impact(.6)),lf06:()=>later(500,()=>C.whoosh(.7,.02)),lf07:()=>later(3600,C.petal),riv3:()=>C.swell(D),rd3:()=>C.swell(D),book:()=>later(3000,C.petal),notes:()=>{C.pen();later(2600,C.pen)},bk:()=>{later(600,C.pen);later(3200,C.pen)},
   door:()=>{later(100,C.creak);[500,1100,1700,2300,2900].forEach(t=>later(t,C.step))},rdB:()=>C.bell(),gate:()=>later(7000,C.gong)};
  R[n]&&R[n]()};
 const TF={'':330,'An':470,'Cô Hạnh':360,'Emma':520,'Khoa':420},typeTick=sp=>{if(!a)return;const k=(sp||'').replace(/\s*[–—-].*$/,'').trim();T(TF[k]||400,(TF[k]||400)*.92,.011,.035,0,'triangle')};

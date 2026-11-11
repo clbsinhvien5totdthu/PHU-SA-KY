@@ -110,6 +110,17 @@ function buildLib(){if(libOk())return buildLibPx();
   poly(R,[[206,138],[210,114],[222,104],[250,104],[262,114],[266,138]],ink)},'l',rim1,rim2);
  return{wall,wallBlur,desk,bookL,an,hanh}}
 
+/* Emma (sprite pixel assets/art/out/sprites/emma_idle.png ← Emma.aseprite): ngược sáng cửa nên chỉnh màu hơi tối/ấm và thêm viền sáng hai bên giống bóng Khoa.
+   Cắt sát khung hình, phóng nearest 8 lần một lần; asp = rộng/cao để cú máy vẽ đúng tỉ lệ (không bị bóp). Chưa nạp xong ảnh -> null, cảnh dùng tạm bóng cũ. */
+let EMS=null;
+function emmaSprite(){if(EMS)return EMS;const im=IM.emma_idle;if(!im||!im.complete||!im.width)return null;
+ const w=im.width,h=im.height,m=mkc(w,h),mg=m.getContext('2d',{willReadFrequently:true});mg.drawImage(im,0,0);const d=mg.getImageData(0,0,w,h).data,on=(i,j)=>i>=0&&j>=0&&i<w&&j<h&&d[(j*w+i)*4+3]>60;
+ let x0=w,x1=0,y0=h,y1=0;for(let j=0;j<h;j++)for(let i=0;i<w;i++)if(on(i,j)){x0=Math.min(x0,i);x1=Math.max(x1,i);y0=Math.min(y0,j);y1=Math.max(y1,j)}
+ const cw=x1-x0+3,ch=y1-y0+2,o=mkc(cw,ch),og=o.getContext('2d'),out=og.createImageData(cw,ch),od=out.data,at=(i,j)=>on(i+x0-1,j+y0-1),rim=(i,j,r,g,b,al)=>{const q=(j*cw+i)*4;od[q]=od[q]*(1-al)+r*al;od[q+1]=od[q+1]*(1-al)+g*al;od[q+2]=od[q+2]*(1-al)+b*al};
+ for(let j=0;j<ch;j++)for(let i=0;i<cw;i++){if(!at(i,j))continue;const s=((j+y0-1)*w+(i+x0-1))*4,q=(j*cw+i)*4;od[q]=Math.min(255,d[s]*.86+14);od[q+1]=Math.min(255,d[s+1]*.78+6);od[q+2]=d[s+2]*.66;od[q+3]=255}
+ for(let j=0;j<ch;j++)for(let i=0;i<cw;i++){if(!at(i,j))continue;if(!at(i-1,j)||!at(i+1,j))rim(i,j,255,242,200,.8);else if(!at(i-2,j)||!at(i+2,j))rim(i,j,232,194,122,.4);if(!at(i,j-1))rim(i,j,255,242,200,.6)}
+ og.putImageData(out,0,0);const cv=mkc(cw*8,ch*8),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(o,0,0,cv.width,cv.height);
+ return EMS={cv,asp:cw/ch}}
 /* ---------- Cửa ra vào (góc ngược): Emma và Khoa bước vào ---------- */
 function buildDoor(){
  const wall=P(440,220,(R,g)=>{
@@ -140,7 +151,7 @@ function buildDoor(){
   poly(R,[[-13,27],[-18,29],[-19,46],[-13,48]],ink);
   poly(R,[[-13,26],[-17,34],[-17,52],[-13,52]],ink);poly(R,[[13,26],[17,34],[18,46],[14,46]],ink);R(15,41,5,9,ink);
   R(-10,56,9,28,ink);R(1,56,9,28,ink);R(-11,83,11,3,ink);R(1,83,11,3,ink)},'b',c1,c2);
- return{wall,wallBlur,emma,khoa}}
+ return{wall,wallBlur,emma:emmaSprite()||emma,khoa,px:!!emmaSprite()}}
 
 /* ---------- Lớp từ ảnh pixel có sẵn (img.js) ---------- */
 const imgCache={};
@@ -170,4 +181,4 @@ function anFront(){if(ANL)return ANL;const im=IM.an_front;if(!im||!im.complete||
  return ANL}
 let LIB,DOOR;
 const drop=pre=>{for(const id in imgCache)if(id.startsWith(pre))delete imgCache[id]},dropStrip=k=>{delete stripC[k]};
-return{VW,VH,K,FILT,strip,drop,dropStrip,anFront,get lib(){if(!LIB||(!LIB.px&&libOk()))LIB=buildLib();return LIB},get door(){return DOOR||(DOOR=buildDoor())},img,mkc,rng}})();
+return{VW,VH,K,FILT,strip,drop,dropStrip,anFront,get lib(){if(!LIB||(!LIB.px&&libOk()))LIB=buildLib();return LIB},get door(){if(!DOOR||(!DOOR.px&&IM.emma_idle&&IM.emma_idle.complete&&IM.emma_idle.width))DOOR=buildDoor();return DOOR},img,mkc,rng}})();

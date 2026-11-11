@@ -205,13 +205,29 @@ function dLib(sh,cam,u,T){const A=CA.lib,I=sh.light??1;
  if(sh.dim)dim(sh.dim(u))}
 const dim=a=>{x.fillStyle=`rgba(8,10,28,${a})`;x.fillRect(0,0,W,H)};
 
+/* ---------- Thế giới: KHUNG ĐIỆN ẢNH THƯ VIỆN (7 khung 480x202 vẽ bằng pxl: assets/art/library_cinematic.px.js → img.js: lf01…lf07c) ----------
+   Mỗi ảnh được phóng nguyên (nearest) 4 lần đúng một lần rồi camera trượt/phóng bằng nội suy -> giữ nét điểm ảnh mà không rung.
+   sh.img(u) trả về danh sách [khoá ảnh, độ đậm] vẽ chồng theo thứ tự (cuốn bìa xanh: bụi → lau → nhũ vàng). cam(u) = {x,y: điểm nhìn trên ảnh 0..1, z: độ phóng ≥ 1}. */
+const FRC={};
+function frm(k){if(FRC[k])return FRC[k];const im=IM[k];if(!im||!im.complete||!im.width)return null;const cv=CA.mkc(im.width*4,im.height*4),g=cv.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(im,0,0,cv.width,cv.height);return FRC[k]=cv}
+function dFrm(sh,cam,u,T){x.fillStyle='#0a0604';x.fillRect(0,0,W,H);
+ const vh=Math.max(10,H-2*bar),s=Math.max(W/480,vh/202)*cam.z,iw=480*s,ih=202*s,hx=Math.min(.5,W/iw/2),hy=Math.min(.5,vh/ih/2),fx0=cl(cam.x,hx,1-hx),fy0=cl(cam.y,hy,1-hy);
+ const dx=W/2-fx0*iw,dy=H/2+shY-fy0*ih;
+ for(const[k,a]of sh.img(u)){const cv=frm(k);if(cv&&a>0){x.globalAlpha=a;x.drawImage(cv,dx,dy,iw,ih)}}x.globalAlpha=1;
+ /* bụi lơ lửng trong vệt nắng (lớp phủ theo màn hình, nhẹ) */
+ x.globalCompositeOperation='lighter';const k2=W/960;
+ for(let i=0;i<36;i++){const px=((hh(i)*W+T*(5+hh(i+3)*9)*k2)%W+W)%W,py=((hh(i+7)*H-T*(3+hh(i+2)*7)*k2)%H+H)%H,a=(.12+.5*hh(i+11))*(.6+.4*Math.sin(T*1.5+i*2.3));
+  x.fillStyle=`rgba(255,236,196,${(a*.45).toFixed(3)})`;x.beginPath();x.arc(px,py,(.7+hh(i+5)*1.5)*Math.max(1,k2),0,7);x.fill()}
+ x.globalCompositeOperation='source-over';
+ if(sh.dim)dim(sh.dim(u))}
+
 /* ---------- Thế giới: CỬA RA VÀO (góc ngược, Emma & Khoa bước vào) ---------- */
 function dDoor(sh,cam,u,T){const A=CA.door;x.fillStyle='#0d0805';x.fillRect(0,0,W,H);
  const f=sh.focus??.3;blit(A.wallBlur,.8,cam);blit(A.wall,.8,cam,1-f);
  {const[wx,wy,s]=wpos(.86,cam,160,76);glowS(wx,wy,s*135,'255,235,190',.26)}
  place(.9,cam);x.globalCompositeOperation='lighter';{const g=x.createLinearGradient(0,124,0,200);g.addColorStop(0,'rgba(255,230,170,.36)');g.addColorStop(1,'rgba(255,210,140,0)');x.fillStyle=g;x.beginPath();x.moveTo(128,124);x.lineTo(192,124);x.lineTo(270,200);x.lineTo(50,200);x.fill()}x.globalCompositeOperation='source-over';idt();
  const k=sh.walk(u);
- [[A.emma,150,134,0],[A.khoa,172,190,.5]].forEach(([L,x0,x1,ph],n)=>{const sc=mix(.8,1.04,k),fy=mix(123,138,k),fxp=mix(x0,x1,k),bob=k<1?Math.abs(Math.sin(u*6+ph*3))*.9:Math.sin(T*1.1+n)*.12;blitR(L,1,cam,fxp-22*sc,fy-86*sc-bob,44*sc,86*sc)});
+ [[A.emma,150,134,0],[A.khoa,172,190,.5]].forEach(([L,x0,x1,ph],n)=>{const sc=mix(.8,1.04,k),fy=mix(123,138,k),fxp=mix(x0,x1,k),bob=k<1?Math.abs(Math.sin(u*6+ph*3))*.9:Math.sin(T*1.1+n)*.12;const wh=86*sc,ww=L.asp?wh*L.asp:44*sc;blitR(L,1,cam,fxp-ww/2,fy-wh-bob,ww,wh)});
  dust(cam,T,70);
  const[wx,wy]=wpos(.86,cam,160,76);flareAt(wx,wy,.35);if(sh.dim)dim(sh.dim(u))}
 
@@ -315,6 +331,14 @@ const SH={
  book:{w:dLib,act:1,focus:rack,petal:1,bloom:.8,flare:.35,light:1.2,cam:u=>{const k=asym(u,7);return{x:mix(172,160,k),y:mix(120,129,k),z:mix(2.0,3.1,k)}}},
  box:{w:dLib,act:1,focus:.85,bloom:.7,cam:u=>{const k=asym(u,7);return{x:mix(290,274,k),y:121,z:mix(2.15,2.5,k)}}},
  libEnd:{w:dLib,act:1,focus:.15,bloom:.7,light:.85,dim:u=>.22*ez(cl(u/10)),cam:u=>{const k=asym(u,6);return{x:mix(150,160,k),y:mix(100,92,k),z:mix(1.55,1.03,k)}}},
+ /* Khung điện ảnh thư viện (pxl): catalog → khe trống trên kệ → bưng sách → sách tuột → nhặt → phủi bụi → bìa sách hiện nhũ vàng */
+ lf01:{w:dFrm,act:1,bloom:.8,img:()=>[['lf01',1]],cam:u=>{const k=asym(u,9);return{x:mix(.30,.40,k),y:.62,z:mix(1.0,1.2,k)}}},
+ lf02:{w:dFrm,act:1,bloom:.7,img:()=>[['lf02',1]],cam:u=>{const k=asym(u,9);return{x:mix(.42,.66,k),y:.58,z:mix(1.0,1.16,k)}}},
+ lf03:{w:dFrm,act:1,bloom:.8,img:()=>[['lf03',1]],cam:u=>{const k=asym(u,10);return{x:mix(.30,.60,k),y:.60,z:mix(1.0,1.1,k)}}},
+ lf04:{w:dFrm,act:1,bloom:.8,img:()=>[['lf04',1]],cam:u=>{const k=asym(u,9);return{x:mix(.34,.58,k),y:.55,z:mix(1.04,1.22,k)}}},
+ lf05:{w:dFrm,act:1,bloom:.8,img:()=>[['lf05',1]],cam:u=>{const k=asym(u,9);return{x:mix(.40,.56,k),y:.72,z:mix(1.0,1.22,k)}}},
+ lf06:{w:dFrm,act:1,bloom:.8,img:()=>[['lf06',1]],cam:u=>{const k=asym(u,9);return{x:mix(.46,.54,k),y:.46,z:mix(1.0,1.14,k)}}},
+ lf07:{w:dFrm,act:1,bloom:.9,img:u=>[['lf07a',1],['lf07b',ez(cl((u-2.2)/1.1))],['lf07c',ez(cl((u-4.2)/1.3))]],cam:u=>{const k=asym(u,10);return{x:.5,y:.5,z:mix(1.0,1.12,k)}}},
  notes:{w:dBook,act:2,bloom:.08,cam:()=>({x:160,y:90,z:1})},
  door:{w:dDoor,act:1,focus:.3,bloom:.8,walk:u=>ez(cl(u/3.4)),cam:u=>{const k=asym(u,6);return{x:160,y:mix(80,86,k),z:mix(1.55,1.12,k)}}},
  emma:{w:dDoor,act:1,focus:.85,bloom:.8,walk:()=>1,cam:u=>{const k=asym(u,8);return{x:mix(137,141,k),y:72,z:mix(1.7,1.85,k)}}},
@@ -330,7 +354,7 @@ const SH={
 };
 
 /* ---------- Dựng theo lời thoại: mỗi câu = một cú máy ---------- */
-const cnt={an:0,hanh:0},INS=['book','box','notes','libEnd','door','libA','libW','libLow','libM','libOTS'];
+const cnt={an:0,hanh:0},INS=['book','box','notes','libEnd','door','libA','libW','libLow','libM','libOTS','lf01','lf02','lf03','lf04','lf05','lf06','lf07'];
 const LAY={bt:['sky','far','water','mid','boats','over','fore'],xq:['sky','far','water','mid','boats','fore'],nn:['sky','far','water','mid','boats','fore'],road:['sky','far','mid','ground','fore'],gate:['sky','trees','gate','ground','people','fore']},
  SCN={riv0:'bt',riv1:'bt',riv2:'xq',riv3:'nn',rd1:'road',rd2:'road',rdB:'road',rd3:'road',gate:'gate'},NXT={riv0:'nn',libA:'road',rd1:'gate'},SK={bt:['row_bt'],xq:['row_xq'],nn:['row_nn'],road:['ride_an','ride_emma','ride_khoa','ride_big_an']},WQ=[];let curScn='';
 const warm=sc=>{(LAY[sc]||[]).forEach(l=>{const k=sc+'_'+l;if(!WQ.includes(k))WQ.push(k)});(SK[sc]||[]).forEach(k=>WQ.push('S:'+k))};
@@ -367,7 +391,7 @@ function post(sh,T,ba){
  const gi=Math.floor(T*12),ox=hh(gi)*160|0,oy=hh(gi+9)*160|0;fx.save();fx.globalCompositeOperation='overlay';fx.globalAlpha=.07;fx.translate(-ox,-oy);fx.fillStyle=grp;fx.fillRect(ox,oy,W,H);fx.restore()}
 
 function render(T){const sh=cur,u=T-curT0,cam=sh.cam(u);let ba=sh.bloom??.5;if(trans&&trans.type!='dip')ba+=(trans.b0-ba)*(1-ez(cl((T-trans.t)/trans.d)));   /* bloom chuyển dần giữa hai cú máy, không bật/tắt đột ngột */
- const hd=(sh.w===dLib||sh.w===dDoor)?1:.5;
+ const hd=(sh.w===dLib||sh.w===dDoor)?1:sh.w===dFrm?0:.5;
  /* rung tay rất nhẹ: máy quay như có người cầm */
  cam.x+=Math.sin(T*.7)*.22*hd;cam.y+=Math.sin(T*1.05+2)*.15*hd;cam.z*=1+Math.sin(T*.45)*.004*hd;
  x.setTransform(1,0,0,1,0,0);x.globalAlpha=1;x.globalCompositeOperation='source-over';

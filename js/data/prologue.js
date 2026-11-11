@@ -3,11 +3,16 @@ const OB=[['known','Tờ giấy gấp tư chia ba cột: “Điều có tư li�
 const en=(k,t,s,c)=>K[k].includes(t)||rec(k,t,s,c);
 /* Phần thứ 4 của mỗi mục tường thuật = tên cú máy (xem SH trong js/cutscene.js); không ghi thì cutscene tự chọn theo người nói. */
 const PRO=done=>seq([
-['','Nắng chiều xiên qua ô cửa sổ, bụi sách lơ lửng trong những vệt sáng. Thư viện đang chuyển bớt kho tư liệu cũ sang phòng đọc mới. An gõ “lịch sử địa phương – Cao Lãnh – Hòa An” vào máy, nhưng kết quả cứ thiếu thiếu.',null,'libA'],
-['An','Lạ thật. Danh mục ghi còn một bản, mà tìm ba vòng rồi vẫn không thấy.'],
+['','Nắng chiều xiên qua ô cửa sổ, bụi sách lơ lửng trong những vệt sáng. Thư viện đang chuyển bớt kho tư liệu cũ sang phòng đọc mới. An gõ “lịch sử địa phương – Cao Lãnh – Hòa An” vào máy, nhưng kết quả cứ thiếu thiếu.',null,'lf01'],
+['An','Lạ thật. Danh mục ghi còn một bản, mà tìm ba vòng rồi vẫn không thấy.',null,'lf02'],
 ['Cô Hạnh','Em thử coi mấy thùng sách mới chuyển vô chưa? Có vài cuốn cũ chưa kịp nhập danh mục. Nhớ nhẹ tay nghen, gáy sách mục lắm.'],
 ['An – chọn cách nói','Nói với cô Hạnh sao đây để cô hiểu mình cần tư liệu để làm gì?',[['“Em không muốn chỉ lượm thông tin trên mạng rồi ghép lại ạ.”',()=>[['Cô Hạnh','Vậy thì càng phải coi kỹ. Có tài liệu đọc một lần là hiểu, có tài liệu phải biết nó từ đâu ra mới dùng được.']]],['“Cô cho em lấy nhanh nha, mai em phải nộp giáo án rồi.”',()=>{st.c.hurry=1;return[['Cô Hạnh','Nộp giáo án thì cũng phải nộp cho đúng nguồn chứ. Thong thả đã, rồi hẵng tính chuyện nhanh.']]}]]],
-['','Dưới đáy thùng là một quyển bìa cứng xanh sẫm, chữ nhũ đã phai: “Lịch sử Đồng Bằng Sông Cửu Long”. Cô Hạnh đặt nó lên bàn; một cánh sen ép khô rơi ra, cùng tờ giấy gấp tư kẹp làm dấu trang.',null,'book'],
+['','An ôm một chồng sách từ thùng mới chuyển, bước qua phòng đọc. Nắng chiều kéo bóng cậu dài trên sàn gỗ; ở xa, cô Hạnh vẫn cặm cụi bên quầy.',null,'lf03'],
+['','Giữa chồng sách, một quyển bìa cứng xanh sẫm tuột ra, quệt vệt bụi trong nắng.',null,'lf04'],
+['','An đặt vội chồng sách xuống rồi cúi nhặt. Quyển sách nằm giữa vũng nắng, phủ một lớp bụi mịn.',null,'lf05'],
+['','Cậu phủi nhẹ. Bụi bốc lên thành đám, sáng lên trong nắng.',null,'lf06'],
+['','Dưới lớp bụi, chữ nhũ đã phai hiện dần: “Lịch sử Đồng Bằng Sông Cửu Long”.',null,'lf07'],
+['','An mang quyển sách ra bàn đọc. Cô Hạnh lại gần; khi mở bìa, một cánh sen ép khô rơi ra, cùng tờ giấy gấp tư kẹp làm dấu trang.',null,'book'],
 ['An – quan sát','Nhiều trang có ghi chú cùng một nét chữ: khi bút chì, khi mực nâu, có câu gạch đi viết lại, và không ký tên. Xem cái nào trước đây?',[['Tờ giấy gấp tư (ba cột).',()=>{en(...OB[0]);return[['An','Ba cột… Người viết cũng tự phân loại những gì mình biết.']]}],['Mốc “Hòa An – 1927 đến 1929” khoanh mực nâu.',()=>{en(...OB[1]);return[['An','Mốc này được khoanh lại. Mà mình chưa biết vì sao.']]}],['Cụm “Người lái đò” ở nhiều trang.',()=>{en(...OB[2]);return[['An','Khi thì kế chuyện đưa thư, khi thì chở người qua rạch. Chưa dám chắc là một người hay nhiều người.']]}]]],
 ['An – xin phép','Mình muốn chụp lại bìa và mấy trang có ghi chú để tra cứu.',[['Hỏi cô Hạnh trước rồi mới chụp.',()=>[['An','Cô ơi, cho em chụp lại bìa với mấy trang có ghi chú để tra cứu nha cô. Em chưa đăng gì lên mạng đâu ạ.'],['Cô Hạnh','Được. Em ghi lại tình trạng cuốn sách trước, rồi chụp theo đúng quy định của thư viện.']]],['Chụp luôn cho nhanh, lát hỏi sau.',()=>{st.c.hurry=1;return[['Cô Hạnh','An, hỏi trước rồi mới chụp. Sách này người ta hiến tặng, đâu phải của riêng mình em.'],['An','Dạ, em xin lỗi cô. Em xóa ảnh liền, khi nào cô đồng ý em chụp lại.']]}]]],
 ['Cô Hạnh','Em coi thử phiếu tiếp nhận lô sách đi. Nếu là tài liệu hiến tặng thì có thể còn thông tin người gửi.'],

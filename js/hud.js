@@ -5,8 +5,8 @@ function hudInit(sc){mm0=document.createElement('canvas');mm0.width=W;mm0.height
 addEventListener('keydown',e=>{if(e.key.toLowerCase()=='m')$('side').classList.toggle('big')});
 function hudTick(sc,dt){const pl=sc.pl,px=pl.x/T/Q,py=pl.y/T/Q,z=ZN.find(a=>px>=a[1]&&px<=a[3]&&py>=a[2]&&py<=a[4]),n=z?z[0]:'Đường nội khu';
 if(n!==zn){zn=n;PSK.emit('zone',n);const l=$('loc');l.textContent='📍 '+n;l.classList.remove('f');void l.offsetWidth;l.classList.add('f')}
-clk=Math.min(clk+dt/1000*.5,18*60+40);const m=clk|0,c='🕔 '+Math.floor(m/60)+':'+String(m%60).padStart(2,'0')+' · '+(m<18*60+10?'Chiều muộn':'Hoàng hôn')+'|Dấu vết '+K.known.length+' · Lời kể '+K.told.length+' · An nghĩ '+K.open.length;
-if(c!==mc){mc=c;const[a,b]=c.split('|');$('clk').textContent=a;$('mtr').textContent=b}
+clk=Math.min(clk+dt/1000*.5,18*60+40);const m=clk|0,sg=m*1e6+K.known.length*1e4+K.told.length*100+K.open.length;
+if(sg!==hudTick.sg){hudTick.sg=sg;const c='🕔 '+Math.floor(m/60)+':'+String(m%60).padStart(2,'0')+' · '+(m<18*60+10?'Chiều muộn':'Hoàng hôn')+'|Dấu vết '+K.known.length+' · Lời kể '+K.told.length+' · An nghĩ '+K.open.length;if(c!==mc){mc=c;const[a,b]=c.split('|');$('clk').textContent=a;$('mtr').textContent=b}}   /* chỉ dựng chuỗi/ghi DOM khi phút game hoặc số liệu đổi */
 const S=STEPS[st.step],now=performance.now();if(now-(hudTick.mt||0)>110){hudTick.mt=now;const q=$('mm').getContext('2d');q.drawImage(mm0,0,0);if(S){q.fillStyle='#ffd24a';q.strokeStyle='#3b2412';q.lineWidth=2;q.beginPath();q.arc(S.p[0],S.p[1],6+2*Math.sin(performance.now()/200),0,7);q.fill();q.stroke()}
-q.fillStyle='#fff';q.strokeStyle='#d0342c';q.lineWidth=3;q.beginPath();q.arc(pl.x/T,pl.y/T,4.8,0,7);q.fill();q.stroke()}$('stat').style.opacity=busy?0:1}
+q.fillStyle='#fff';q.strokeStyle='#d0342c';q.lineWidth=3;q.beginPath();q.arc(pl.x/T,pl.y/T,4.8,0,7);q.fill();q.stroke()}const so=busy?0:1;if(so!==hudTick.so){hudTick.so=so;$('stat').style.opacity=so}}
 
