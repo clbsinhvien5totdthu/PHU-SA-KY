@@ -62,11 +62,11 @@ const NOLBL=new Set(['GX_CONG_KHONG_NHAN','FX_KHOI_CHUA_NHAN','AX_MANG_CHU_NHAT'
 const SPR={A3_DEN_THO:['dt',1.35,34],B1_NHA_TRUNG_BAY:['exh',1.5,50],D2_NHA_SAN:['san',1,30],D4_BAN_QUAN_LY:['bql',1.15,26],F2_TUONG_CU:['stat',1,22],
  F1_NHA_NOC_NGUA_1:['noc',1,24],F4_NHA_BAT_DAN_1:['bat',1,24],F5_NHA_ONG_NAM_GIAO:['la2',1,24],F6_NHA_CU_SAC:['noc',1,24],F7_NHA_CHU_DINH_2:['dinh',1,24],F8_NHA_BAT_DAN_2:['bat',1,24],F9_NHA_ONG_CA_NHI_NGUU:['la',1,24],F16_NHA_NOC_NGUA_2:['noc',1,24],E4_NHA_CHU_DINH_1:['dinh',1,24],
  F10_NHA_TREN_COC_2:['coc',1,22],F14_NHA_TREN_COC_1:['coc',1,22],
- A7_WC_DEN:['bk',1,12],B4_WC:['bk',1,12],C2_WC:['bk',1,12],E5_WC:['bk',1,12],F12_WC:['bk',1,12],F15_CAFE_HOA_AN:['bk',1,12],
+ A7_WC_DEN:['bk',1,12],B4_WC:['bk',1,12],C2_WC:['bk',1,12],E5_WC:['bk',1,12],F12_WC:['bk',1,12],F15_CAFE_HOA_AN:['cf',1,12],
  C3_DIEM_DUNG_CHAN:['bl',1,14],E2_DIEM_DUNG_CHAN:['bl',1,14],F11_DIEM_DUNG_CHAN:['bl',1,14],F13_KHU_AM_THUC:['bg',1,28],
  C4_QUAY_LUU_NIEM:['pk',1,14],D3_QUAY_LUU_NIEM:['pk',1,14],E3_QUAY_LUU_NIEM:['pk',1,14]};
 /* Hạng mục gồm nhiều ô: [kết cấu, [[dx,dy],...]] theo px sơ đồ quanh điểm đo */
-const MULTI={C1_DIEM_DUNG_CHAN:['bk',[[-44,-28],[0,-28],[0,10]]],F3_DIEM_DUNG_CHAN:['bl',[[0,-22],[2,22]]]};
+const MULTI={C1_DIEM_DUNG_CHAN:['bl',[[-44,-28],[0,-28],[0,10]]],F3_DIEM_DUNG_CHAN:['bl',[[0,-22],[2,22]]]};
 /* Chùa Hòa Long: chỉ footprint (col,row,rộng,cao theo ô) — chưa gán kiến trúc */
 const CHUA=[[125,50,6,9],[125,59,5,22],[131,51,3,16],[131,70,3,5]];
 const short=n=>n.replace(/^Điểm dừng chân.*$/,'ĐIỂM DỪNG CHÂN').replace(/^Quầy lưu niệm.*$/,'QUẦY LƯU NIỆM').replace(/^WC.*$/,'WC').replace(/^Mặt nước.*$/,'').toUpperCase();

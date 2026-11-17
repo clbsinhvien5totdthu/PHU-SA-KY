@@ -9,18 +9,18 @@ const NB=[[0,-1],[0,1],[-1,0],[1,0]],hx=c=>'#'+c.toString(16).padStart(6,'0');
 const NBX=[0,0,-1,1],NBY=[-1,1,0,0];
 /* khoá ô = (loại*256 + mặt nạ viền)*24 + biến thể (chỉ cỏ mới có 24 biến thể vì có hoa; loại khác 4 → ít tổ hợp, dựng tileset nhanh) */
 /* MAPDATA.X: bit0 = nước kênh phù sa (t=13), bit1 = lối đất trong làng (t=12) — chỉ đổi tranh ô, M vẫn là 2/8 nên va chạm/đường đi không đổi */
-const keyOf=(x,y)=>{const X=(MAPDATA.X?.[y]?.charCodeAt(x)-48)||0;let t=M[y][x];if(t===2&&(X&1))t=13;else if(t===8&&(X&2))t=12;let m=0;
+const keyOf=(x,y)=>{const X=(MAPDATA.X?.[y]?.charCodeAt(x)-48)||0;let t=M[y][x];if(t===2&&(X&1))t=13;let m=0;
  for(let i=0;i<4;i++){const n=M[y+NBY[i]]?.[x+NBX[i]];
   if(t===2||t===13){if(n!==undefined&&n!==2&&n!==7&&n!==11)m|=1<<i}
   else if(t===0||t===4||t===1||t===8||t===12||t===5||t===7||t===11){if(n===2)m|=1<<i}
-  if((t===8||t===12||t===5)&&(n===0||n===4||n===1))m|=16<<i}
+  if(t===5&&(n===0||n===4||n===1))m|=16<<i}
  const h=((x*73856093)^(y*19349663))>>>0;return(t*256+m)*24+(t===0?h%24:h%4)};
 /* ô nền vẽ bằng pxl (assets/art/map.px.js → js/mapart.js): mỗi ô = ảnh gốc + lớp phủ viền (bờ nước, mép nước, viền lối đi, lan can cầu) */
 const TI=k=>sc.textures.get(k).getSourceImage(),DN=['n','s','w','e'];
 const drawTile=(cx,X,Y,t,m,v)=>{const D=k=>cx.drawImage(TI(k),X,Y);
- D(t==0?(v>=22?'m_gf'+(v==22?0:2):v>=20?'m_gs'+(v-20):'m_g'+v%8):t==4?'m_d'+v%2:t==1?'m_dirt'+v%2:t==2?'m_w'+v%4:t==13?'m_wp'+v%4:t==12?'m_e'+v%4:t==3?'m_bd'+v%2:t==5?'m_plz'+(v%4==0?'1':''):t==6?'m_out'+v%4:t==7?'m_pk_h':t==11?'m_pk_v':t==8?'m_p'+v%4:t==9?'m_rd'+v%2:'m_lot');
+ D(t==0?(v>=22?'m_gf'+(v==22?0:2):v>=20?'m_gs'+(v-20):'m_g'+v%8):t==4?'m_d'+v%2:t==1?'m_dirt'+v%2:t==2?'m_w'+v%4:t==13?'m_wp'+v%4:t==12?'m_e'+v%4:t==3?'m_bd'+v%2:t==5?'m_plz'+(v%4==0?'1':''):t==6?'m_out'+v%4:t==7?'m_pk_h':t==11?'m_pk_v':t==8?'m_g'+v%8:t==9?'m_rd'+v%2:'m_lot');
  DN.forEach((d,i)=>{if(t==2||t==13){if(m&(1<<i))D(t==13?'m_wedgep_'+d:'m_wedge_'+d)}else if([0,4,1,8,12,5].includes(t)){if(m&(1<<i))D('m_bank_'+d)}else if((t==7||t==11)&&m&(1<<i)&&((t==7)==(i<2)))D('m_rail_'+d);
-  if((t==8||t==5)&&m&(16<<i))D('m_pedge_'+d);if(t==12&&m&(16<<i))D('m_eedge_'+d)})};
+  if(t==5&&m&(16<<i))D('m_pedge_'+d)})};
 /* Nền dựng theo MẢNG (chunk 32x32 ô = 512 px) quanh khung nhìn thay cho Phaser Tilemap (162.000 đối tượng Tile, ~1.000 quad/khung): chỉ giữ vài mảng gần người chơi trong bộ nhớ, mỗi mảng là 1 ảnh → vài quad/khung */
 const tkeys=[],tmap=new Map(),TG=new Uint16Array(W*H),TCOLS=40,PHS=[],STARS=[];
 for(let y=0;y<H;y++)for(let x=0;x<W;x++){const k=keyOf(x,y);let i=tmap.get(k);if(i===undefined){i=tkeys.length;tmap.set(k,i);tkeys.push(k)}TG[y*W+x]=i}
@@ -32,7 +32,11 @@ const CT=32,CPX=CT*T,GCN=Math.ceil(W/CT),GCM=Math.ceil(H/CT),GC=new Map();let gS
 const gOver=g=>{g.strokeStyle='#fff';g.lineWidth=2;for(const q of PHS){g.beginPath();if(q[0]=='r')g.rect(q[1],q[2],q[3],q[4]);else if(q[0]=='p'){q[1].forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.closePath()}else g.arc(q[1],q[2],q[3],0,6.2832);g.stroke()}
  g.fillStyle='#ffd27a';g.strokeStyle='#3b2412';g.lineWidth=1;for(const[x,y]of STARS){g.beginPath();for(let i=0;i<8;i++){const a=-1.5708+i*.7854,r=i%2?2.2:5.5,px=x+Math.cos(a)*r,py=y+Math.sin(a)*r;i?g.lineTo(px,py):g.moveTo(px,py)}g.closePath();g.fill();g.stroke()}};
 const gNew=(cx,cy)=>{const n=CT+1,cv=document.createElement('canvas');cv.width=cv.height=n*T;return{cx,cy,cv,g:cv.getContext('2d'),row:0}};   /* +1 ô gối đầu sang mảng bên cạnh → không bao giờ hở khe */
-const gRows=(j,r)=>{const n=CT+1,g=j.g,e=Math.min(n,j.row+r);for(let ty=j.row;ty<e;ty++){const Y=j.cy*CT+ty;if(Y>=H)continue;for(let tx=0;tx<n;tx++){const X=j.cx*CT+tx;if(X>=W)break;const i=TG[Y*W+X];g.drawImage(TSC,(i%TCOLS)*T,(i/TCOLS|0)*T,T,T,tx*T,ty*T,T,T)}}j.row=e;return e>=n};
+/* Đường lát gạch (v17): dual-grid 15 mảnh m_br_01..15 (assets/art/map.px.js). Mảnh đặt tại ĐỈNH lưới (lệch nửa ô): mask = NW·1+NE·2+SW·4+SE·8, bit = ô quanh đỉnh có M==8.
+ m_br_15c1/c2 = ruột có viên sứt, chỉ dùng khi băm%12==0 / ==6. Đỉnh hàng ty vẽ sau khi ô nền hàng ty đã vẽ (mảnh phủ nửa dưới hàng ty-1 và nửa trên hàng ty). */
+const BRK=(X,Y)=>M[Y]?.[X]===8,BRP=m=>'m_br_'+(m<10?'0':'')+m;
+const gBr=(g,j,ty)=>{const Y=j.cy*CT+ty;if(Y>H)return;for(let tx=0;tx<=CT+1;tx++){const X=j.cx*CT+tx;if(X>W)break;const m=(BRK(X-1,Y-1)?1:0)|(BRK(X,Y-1)?2:0)|(BRK(X-1,Y)?4:0)|(BRK(X,Y)?8:0);if(!m)continue;let k=BRP(m);if(m===15){const h=((X*73856093)^(Y*19349663))>>>0;if(h%12===0)k='m_br_15c1';else if(h%12===6)k='m_br_15c2'}g.drawImage(TI(k),tx*T-8,ty*T-8)}};
+const gRows=(j,r)=>{const n=CT+1,g=j.g,e=Math.min(n,j.row+r);for(let ty=j.row;ty<e;ty++){const Y=j.cy*CT+ty;if(Y>=H)continue;for(let tx=0;tx<n;tx++){const X=j.cx*CT+tx;if(X>=W)break;const i=TG[Y*W+X];g.drawImage(TSC,(i%TCOLS)*T,(i/TCOLS|0)*T,T,T,tx*T,ty*T,T,T)}gBr(g,j,ty)}j.row=e;if(e>=n)gBr(g,j,n);return e>=n};
 const gFin=j=>{const g=j.g,k=j.cx+j.cy*64,key='gc'+k;g.save();g.translate(-j.cx*CPX,-j.cy*CPX);gOver(g);g.restore();sc.textures.addCanvas(key,j.cv);sc.textures.get(key).setFilter(Phaser.Textures.FilterMode.NEAREST);const e={im:sc.add.image(j.cx*CPX,j.cy*CPX,key).setOrigin(0,0).setDepth(0),key,u:gSt};GC.set(k,e);return e};
 const gBuild=(cx,cy)=>{const k=cx+cy*64;let e=GC.get(k);if(e)return e;let j;if(gJ&&gJ.cx==cx&&gJ.cy==cy){j=gJ;gJ=null}else j=gNew(cx,cy);gRows(j,99);return gFin(j)};   /* dựng ngay (mảng đang nhìn thấy mà chưa có) */
 const gUpd=force=>{const v=sc.cameras.main.worldView,x0=Math.max(0,Math.floor(v.x/CPX)),x1=Math.min(GCN-1,Math.floor(v.right/CPX)),y0=Math.max(0,Math.floor(v.y/CPX)),y1=Math.min(GCM-1,Math.floor(v.bottom/CPX)),kk=x0+x1*64+y0*4096+y1*262144;

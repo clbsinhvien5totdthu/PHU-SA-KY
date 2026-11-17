@@ -367,75 +367,236 @@ function nonTreo(c,x,y){c.poly([x,y,x+7,y+7,x-7,y+7],"#e6cf82");c.poly([x,y,x-7,
 /* lu nước men nâu */
 function lu(c,x,y,w,h){c.ellipse(x+w/2,y+h-2,w/2,3,"#1d1b3a30");c.rect(x+1,y+4,w-2,h-6,"#8a4a2a");c.ellipse(x+w/2,y+h-4,w/2,5,"#8a4a2a");c.ellipse(x+w/2,y+4,w/2-1,3,"#a9633a");c.ellipse(x+w/2,y+4,w/2-3,2,"#3a1f14");c.vline(x+2,y+6,h-10,"#c98152");c.vline(x+w-2,y+6,h-10,"#6a3820");c.hline(x+1,y+8,w-2,"#a9633a")}
 
-/* ---- Nhà nọc ngựa (ngói âm dương, vách ván, hiên rộng, 3 gian) ---- */
-sprite("m_h_noc",{w:144,h:144,outline:"J"},(c)=>{
- bong(c,72,134,126,5);
- van(c,14,74,116,44,11);c.rect(14,74,116,8,"#1d1b3a44");c.rect(14,82,116,3,"#1d1b3a22");
- ngoi(c,28,116,8,136,22,68,5);nocNgoi(c,26,118,18);
- c.rect(6,68,132,4,WD.a);c.hline(6,68,132,WD.b);for(let x=9;x<136;x+=6)c.rect(x,72,3,2,WD.b);
- c.rect(8,72,128,5,WD.d);c.hline(8,72,128,WD.f);c.hline(8,76,128,WD.b);for(let x=10;x<134;x+=6)c.poly([x,77,x+5,77,x+2,82],WD.c);       /* bao lam: diềm gỗ xẻ răng dưới xà */
- for(const x of[10,42,96,126])cot(c,x,77,118,4);
- cua(c,64,88,16,30);sotien(c,24,90,16,14);sotien(c,104,90,16,14);
- lu(c,46,102,12,16);nonTreo(c,96,96);c.line(96,88,96,92,"#6b3f27");
- them(c,10,118,124,6,3);them(c,54,124,36,5,4);c.hline(54,129,36,"#6e3a26")})
-/* ---- Nhà bát dần (mái bốn phía thoải, vách vôi, cửa chớp xanh) ---- */
-sprite("m_h_bat",{w:144,h:144,outline:"J"},(c)=>{
- bong(c,72,134,124,5);
- voi(c,16,78,112,40,3);c.rect(16,78,112,8,"#1d1b3a40");c.rect(16,86,112,3,"#1d1b3a20");
- ngoi(c,42,102,6,138,16,72,15);nocNgoi(c,40,104,12);
- c.poly([6,72,16,60,16,72],"#7f3e26");c.poly([138,72,128,60,128,72],"#7f3e26");
- c.rect(4,72,136,4,WD.a);c.hline(4,72,136,WD.b);for(let x=8;x<138;x+=6)c.rect(x,76,3,2,WD.b);
- cot(c,12,78,118,4);cot(c,128,78,118,4);cot(c,52,78,118,4);cot(c,88,78,118,4);
- chop(c,24,94,20,16);chop(c,100,94,20,16);cua(c,62,90,20,28);
- c.rect(60,84,24,4,WD.d);c.hline(60,84,24,WD.f);lu(c,112,104,12,14);nonTreo(c,48,100);
- them(c,8,118,128,6,7);them(c,56,124,32,5,8)})
-/* ---- Nhà chữ đinh (nhà chính + nhà ngang: đầu hồi ngay trước mặt) ---- */
-sprite("m_h_dinh",{w:144,h:144,outline:"J"},(c)=>{
- bong(c,70,134,128,5);
- van(c,6,78,84,40,21);c.rect(6,78,84,8,"#1d1b3a44");
- ngoi(c,20,78,4,94,30,70,21);nocNgoi(c,18,80,26);c.rect(2,70,94,4,WD.a);c.hline(2,70,94,WD.b);for(let x=5;x<94;x+=6)c.rect(x,74,3,2,WD.b);
- for(const x of[4,34,60,88])cot(c,x,78,118,4);cua(c,38,92,16,26);sotien(c,14,94,14,12);sotien(c,64,94,14,12);
- /* nhà ngang: tam giác đầu hồi lát ván đứng, bờ ngói hai bên, mái nghiêng phía phải */
- c.poly([94,70,138,70,116,34],"#7a5a40");for(let x=96;x<138;x+=4)c.vline(x,50+Math.abs(116-x)*0+(Math.abs(x-116)*.8|0),70-(50+(Math.abs(x-116)*.8|0)),(x/4|0)%2?"#8c6a4c":"#6f5039");
- c.poly([116,36,138,70,134,72,114,40],"#b05830");c.poly([116,36,94,70,98,72,118,40],"#cf7646");
- c.poly([116,36,134,30,144,62,138,70],"#8f4a2e");for(let y=40;y<66;y+=5)c.line(118+(y-40)*.6,y,140+(y-40)*.1,y+3,"#5a2a1e");
- c.circ(116,56,4,"#2a1f1a");c.circ(116,56,2,"#4a3a30");
- van(c,96,70,42,48,23);c.rect(96,70,42,8,"#1d1b3a44");cot(c,94,70,118,4);cot(c,136,70,118,4);sotien(c,104,86,16,16);cua(c,124,92,10,26);
- lu(c,66,102,12,16);nonTreo(c,28,100);
- them(c,4,118,134,6,5);them(c,36,124,22,5,6)})
-/* ---- Nhà mái lá vách lá (chằm, lá dừa), hiên thấp, nền đất ---- */
-sprite("m_h_la",{w:144,h:144,outline:"J"},(c)=>{
- bong(c,72,134,118,5);
- vachLa(c,22,80,100,38,4);c.rect(22,80,100,8,"#1d1b3a44");
- la(c,38,106,12,132,22,76,9);nocLa(c,36,108,17);
- for(const x of[18,122]){c.rect(x,78,5,40,"#8a9a3a");c.vline(x,78,40,"#b5c65a");c.vline(x+4,78,40,"#4f5e22");for(const y of[92,106])c.hline(x-1,y,7,"#4f5e22");c.rect(x-1,114,7,4,"#8a8aa0")}
- c.rect(62,90,20,28,"#241912");for(let x=62;x<82;x+=2)c.vline(x,90,12,x%4?"#bfa266":"#97793f");c.hline(62,102,20,"#6f8a3a");c.rect(60,88,24,3,"#6f8a3a");
- c.rect(32,92,14,12,"#241912");c.line(30,92,34,86,"#8a9a3a",2);c.rect(28,90,18,3,"#97793f");
- c.line(94,86,94,100,"#6b3f27");for(let i=0;i<4;i++){c.rect(92,88+i*3,4,2,"#c4574a");c.px(92,88+i*3,"#e0705c")}                                /* chùm ớt/bắp phơi */
- nonTreo(c,108,98);lu(c,104,104,12,16);c.rect(54,118,36,4,"#a8835a");c.hline(54,118,36,"#c19b6e");c.rect(60,122,24,3,"#9a7552")})
-/* ---- Nhà mái lá + vách ván, chái nhỏ bên trái, vá tôn ---- */
-sprite("m_h_la2",{w:144,h:144,outline:"J"},(c)=>{
- bong(c,76,134,124,5);
- van(c,34,78,98,40,17,["#8c7050","#7f6446","#967a5a","#86694c"]);c.rect(34,78,98,8,"#1d1b3a44");
- for(let x=102;x<128;x+=3){c.vline(x,92,22,x%6?"#a7b0b6":"#8a959c");c.vline(x+1,92,22,"#c6ced2")}c.rect(100,92,28,2,"#6a747a");c.rect(100,112,28,2,"#4e585e");     /* tấm tôn lượn sóng */
- van(c,6,92,38,26,19);c.rect(6,92,38,6,"#1d1b3a40");
- la(c,44,124,30,140,26,76,17);nocLa(c,42,126,21);
- la(c,6,40,2,52,58,94,19);c.rect(0,94,54,3,"#6e5222");
- cot(c,30,78,118,5);cot(c,132,78,118,5);cot(c,2,94,118,4);
- c.rect(62,92,18,26,"#2a1f1a");c.rect(60,90,22,3,WD.d);c.rect(64,94,6,24,"#7a5238");c.rect(72,94,6,24,"#8e6446");sotien(c,42,96,12,12);
- lu(c,84,102,12,16);nonTreo(c,16,108);c.rect(52,118,40,4,"#a8835a");c.hline(52,118,40,"#c19b6e")})
-/* ---- Nhà sàn trên cọc (mùa nước nổi): cọc tre, sàn ván, thang, mái lá ---- */
-sprite("m_h_coc",{w:192,h:144,outline:"J"},(c)=>{
- bong(c,100,136,150,5);
- c.rect(26,96,142,30,"#1d1b3a58");c.rect(26,96,142,6,"#1d1b3a40");
- for(const x of[30,60,90,120,150,164]){c.rect(x,92,6,40,"#8a6a3a");c.vline(x,92,40,"#c9a05a");c.vline(x+5,92,40,"#4a3418");for(const y of[104,118])c.hline(x-1,y,8,"#4a3418");c.rect(x-1,126,8,6,"#4a5a34");c.rect(x-1,128,8,4,"#3a2a1e")}
- c.rect(24,86,146,8,WD.d);c.hline(24,86,146,WD.f);c.hline(24,93,146,WD.a);for(let x=28;x<168;x+=9)c.vline(x,87,6,WD.b)
- van(c,40,48,114,38,29);c.rect(40,48,114,8,"#1d1b3a44");
- la(c,54,142,26,168,12,50,23);nocLa(c,52,144,7);
- cot(c,38,48,86,4);cot(c,152,48,86,4);cua(c,88,56,16,30);sotien(c,52,58,14,12);sotien(c,124,58,14,12);
- for(let x=24;x<=60;x+=12){c.rect(x,70,3,16,WD.c)}c.rect(22,68,42,3,WD.d);c.hline(22,68,42,WD.f);
- c.rect(8,84,4,48,"#8a6a3a");c.rect(18,84,4,48,"#8a6a3a");for(let y=92;y<128;y+=8)c.rect(8,y,14,3,"#a07c46");c.vline(8,84,48,"#c9a05a");c.vline(21,84,48,"#4a3418");
- lu(c,128,70,12,16);nonTreo(c,108,70)})
+/* ====================== v17 · NHÀ LÀNG HÒA AN — top-down 3/4 kiểu Stardew ======================
+   Một nguồn sáng trên-trái cho cả dự án: mặt/mái trái sáng, phải tối; bóng đổ xuống dưới-phải (một lớp alpha 35%).
+   Thấy mặt trên mái (4 mặt: sau · trước · hông trái · hông phải) + tường nam cao ~40-45% sprite; cửa chính ở tường nam.
+   Viền nâu đỏ sẫm "1" (không #000). Mọi hàm mới đặt tiền tố h3 để KHÔNG đụng tới các công trình công cộng dùng hàm cũ.
+   Vật nhỏ trên nhà (lu, nón treo, chùm ớt, tấm tôn, thang…) giữ đúng bộ của v16, không thêm vật mới. */
+pal({"1":"#3b1b19"})
+const H3={
+ til:["#35192c","#5a2630","#84362f","#ad4a31","#cc6537","#e3853f","#f2a95a"],
+ tha:["#3f2a22","#5f4326","#85602b","#a97f38","#c79d48","#dfba5c","#f0d578"],
+ woo:["#2d1a1f","#4a2b27","#6a4331","#8a5c40","#a8774f","#c4946a","#dcb487"],
+ sil:["#3a3438","#574c4c","#756a64","#8f8479","#a89c8c","#c2b6a2"],
+ pla:["#5b4a5e","#85727a","#ad9a95","#cfc0b0","#e8dcc4","#f6edd8"],
+ lea:["#3a2e22","#5d4a2c","#836a38","#a98c4c","#c7ab62","#dfc680"],
+ bam:["#233420","#3a4f26","#5f7a33","#8fa84a","#b9cf6a"],
+ bri:["#4a2230","#6e3033","#964236","#b9573a","#d4713f","#e8904f","#f4b36a"],
+ stn:["#4b4960","#6c6a82","#908ea3","#b5b3c3"],
+ mos:["#33492f","#4d6b3a","#6f9448","#97b863"],
+ shu:["#2b4a3a","#3f6a4a","#5b8a5c","#8bb078"],
+ dk:"#241418"}
+const h3c=(R,i)=>R[Math.max(0,Math.min(R.length-1,Math.round(i)))]
+const h3l=(a,b,t)=>a+(b-a)*t
+const h3h=(a,b)=>((a*73856093)^(b*19349663))>>>0
+const h3s=(c,x,y,w,h,a)=>c.rect(x,y,w,h,"#2b1a3a"+a)          /* bóng lạnh: đè alpha lên vật liệu (a = hex 2 ký tự) */
+
+/* mặt phẳng của mái hông tại (x,y): B sau · F trước · L hông trái · R hông phải */
+function h3plane(x,y,G){const t=(y-G.yt)/(G.yb-G.yt),xl=h3l(G.tl,G.bl,t),xr=h3l(G.tr,G.br,t);if(y<G.yt||y>=G.yb||x<xl||x>=xr)return null;
+ if(y<G.yr){const u=(y-G.yt)/(G.yr-G.yt);return x<h3l(G.tl,G.rl,u)?"L":x>=h3l(G.tr,G.rr,u)?"R":"B"}
+ const u=(y-G.yr)/(G.yb-G.yr);return x<h3l(G.rl,G.bl,u)?"L":x>=h3l(G.rr,G.br,u)?"R":"F"}
+/* một điểm ngói/lá: b = bậc nền theo mặt (đã tính sáng-tối), (p,q) = pha cột & pha lớp */
+function h3tile(mat,b,p,q,ci,x){
+ if(mat=="til"){let i=b;if(p==0)i+=1;else if(p>=3)i-=1;if(q==4)i-=2;else if(q==0&&p==0)i+=1;return h3c(H3.til,i)}
+ let i=b+[-2,-1,0,1][q];if(q==0&&h3h(x,ci)%3==0)i=b+1;if(((x*3+ci*5)%8+8)%8==0)i-=1;return h3c(H3.tha,i)}
+/* mái hông: 4 mặt, ngói âm dương (cột 6 px, hai tông) hoặc lá chằm (lớp 4 px); rêu chỉ ở máng mái */
+function h3roof(c,G,mat,seed){const per=mat=="til"?5:4,lv={F:3,L:4,R:2,B:3};
+ for(let y=G.yt;y<G.yb;y++){const t=(y-G.yt)/(G.yb-G.yt),xl=Math.round(h3l(G.tl,G.bl,t)),xr=Math.round(h3l(G.tr,G.br,t));
+  for(let x=xl;x<xr;x++){const pl=h3plane(x,y,G);if(!pl)continue;let b=lv[pl];
+   if(pl=="F"){const u=(x-G.bl)/(G.br-G.bl);b=u<.3?4:3;if(Math.abs(u-.3)<.01&&((x+y)&1))b=4}
+   const p=(((x-G.bl)%6)+6)%6,q=(((y-G.yr)%per)+per)%per,ci=Math.floor((y-G.yr)/per);
+   c.px(x,y,h3tile(mat,b,p,q,ci,x))}}
+ /* bờ hông (rafter): vạch sáng bên trên-trái, vạch tối bên phải */
+ const R=H3[mat];for(let y=G.yr;y<G.yb;y++){const u=(y-G.yr)/(G.yb-G.yr),a=Math.round(h3l(G.rl,G.bl,u)),b2=Math.round(h3l(G.rr,G.br,u));
+  c.px(a,y,h3c(R,5));c.px(a+1,y,h3c(R,2));c.px(b2-1,y,h3c(R,3));c.px(b2,y,h3c(R,1))}
+ for(let y=G.yt;y<G.yr;y++){const u=(y-G.yt)/(G.yr-G.yt),a=Math.round(h3l(G.tl,G.rl,u)),b2=Math.round(h3l(G.tr,G.rr,u));c.px(a,y,h3c(R,4));c.px(b2-1,y,h3c(R,2))}
+ /* mép máng: dải tối dưới cùng + đầu ngói bo; rêu theo máng (nước chảy tụ), vài đoạn ngắn */
+ if(mat=="til"){const xl=G.bl,xr=G.br;for(let x=xl;x<xr;x++){const p=(((x-G.bl)%6)+6)%6;c.px(x,G.yb-1,H3.til[0]);c.px(x,G.yb-2,p<3?H3.til[5]:H3.til[2])}
+  const r=c.rng(seed);for(let k=0;k<5;k++){const x=xl+10+Math.floor(r()*(xr-xl-30)),w=3+Math.floor(r()*4);for(let i=0;i<w;i++){c.px(x+i,G.yb-3,h3c(H3.mos,1+(i%2)));if(i%3!=2)c.px(x+i,G.yb-2,H3.mos[1])}}}
+ else{for(let x=G.bl;x<G.br;x++){c.px(x,G.yb-1,H3.tha[1])}}}
+/* bờ nóc ngói + đầu đao cong */
+function h3ridgeTil(c,G){const x0=G.rl-2,x1=G.rr+2,y=G.yr;
+ c.rect(x0,y-3,x1-x0,6,H3.til[3]);c.hline(x0,y-3,x1-x0,H3.til[5]);c.hline(x0,y-2,x1-x0,H3.til[4]);c.hline(x0,y+1,x1-x0,H3.til[2]);c.hline(x0,y+2,x1-x0,H3.til[0]);
+ for(let x=x0+2;x<x1-2;x+=6){c.rect(x,y-4,4,2,H3.til[4]);c.hline(x,y-4,4,H3.til[6])}
+ c.poly([x0-4,y+3,x0+2,y-3,x0+2,y-9,x0-2,y-9,x0-6,y-4],H3.til[4]);c.vline(x0+1,y-8,6,H3.til[6]);c.hline(x0-2,y-9,4,H3.til[6]);
+ c.poly([x1+4,y+3,x1-2,y-3,x1-2,y-9,x1+2,y-9,x1+6,y-4],H3.til[2]);c.vline(x1-2,y-8,6,H3.til[3]);c.hline(x1-2,y-9,4,H3.til[4])}
+/* nóc mái lá: bó lá dày, dây buộc, hai cây nọc bắt chéo ở đầu hồi */
+function h3ridgeTha(c,G){const x0=G.rl-1,x1=G.rr+1,y=G.yr;
+ c.rect(x0,y-3,x1-x0,7,H3.tha[3]);c.hline(x0,y-3,x1-x0,H3.tha[6]);c.hline(x0,y-2,x1-x0,H3.tha[5]);c.hline(x0,y+2,x1-x0,H3.tha[2]);c.hline(x0,y+3,x1-x0,H3.tha[1]);
+ for(let x=x0+4;x<x1-3;x+=8){c.vline(x,y-3,7,H3.woo[2]);c.px(x,y-3,H3.woo[4])}
+ c.line(x0-3,y-8,x0+3,y+1,H3.woo[4]);c.line(x0+3,y-8,x0-3,y+1,H3.woo[3]);c.line(x1-3,y-8,x1+3,y+1,H3.woo[2]);c.line(x1+3,y-8,x1-3,y+1,H3.woo[1])}
+/* tua lá chằm dưới chân mái (độ dài theo hàm băm, không rắc ngẫu nhiên) */
+function h3fringe(c,x0,x1,y){for(let x=x0;x<x1;x++){const L=1+(h3h(x,7)%4);const lit=x<(x0+(x1-x0)*.3);c.vline(x,y,L,lit?H3.tha[3]:H3.tha[2]);c.px(x,y+L,H3.tha[1])}}
+/* vách ván nằm ngang: ván bạc ở mặt nắng (trái), nâu ở phải; mối nối so le; bóng mái; rêu + bùn ở chân tường */
+function h3wallPlank(c,x0,y0,x1,y1,seed,eaveH=6){const w=x1-x0;
+ for(let y=y0,row=0;y<y1;y+=6,row++){const hgt=Math.min(6,y1-y),sil=Math.round(w*(.07+.05*(h3h(row,seed)%3)));
+  for(let x=x0;x<x1;x++){const isS=x<x0+sil||(x<x0+sil+2&&((x+row)&1)),R=isS?H3.sil:H3.woo,b=isS?3:3-(h3h(row,seed+1)%2);
+   c.px(x,y,h3c(R,b+2));for(let k=1;k<hgt-1;k++)c.px(x,y+k,h3c(R,b));if(hgt>=5)c.px(x,y+hgt-1,h3c(R,b-2))}
+  const jx=x0+8+((row*29+seed)%(w-16));c.vline(jx,y+1,4,H3.woo[1]);c.px(jx+1,y+1,H3.woo[4])}
+ h3s(c,x0,y0,w,eaveH,"73");h3s(c,x0,y0+eaveH,w,3,"33");
+ const r=c.rng(seed+9);for(let k=0;k<4;k++){const x=x0+4+Math.floor(r()*(w-14)),ww=4+Math.floor(r()*5);for(let i=0;i<ww;i++){const hh2=1+((i*5+k)%3==0?2:1);for(let j=0;j<hh2;j++)c.px(x+i,y1-1-j,h3c(H3.mos,j==hh2-1?2:1))}}
+ c.hline(x0,y1-1,w,"#3a2a28")}
+/* vách vôi: kem ngả tím ở bóng, vệt mưa dưới bệ cửa, bùn bắn chân tường mờ dần lên */
+function h3wallPla(c,x0,y0,x1,y1,seed,eaveH=6){const w=x1-x0;
+ for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){const u=(x-x0)/w;c.px(x,y,h3c(H3.pla,u<.3?4:u<.82?3:2))}
+ c.vline(x0,y0,y1-y0,H3.pla[5]);c.vline(x1-1,y0,y1-y0,H3.pla[1]);
+ h3s(c,x0,y0,w,eaveH,"7a");h3s(c,x0,y0+eaveH,w,3,"3a");
+ for(let y=y1-6;y<y1;y++){const d=y1-y;for(let x=x0;x<x1;x++)if(d>3||((x+y)&1)||d<=1)c.px(x,y,d<=2?"#8d7960":"#a89572")}
+ c.hline(x0,y1-1,w,"#6e5844")}
+/* vách lá đan: dải 3 px hai tông, nẹp tre xanh ngang */
+function h3wallLea(c,x0,y0,x1,y1,seed,eaveH=6){const w=x1-x0;
+ for(let x=x0;x<x1;x++){const s=Math.floor((x-x0)/3),ph=(x-x0)%3,u=(x-x0)/w,b=(u<.3?4:u<.7?3:2)-(s%2?0:1);
+  for(let y=y0;y<y1;y++)c.px(x,y,h3c(H3.lea,ph==2?b-2:ph==0?b+1:b))}
+ for(const yy of[y0+Math.floor((y1-y0)*.34),y0+Math.floor((y1-y0)*.7)]){c.rect(x0,yy,w,2,H3.bam[2]);c.hline(x0,yy,w,H3.bam[4]);c.hline(x0,yy+2,w,H3.bam[0])}
+ h3s(c,x0,y0,w,eaveH,"73");h3s(c,x0,y0+eaveH,w,3,"33");
+ c.rect(x0,y1-4,w,4,"#6e5636");c.hline(x0,y1-4,w,"#8a6f45");c.hline(x0,y1-1,w,"#3a2a28")}
+/* cột tròn: sáng trái, tối phải, kê chân đá; bóng đổ phải-xuống lên tường */
+function h3post(c,x,y0,y1,w=4,R=H3.woo){for(let i=0;i<w;i++){const b=i==0?5:i==1?4:i<w-1?3:1;c.vline(x+i,y0,y1-y0,h3c(R,b))}
+ c.vline(x+w,y0+3,y1-y0-6,"#2b1a3a55");
+ c.rect(x-1,y1-5,w+2,5,H3.stn[2]);c.hline(x-1,y1-5,w+2,H3.stn[3]);c.hline(x-1,y1-1,w+2,H3.stn[0]);c.vline(x+w,y1-5,5,H3.stn[1])}
+function h3beam(c,x0,x1,y,hgt=4){c.rect(x0,y,x1-x0,hgt,H3.woo[3]);c.hline(x0,y,x1-x0,H3.woo[5]);c.hline(x0,y+hgt-1,x1-x0,H3.woo[1]);for(let x=x0+3;x<x1-3;x+=7)c.px(x,y+1,H3.woo[2])}
+/* bao lam: diềm gỗ xẻ răng dưới xà (rộng 5 px, cao 6) */
+function h3baolam(c,x0,x1,y){for(let x=x0;x<x1;x+=6){c.poly([x,y,x+5,y,x+2,y+6],H3.woo[4]);c.poly([x+3,y,x+5,y,x+3,y+4],H3.woo[2]);c.px(x,y,H3.woo[6])}}
+/* cửa hai cánh ván dọc */
+function h3door(c,x,y,w,h){c.rect(x-2,y-3,w+4,h+3,H3.woo[4]);c.hline(x-2,y-3,w+4,H3.woo[6]);c.vline(x-2,y-3,h+3,H3.woo[5]);c.vline(x+w+1,y-3,h+3,H3.woo[2]);
+ c.rect(x,y,w,h,H3.dk);const hw=Math.floor(w/2)-1;
+ for(const lx of[x+1,x+hw+2]){c.rect(lx,y+1,hw,h-1,H3.woo[2]);for(let xx=lx;xx<lx+hw;xx+=3)c.vline(xx,y+1,h-1,H3.woo[3]);c.vline(lx,y+1,h-1,H3.woo[4]);c.hline(lx,y+Math.floor(h*.5),hw,H3.woo[1])}
+ c.px(x+hw-1,y+Math.floor(h*.55),"#e3b04b");c.px(x+hw+3,y+Math.floor(h*.55),"#e3b04b");
+ c.rect(x-3,y+h,w+6,2,H3.stn[2]);c.hline(x-3,y+h,w+6,H3.stn[3])}
+/* cửa sổ song tiện: nền tối, song sáng trái/tối phải, khung + bệ; vệt mưa ở dưới bệ */
+function h3sotien(c,x,y,w,h){c.rect(x-2,y-2,w+4,h+4,H3.woo[4]);c.hline(x-2,y-2,w+4,H3.woo[6]);c.vline(x-2,y-2,h+4,H3.woo[5]);c.vline(x+w+1,y-2,h+4,H3.woo[2]);c.rect(x,y,w,h,H3.dk);
+ for(let xx=x+2;xx<x+w-1;xx+=4){c.rect(xx,y,2,h,H3.woo[4]);c.vline(xx,y,h,H3.woo[6])}c.hline(x,y+Math.floor(h/2),w,H3.woo[3]);
+ c.rect(x-3,y+h+2,w+6,3,H3.woo[3]);c.hline(x-3,y+h+2,w+6,H3.woo[5]);
+ for(const sx of[x+2,x+w-3])c.vline(sx,y+h+5,5,"#2b1a3a40")}
+/* cửa sổ chớp xanh (nhà vôi) */
+function h3chop(c,x,y,w,h){c.rect(x-2,y-2,w+4,h+4,H3.pla[5]);c.vline(x+w+1,y-2,h+4,H3.pla[2]);c.rect(x,y,w,h,"#2f3e4c");c.poly([x+2,y+2,x+w-3,y+2,x+w-5,y+h*.55,x+2,y+h*.7],"#6c8c9a");
+ const sw=Math.floor(w/3)+1;for(const sx of[x-1,x+w-sw+1]){c.rect(sx,y-1,sw,h+2,H3.shu[2]);c.vline(sx,y-1,h+2,H3.shu[3]);for(let yy=y+1;yy<y+h;yy+=3){c.hline(sx,yy,sw,H3.shu[3]);c.hline(sx,yy+1,sw,H3.shu[0])}}
+ c.rect(x-3,y+h+2,w+6,3,H3.pla[3]);c.hline(x-3,y+h+2,w+6,H3.pla[5]);for(const sx of[x+1,x+w-2])c.vline(sx,y+h+5,6,"#85727a")}
+/* thềm gạch tàu: so le nửa viên, 3 tông — cùng bảng gạch với ô lát đường m_br* */
+function h3brick(c,x,y,w,h,seed){for(let yy=0,row=0;yy<h;yy+=3,row++){for(let xx=-(row%2)*3;xx<w;xx+=6){const t=h3h(Math.floor((xx+6)/6)+row*7,seed)%3,b=3+t-1,x1=Math.max(0,xx),x2=Math.min(w,xx+5);if(x2<=x1)continue;
+   c.rect(x+x1,y+yy,x2-x1,Math.min(2,h-yy),h3c(H3.bri,b));c.hline(x+x1,y+yy,x2-x1,h3c(H3.bri,b+1))}
+  c.hline(x,y+yy+2,w,"#7d5a52")}
+ c.hline(x,y+h-1,w,H3.bri[1])}
+/* bóng đổ nền: MỘT lớp alpha 35% (89/255) xám nâu ấm, rơi xuống dưới-phải; đặt ngoài phần viền để không bị viền theo */
+const h3sh=(x0,x1,y)=>poly([x0+6,y-2,x1,y-2,x1+6,y+6,x0+12,y+6],"#2a1f1459")
+
+/* ============================ 6 KIỂU NHÀ (thân có viền + bóng đổ riêng) ============================ */
+/* ---- Nhà nọc ngựa (ngói âm dương, vách ván bạc, hiên rộng 4 cột, bao lam, song tiện) · dùng cho Nọc ngựa 1–2 và Nhà Cụ Sắc ---- */
+sprite("_h3_noc",{w:144,h:144,outline:"1"},(c)=>{
+ const G={tl:30,tr:114,yt:14,rl:38,rr:106,yr:25,bl:6,br:138,yb:60};
+ h3wallPlank(c,6,64,138,124,11,7);
+ h3beam(c,2,142,60,4);h3baolam(c,6,138,64);
+ for(const x of[10,44,96,128])h3post(c,x,64,124,4);
+ h3door(c,64,90,16,34);h3sotien(c,22,84,16,16);h3sotien(c,104,84,16,16);
+ h3brick(c,2,124,140,7,3);h3brick(c,54,131,36,4,5);
+ lu(c,46,106,12,16);c.vline(88,90,5,"#6b3f27");nonTreo(c,88,98);
+ h3roof(c,G,"til",5);h3ridgeTil(c,G)})
+sprite("m_h_noc",{w:146,h:146},h3sh(10,136,128),stamp("_h3_noc",0,0))
+
+/* ---- Nhà bát dần (mái bốn phía thoải, vách vôi, cửa chớp xanh, hiên cột tròn) ---- */
+sprite("_h3_bat",{w:144,h:144,outline:"1"},(c)=>{
+ const G={tl:46,tr:98,yt:14,rl:57,rr:87,yr:24,bl:6,br:138,yb:64};
+ h3wallPla(c,8,68,136,124,3,7);
+ h3beam(c,4,140,64,4);
+ for(const x of[12,52,88,128])h3post(c,x,68,124,4);
+ h3chop(c,24,88,20,16);h3chop(c,98,88,20,16);h3door(c,62,92,20,32);
+ h3brick(c,4,124,136,7,7);h3brick(c,56,131,32,4,8);
+ lu(c,108,106,12,16);c.vline(46,94,5,"#6b3f27");nonTreo(c,46,102);
+ h3roof(c,G,"til",15);h3ridgeTil(c,G)})
+sprite("m_h_bat",{w:146,h:146},h3sh(10,134,128),stamp("_h3_bat",0,0))
+
+/* ---- Nhà chữ đinh: nhà chính (trái) + nhà ngang (phải) lòi ra trước, đầu hồi hướng nam lát ván đứng ---- */
+sprite("_h3_dinh",{w:144,h:144,outline:"1"},(c)=>{
+ const GM={tl:16,tr:90,yt:18,rl:26,rr:80,yr:28,bl:2,br:98,yb:62};
+ h3wallPlank(c,4,66,96,122,21,7);h3beam(c,0,98,62,4);h3baolam(c,4,94,66);
+ for(const x of[4,36,60,90])h3post(c,x,66,122,4);
+ h3door(c,38,92,16,30);h3sotien(c,14,86,14,14);h3sotien(c,64,86,14,14);
+ h3brick(c,0,122,98,6,3);
+ lu(c,66,104,12,16);nonTreo(c,28,100);
+ h3roof(c,GM,"til",21);h3ridgeTil(c,GM);
+ /* nhà ngang: mái chạy dọc bắc–nam (hông nhỏ phía sau), hai mái dốc trái sáng/phải tối, mặt trước là đầu hồi tam giác lát ván đứng */
+ const wx0=96,wx1=140,rx=118,yb2=68,ya=52,yp=28,yc=40;
+ const wing=(x,y)=>{const left=x<rx,d=left?x-wx0:wx1-1-x,span=rx-wx0;if(y<(left?yp+Math.round((yc-yp)*(1-d/span)):yp+Math.round((yc-yp)*(1-d/span))))return null;
+  const bot=yb2-Math.round((yb2-ya)*(d/span));return y<bot?{left,d,y}:null}
+ for(let y=yp;y<yb2;y++)for(let x=wx0;x<wx1;x++){const w=wing(x,y);if(!w)continue;const p=(((y-yp)%6)+6)%6,q=(((w.d)%5)+5)%5;let i=w.left?4:2;if(p==0)i+=1;else if(p>=3)i-=1;if(q==4)i-=2;else if(q==0&&p==0)i+=1;c.px(x,y,h3c(H3.til,i))}
+ c.vline(rx,yp,ya-yp,H3.til[5]);c.vline(rx+1,yp,ya-yp,H3.til[1]);
+ for(let x=wx0;x<rx;x++){const d=x-wx0;c.px(x,yb2-Math.round((yb2-ya)*(d/(rx-wx0)))-1,H3.til[5])}for(let x=rx;x<wx1;x++){const d=wx1-1-x;c.px(x,yb2-Math.round((yb2-ya)*(d/(rx-wx0)))-1,H3.til[1])}
+ c.poly([rx,ya,wx0,yb2,wx1,yb2],H3.woo[3]);for(let x=wx0;x<wx1;x++){const d=x<rx?x-wx0:wx1-1-x,yt2=yb2-Math.round((yb2-ya)*(d/(rx-wx0)));for(let y=yt2+1;y<yb2;y++)c.px(x,y,h3c(x<wx0+10?H3.sil:H3.woo,(((x-wx0)>>1)%2?3:2)+(x<rx?1:0)))}
+ c.circ(rx,62,3,H3.dk);c.ring(rx,62,3,H3.woo[4]);
+ h3wallPlank(c,wx0+1,yb2,wx1-1,128,23,6);h3beam(c,wx0-2,wx1+2,yb2-1,3);
+ h3post(c,94,yb2+2,128,4);h3post(c,136,yb2+2,128,4);h3sotien(c,104,90,14,14);h3door(c,124,98,10,30);
+ h3brick(c,wx0-4,128,wx1-wx0+8,6,5)})
+sprite("m_h_dinh",{w:146,h:146},h3sh(8,138,132),stamp("_h3_dinh",0,0))
+
+/* ---- Nhà mái lá chằm + vách lá đan, hiên thấp, nền đất · Ông Cả Nhị Ngưu ---- */
+sprite("_h3_la",{w:144,h:144,outline:"1"},(c)=>{
+ const G={tl:40,tr:104,yt:14,rl:48,rr:96,yr:26,bl:14,br:130,yb:62};
+ h3wallLea(c,20,66,124,124,4,7);
+ for(const x of[16,122]){h3post(c,x,66,124,4,H3.bam)}
+ c.rect(62,92,20,32,H3.dk);for(let x=62;x<82;x+=2)c.vline(x,92,11,x%4?H3.lea[3]:H3.lea[1]);c.hline(62,103,20,H3.bam[2]);c.rect(60,90,24,3,H3.bam[2]);c.hline(60,90,24,H3.bam[4]);
+ c.rect(32,92,14,13,H3.dk);c.rect(29,90,20,3,H3.lea[2]);c.hline(29,90,20,H3.lea[4]);
+ c.vline(94,86,14,"#6b3f27");for(let i=0;i<4;i++){c.rect(92,88+i*3,4,2,"#c4574a");c.px(92,88+i*3,"#e0705c")}
+ nonTreo(c,110,100);lu(c,102,106,12,16);
+ c.rect(54,124,36,4,"#a8835a");c.hline(54,124,36,"#c19b6e");c.rect(60,128,24,3,"#9a7552");
+ h3roof(c,G,"tha",9);h3ridgeTha(c,G);h3fringe(c,G.bl+2,G.br-2,G.yb)})
+sprite("m_h_la",{w:146,h:146},h3sh(18,128,128),stamp("_h3_la",0,0))
+
+/* ---- Nhà mái lá + vách ván, chái nhỏ bên trái, vá tôn · Ông Năm Giáo ---- */
+sprite("_h3_la2",{w:144,h:144,outline:"1"},(c)=>{
+ const G={tl:62,tr:126,yt:14,rl:70,rr:118,yr:26,bl:44,br:140,yb:62};
+ h3wallPlank(c,48,66,138,122,17,7);
+ for(let x=102;x<128;x+=3){c.vline(x,86,28,x%6?"#a7b0b6":"#8a959c");c.vline(x+1,86,28,"#c6ced2")}c.rect(100,86,28,2,"#6a747a");c.rect(100,112,28,2,"#4e585e");
+ /* chái trái: mái lá thấp hơn, vách ván */
+ h3wallPlank(c,6,96,50,124,19,5);
+ const GC={tl:12,tr:44,yt:56,rl:17,rr:39,yr:63,bl:2,br:54,yb:94};h3roof(c,GC,"tha",19);h3ridgeTha(c,GC);h3fringe(c,GC.bl+1,GC.br-1,GC.yb);
+ h3post(c,46,66,124,5);h3post(c,134,66,124,5);h3post(c,2,96,124,4);
+ c.rect(62,92,18,32,H3.dk);c.rect(60,90,22,3,H3.woo[4]);c.rect(64,94,6,30,H3.woo[2]);c.rect(72,94,6,30,H3.woo[3]);h3sotien(c,86,90,10,10);
+ nonTreo(c,18,110);lu(c,90,106,12,16);
+ c.rect(52,124,40,4,"#a8835a");c.hline(52,124,40,"#c19b6e");
+ h3roof(c,G,"tha",17);h3ridgeTha(c,G);h3fringe(c,G.bl+2,G.br-2,G.yb)})
+sprite("m_h_la2",{w:146,h:146},h3sh(10,140,128),stamp("_h3_la2",0,0))
+
+/* ---- Nhà sàn trên cọc (mùa nước nổi): cọc tre, sàn ván, thang, mái lá · Nhà trên cọc 1–2 ---- */
+sprite("_h3_coc",{w:192,h:144,outline:"1"},(c)=>{
+ const G={tl:46,tr:148,yt:8,rl:58,rr:136,yr:20,bl:22,br:170,yb:46};
+ for(const x of[30,62,94,126,150,164]){c.rect(x,100,6,28,H3.lea[3]);c.vline(x,100,28,H3.lea[5]);c.vline(x+5,100,28,H3.lea[1]);for(const y of[108,120])c.hline(x-1,y,8,H3.lea[1]);
+  c.rect(x,120,6,8,H3.mos[1]);c.vline(x,120,8,H3.mos[2]);c.vline(x+5,120,8,H3.mos[0]);c.rect(x-1,126,8,6,"#4a3a2a");c.hline(x-1,126,8,"#6a5440");c.hline(x-1,131,8,"#2e2018")}
+ c.rect(24,92,146,8,H3.woo[4]);c.hline(24,92,146,H3.woo[6]);c.hline(24,99,146,H3.woo[1]);for(let x=28;x<168;x+=9)c.vline(x,93,6,H3.woo[2]);
+ h3wallPlank(c,44,50,150,92,29,7);h3beam(c,40,154,46,3);
+ for(const x of[44,148])h3post(c,x,50,92,4);
+ h3door(c,88,62,16,30);h3sotien(c,56,64,14,12);h3sotien(c,124,64,14,12);
+ for(let x=24;x<=60;x+=12)c.rect(x,76,3,16,H3.woo[3]);c.rect(22,74,42,3,H3.woo[4]);c.hline(22,74,42,H3.woo[6]);
+ c.rect(8,90,4,42,H3.lea[3]);c.rect(18,90,4,42,H3.lea[3]);for(let y=98;y<128;y+=8)c.rect(8,y,14,3,H3.woo[4]);c.vline(8,90,42,H3.lea[5]);c.vline(21,90,42,H3.lea[1]);
+ lu(c,128,76,12,16);nonTreo(c,108,76);
+ h3roof(c,G,"tha",23);h3ridgeTha(c,G);h3fringe(c,G.bl+2,G.br-2,G.yb)})
+sprite("m_h_coc",{w:194,h:146},poly([28,128,176,128,186,138,38,138],"#2a1f1459"),stamp("_h3_coc",0,0))
+
+/* ====================== v17 · ĐƯỜNG LÁT GẠCH — bộ ô m_br* (16×16, tileable, dual-grid 15 mảnh) ======================
+   Một bộ gạch duy nhất: gạch đỏ cam 8×4 (mạch vữa 1 px ở phải + dưới), xếp so le nửa viên, 3 sắc độ theo bảng tuần hoàn 2×4 viên.
+   Mẫu gạch là hàm tuần hoàn 16 px → mọi mảnh dùng chung một pha, ghép liền không thấy mối.
+   Dual-grid: mảnh m_br_<mask> đặt tại ĐỈNH lưới (lệch nửa ô); mask = NW·1 + NE·2 + SW·4 + SE·8 (bit = ô quanh đỉnh là gạch).
+   m_br_15 = ruột; m_br_15c1/c2 = ruột có viên sứt (chỉ dùng hiếm: h%12==0 / h%12==6). Góc lồi bo 3 px, góc lõm lấp 3 px;
+   mép gạch có viền tối 1 px, bóng đổ dưới-phải một lớp alpha 35%. KHÔNG rắc nhiễu: vết sứt chỉ ở góc viên gạch, nơi bốn mạch vữa gặp nhau. */
+const BR3={t:["#b9573a","#c4623b","#d4713f"],hi:["#cf7142","#d9794a","#e8904f"],mo:"#6b4742",lip:"#4a2230",sh:"#2a1f1459"}
+const BTONE=[[0,2],[1,0],[2,1],[1,2]]
+function brBase(x,y){const r=(y>>2)&3,f=y&3,xs=(x+((r&1)?4:0))&15,xo=xs&7,tn=BTONE[r][xs>>3];
+ if(f==3||xo==7)return BR3.mo;return f==0?BR3.hi[tn]:BR3.t[tn]}
+function brShape(m){const q=(x,y)=>(m>>((y>=8?2:0)+(x>=8?1:0)))&1,S=[];
+ for(let y=0;y<16;y++){S[y]=[];for(let x=0;x<16;x++){const qx=x>=8?1:0,qy=y>=8?1:0,u=qx?x-8:7-x,v=qy?y-8:7-y;let on=q(x,y)==1;
+  const hn=q(qx?0:8,y),vn=q(x,qy?0:8);
+  if(on&&!hn&&!vn&&u+v<=1)on=false;                     /* góc lồi bo 3 px */
+  if(!on&&hn&&vn&&u+v<=1)on=true;                       /* góc lõm lấp 3 px */
+  S[y][x]=on}}return S}
+function brPiece(m,chips){return(c)=>{const S=brShape(m),ins=(x,y)=>x>=0&&y>=0&&x<16&&y<16&&S[y][x];
+ for(let y=0;y<16;y++)for(let x=0;x<16;x++){
+  if(S[y][x]){const lip=!(x==0||x==15||y==0||y==15)&&([[1,0],[-1,0],[0,1],[0,-1]].some(([a,b])=>{const X=x+a,Y=y+b;return X>=0&&Y>=0&&X<16&&Y<16&&!S[Y][X]}));
+   c.px(x,y,lip?BR3.lip:brBase(x,y))}
+  else if(ins(x-1,y)||ins(x,y-1)||ins(x-1,y-1))c.px(x,y,BR3.sh)}
+ for(const[cx,cy]of chips||[]){c.px(cx,cy,BR3.mo);c.px(cx+1,cy,BR3.mo);c.px(cx,cy+1,BR3.lip)}}}
+for(let m=1;m<=15;m++)sprite("m_br_"+(m<10?"0":"")+m,{w:16,h:16},brPiece(m))
+sprite("m_br_15c1",{w:16,h:16},brPiece(15,[[3,2]]))
+sprite("m_br_15c2",{w:16,h:16},brPiece(15,[[10,10]]))
+
 
 
 /* ============ SÂN & VẬT DỤNG NHÀ QUÊ (vật trang trí; vẽ ×2 trong game) ============ */
@@ -471,6 +632,59 @@ sprite("m_xuong",{w:46,h:16,outline:"J"},(c)=>{
  c.poly([1,5,44,5,40,11,6,11],"#7a4a31");c.poly([1,5,44,5,43,7,2,7],"#b27a4b");c.rect(2,5,42,2,"#2f6b97");c.hline(2,5,42,"#7bbdd2");c.hline(6,11,34,"#4a2a1c");
  for(let x=10;x<40;x+=6)c.vline(x,7,4,"#573629");c.poly([1,5,0,2,4,5],"#9c6340");c.poly([44,5,45,3,41,5],"#9c6340");
  c.line(14,4,34,0,"#dba468",1);c.poly([33,0,38,-1,38,2],"#9c6340")})
+
+
+/* ============ CÔNG TRÌNH PHỤ KIỂU QUÊ (thay các khối giữ chỗ xanh/hồng/đen) ============ */
+/* chòi nghỉ mát mái lá: sàn ván nâng, cột tre, băng ghế tre, đèn lồng đỏ (72x72) */
+sprite("m_h_bl",{w:72,h:72,outline:"J"},(c)=>{
+ bong(c,36,68,60,3);
+ c.rect(8,56,56,6,WD.d);c.hline(8,56,56,WD.f);c.hline(8,61,56,WD.a);for(let x=12;x<62;x+=8)c.vline(x,57,4,WD.b);
+ for(const x of[22,46]){c.rect(x,26,3,30,"#9aa24a");c.vline(x,26,30,"#c4cc6a")}                                  /* cột sau */
+ c.rect(18,44,36,3,WD.c);c.hline(18,44,36,WD.e);c.rect(20,47,3,9,WD.b);c.rect(49,47,3,9,WD.b);                    /* băng ghế tre */
+ la(c,22,50,6,66,6,30,31);nocLa(c,20,52,3);
+ for(const x of[10,58]){c.rect(x,28,4,30,"#8a9a3a");c.vline(x,28,30,"#b5c65a");c.vline(x+3,28,30,"#4f5e22");for(const y of[40,52])c.hline(x-1,y,6,"#4f5e22");c.rect(x-1,54,6,3,"#8a8aa0")}
+ c.line(36,30,36,34,"#6b3f27");c.circ(36,38,4,"#c4574a");c.circ(36,38,2,"#f0a05a");c.hline(33,34,7,"#e3b04b");c.hline(33,42,7,"#e3b04b");nonTreo(c,18,34)})
+/* quầy lưu niệm: mái chằm nhỏ, quầy tre đan, hàng nón lá + giỏ + gốm bày bán, tấm bảng đỏ (72x72) */
+sprite("m_h_pk",{w:72,h:72,outline:"J"},(c)=>{
+ bong(c,36,68,62,3);
+ la(c,20,52,4,68,8,30,33);nocLa(c,18,54,5);
+ for(const x of[8,60]){c.rect(x,28,4,36,"#8a9a3a");c.vline(x,28,36,"#b5c65a");c.vline(x+3,28,36,"#4f5e22")}
+ c.rect(8,48,56,18,"#a98c52");for(let x=8;x<64;x+=3)c.vline(x,48,18,(x/3|0)%2?"#bfa266":"#97793f");c.rect(6,44,60,5,WD.d);c.hline(6,44,60,WD.f);c.hline(6,48,60,WD.a);
+ for(let i=0;i<5;i++){const x=16+i*8;nonTreo(c,x,34)}                                                              /* nón lá treo hàng */
+ for(let i=0;i<3;i++){c.poly([14+i*5,44,26+i*5,44,24+i*5,39],"#e6cf82");c.hline(14+i*5,44,12,"#8a6a2a")}
+ c.ellipse(46,42,6,3,"#c9a05a");c.ellipse(46,40,6,3,"#e6cf82");lu(c,54,35,8,10);c.ellipse(36,42,5,2,"#8a4a2a");
+ c.rect(22,50,28,8,"#c4574a");c.hline(22,50,28,"#e8705c");for(let x=26;x<48;x+=6)c.rect(x,53,3,2,"#f0c94a")})
+/* nhà vệ sinh: khối gạch trát vôi, mái ngói thấp, hai cửa gỗ có ký hiệu nam/nữ (54x54) */
+sprite("m_h_bk",{w:54,h:54,outline:"J"},(c)=>{
+ bong(c,27,51,46,3);
+ voi(c,6,26,42,24,3);c.rect(6,26,42,5,"#1d1b3a40");
+ ngoi(c,12,42,2,52,6,28,35);nocNgoi(c,10,44,3);c.rect(1,28,52,3,WD.a);c.hline(1,28,52,WD.b);
+ for(const[x,col]of[[11,"#3f6a98"],[32,"#c4574a"]]){c.rect(x-1,33,12,17,WD.d);c.rect(x,34,10,16,"#6c4a34");for(let xx=x;xx<x+10;xx+=3)c.vline(xx,34,16,"#7e5a40");c.circ(x+5,38,2,col);c.px(x+8,43,"#e3b04b")}
+ c.rect(44,40,6,10,"#6aa8c8");c.hline(44,40,6,"#a8d4e8");c.rect(44,50,6,2,"#4a7a96")})
+/* quán cà phê vườn: nhà gỗ nhỏ mái ngói, mái hiên bạt, hai bộ bàn ghế mây, bảng ly cà phê (54x54) */
+sprite("m_h_cf",{w:54,h:54,outline:"J"},(c)=>{
+ bong(c,27,51,46,3);
+ van(c,8,26,38,22,41);c.rect(8,26,38,5,"#1d1b3a44");ngoi(c,13,41,3,51,6,26,43);nocNgoi(c,11,43,3);
+ c.rect(4,26,46,3,WD.a);cot(c,5,28,48,3);cot(c,46,28,48,3);
+ cua(c,22,34,10,14);sotien(c,10,35,8,8);sotien(c,36,35,8,8);
+ c.poly([6,30,48,30,52,36,2,36],"#c4574a");for(let x=4;x<50;x+=6)c.poly([x,30,x+3,30,x+3,36,x,36],"#f0e8d0");
+ c.ellipse(10,46,4,2,"#bf8250");c.rect(9,46,2,4,WD.b);c.ellipse(44,46,4,2,"#bf8250");c.rect(43,46,2,4,WD.b);c.circ(26,30,0,"#fff");
+ c.rect(24,20,6,5,"#f0e8d0");c.rect(30,21,2,3,"#f0e8d0");c.hline(25,19,4,"#d9d9e8")})
+/* quán ẩm thực mái lá rộng: bàn ghế gỗ, bếp củi bốc khói, kệ giỏ, nồi (144x120) */
+sprite("m_h_bg",{w:144,h:120,outline:"J"},(c)=>{
+ bong(c,72,114,128,5);
+ c.rect(10,56,124,50,"#2a1f1a");c.grad(10,56,124,24,"ab","v",.5);
+ la(c,22,122,4,140,8,56,37);nocLa(c,20,124,4);
+ for(const x of[6,66,132]){c.rect(x,56,5,50,"#8a9a3a");c.vline(x,56,50,"#b5c65a");c.vline(x+4,56,50,"#4f5e22");for(const y of[70,88])c.hline(x-1,y,7,"#4f5e22");c.rect(x-1,102,7,4,"#8a8aa0")}
+ /* bếp củi + nồi + khói */
+ c.rect(14,78,32,26,"#8a5836");c.rect(14,78,32,4,"#b27a4b");c.rect(20,90,20,14,"#2a1a16");c.rect(23,96,14,8,"#e0502d");c.rect(26,98,8,6,"#ffd66b");c.ellipse(30,76,11,5,"#58506e");c.ellipse(30,74,9,3,"#8a8dab");c.ellipse(30,73,7,2,"#e8e0c8");
+ for(let i=0;i<5;i++){c.circ(28+Math.sin(i)*3,66-i*3,2,"#dfe0ee99")}
+ /* kệ giỏ tre + bàn ghế */
+ c.rect(52,62,12,3,WD.d);c.rect(52,76,12,3,WD.d);for(let i=0;i<3;i++){c.ellipse(55+i*3,60,4,2,"#c9a05a");c.ellipse(56+i*3,74,4,2,"#e6cf82")}
+ for(const[x,y]of[[78,88],[108,88]]){c.rect(x,y,26,4,WD.d);c.hline(x,y,26,WD.f);c.rect(x+2,y+4,3,12,WD.b);c.rect(x+21,y+4,3,12,WD.b);c.ellipse(x+13,y-2,5,2,"#efe3c8");c.ellipse(x+13,y-4,3,2,"#c4574a");
+  for(const sx of[x-8,x+30]){c.rect(sx,y+6,8,3,WD.c);c.rect(sx+1,y+9,2,7,WD.b);c.rect(sx+5,y+9,2,7,WD.b)}}
+ c.rect(70,56,68,12,"#c4574a");c.hline(70,56,68,"#e8705c");for(let x=74;x<136;x+=8)c.rect(x,59,4,5,"#f0c94a");
+ c.circ(18,58,4,"#c4574a");c.circ(18,58,2,"#f0a05a");c.circ(126,58,4,"#c4574a");c.circ(126,58,2,"#f0a05a");nonTreo(c,56,72)})
 
 sprite("_fm",{w:2,h:2},"mN\nNm")
 sprite("m_bush",{w:24,h:18},layer("sh",...shd(14,16,10,2)),layer("b",(c)=>{foliage(c,{seed:5,cx:12,cy:9,rx:11,ry:7,flat:.7,rmin:3,rmax:5,tones:LF.bang});

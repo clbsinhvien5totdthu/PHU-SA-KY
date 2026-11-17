@@ -105,8 +105,8 @@ def chaikin(P,n=2):
 import csv as _csv
 # công trình có chân trên mặt đất (w,h theo ô, đúng kích thước sprite trong game) — kênh KHÔNG được đi xuyên qua
 FOOT={'A3_DEN_THO':(12,12),'B1_NHA_TRUNG_BAY':(22.5,18),'D2_NHA_SAN':(12,9),'D4_BAN_QUAN_LY':(14,7),'F1_NHA_NOC_NGUA_1':(9,9),'F4_NHA_BAT_DAN_1':(9,9),'F5_NHA_ONG_NAM_GIAO':(9,9),'F6_NHA_CU_SAC':(9,9),'F7_NHA_CHU_DINH_2':(9,9),'F8_NHA_BAT_DAN_2':(9,9),'F9_NHA_ONG_CA_NHI_NGUU':(9,9),'F16_NHA_NOC_NGUA_2':(9,9),'E4_NHA_CHU_DINH_1':(9,9),'F10_NHA_TREN_COC_2':(12,9),'F14_NHA_TREN_COC_1':(12,9),
-      'A7_WC_DEN':(3.4,3.4),'B4_WC':(3.4,3.4),'C2_WC':(3.4,3.4),'E5_WC':(3.4,3.4),'F12_WC':(3.4,3.4),'F15_CAFE_HOA_AN':(3.4,3.4),'C3_DIEM_DUNG_CHAN':(4.5,4.5),'E2_DIEM_DUNG_CHAN':(4.5,4.5),'F11_DIEM_DUNG_CHAN':(4.5,4.5),'F13_KHU_AM_THUC':(9,7.5),'C4_QUAY_LUU_NIEM':(4.5,4.5),'D3_QUAY_LUU_NIEM':(4.5,4.5),'E3_QUAY_LUU_NIEM':(4.5,4.5)}
-FOOT_MULTI={'C1_DIEM_DUNG_CHAN':((3.4,3.4),[(-44,-28),(0,-28),(0,10)]),'F3_DIEM_DUNG_CHAN':((4.5,4.5),[(0,-22),(2,22)])}
+      'A7_WC_DEN':(3.4,3.4),'B4_WC':(3.4,3.4),'C2_WC':(3.4,3.4),'E5_WC':(3.4,3.4),'F12_WC':(3.4,3.4),'F15_CAFE_HOA_AN':(3.5,3.5),'C3_DIEM_DUNG_CHAN':(4.5,4.5),'E2_DIEM_DUNG_CHAN':(4.5,4.5),'F11_DIEM_DUNG_CHAN':(4.5,4.5),'F13_KHU_AM_THUC':(9,7.5),'C4_QUAY_LUU_NIEM':(4.5,4.5),'D3_QUAY_LUU_NIEM':(4.5,4.5),'E3_QUAY_LUU_NIEM':(4.5,4.5)}
+FOOT_MULTI={'C1_DIEM_DUNG_CHAN':((4.5,4.5),[(-44,-28),(0,-28),(0,10)]),'F3_DIEM_DUNG_CHAN':((4.5,4.5),[(0,-22),(2,22)])}
 BUILD=[]   # (x0,y0,x1,y1) theo ô
 for _r in _csv.DictReader(open(ROOT+'/data/ref/03_feature_manifest.csv',encoding='utf-8-sig')):
     _x,_y=(float(_r['x_px'])-40)/PX,(float(_r['y_px'])-40)/PX
@@ -459,6 +459,10 @@ bench=(M==0)&~BLK&(dpath<=2.2)&(dwat>=2.5)&(dwat<=7)&(dph>=2)&(dfe>=4)&(dbr>=5)&
 pts(bench,3000,30,lambda g:'bench',False,count=9,k_far=('bench',))
 pts(shoreland,3000,8,pick([('stone0',.5),('stone1',.5)]),False,count=46)
 print('trang trí:',{k:sum(1 for d in DECOR if d[0]==k) for k in sorted(set(d[0] for d in DECOR))})
+# ---- v17: chuẩn hoá lối làng (trục 2 ô, nhánh 1 ô, lối cửa) — xem tools/v17_paths.py ----
+import sys as _sys; _sys.path.insert(0,ROOT+'/tools')
+from v17_paths import regularize as _reg17
+V17=_reg17(M,LANEM,BLK,HOUSES,BRIDGES)
 CH='0123456789ab'
 js='/* Sinh tự động bởi tools/build_map.py (v3, 1 ô = 4 px sơ đồ). Không sửa tay: sửa build_map.py rồi chạy lại. */\n'
 XR=(RIVER.astype(np.uint8)*1+(LANEM&(M==8)).astype(np.uint8)*2)
