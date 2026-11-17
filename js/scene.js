@@ -8,18 +8,19 @@ const BS={0:[0x78b347,0x72ac43,0x80ba4e],4:[0x5f9d3c,0x66a640,0x5a9638],1:[0xc7a
 const NB=[[0,-1],[0,1],[-1,0],[1,0]],hx=c=>'#'+c.toString(16).padStart(6,'0');
 const NBX=[0,0,-1,1],NBY=[-1,1,0,0];
 /* khoá ô = (loại*256 + mặt nạ viền)*24 + biến thể (chỉ cỏ mới có 24 biến thể vì có hoa; loại khác 4 → ít tổ hợp, dựng tileset nhanh) */
-const keyOf=(x,y)=>{const t=M[y][x];let m=0;
+/* MAPDATA.X: bit0 = nước kênh phù sa (t=13), bit1 = lối đất trong làng (t=12) — chỉ đổi tranh ô, M vẫn là 2/8 nên va chạm/đường đi không đổi */
+const keyOf=(x,y)=>{const X=(MAPDATA.X?.[y]?.charCodeAt(x)-48)||0;let t=M[y][x];if(t===2&&(X&1))t=13;else if(t===8&&(X&2))t=12;let m=0;
  for(let i=0;i<4;i++){const n=M[y+NBY[i]]?.[x+NBX[i]];
-  if(t===2){if(n!==undefined&&n!==2&&n!==7&&n!==11)m|=1<<i}
-  else if(t===0||t===4||t===1||t===8||t===5||t===7||t===11){if(n===2)m|=1<<i}
-  if((t===8||t===5)&&(n===0||n===4||n===1))m|=16<<i}
+  if(t===2||t===13){if(n!==undefined&&n!==2&&n!==7&&n!==11)m|=1<<i}
+  else if(t===0||t===4||t===1||t===8||t===12||t===5||t===7||t===11){if(n===2)m|=1<<i}
+  if((t===8||t===12||t===5)&&(n===0||n===4||n===1))m|=16<<i}
  const h=((x*73856093)^(y*19349663))>>>0;return(t*256+m)*24+(t===0?h%24:h%4)};
 /* ô nền vẽ bằng pxl (assets/art/map.px.js → js/mapart.js): mỗi ô = ảnh gốc + lớp phủ viền (bờ nước, mép nước, viền lối đi, lan can cầu) */
 const TI=k=>sc.textures.get(k).getSourceImage(),DN=['n','s','w','e'];
 const drawTile=(cx,X,Y,t,m,v)=>{const D=k=>cx.drawImage(TI(k),X,Y);
- D(t==0?(v>=22?'m_gf'+(v==22?0:2):'m_g'+v%4):t==4?'m_d'+v%2:t==1?'m_dirt'+v%2:t==2?'m_w'+v%4:t==3?'m_bd'+v%2:t==5?'m_plz'+(v%4==0?'1':''):t==6?'m_out'+v%2:t==7?'m_pk_h':t==11?'m_pk_v':t==8?'m_p'+v%4:t==9?'m_rd'+v%2:'m_lot');
- DN.forEach((d,i)=>{if(t==2){if(m&(1<<i))D('m_wedge_'+d)}else if([0,4,1,8,5].includes(t)){if(m&(1<<i))D('m_bank_'+d)}else if((t==7||t==11)&&m&(1<<i)&&((t==7)==(i<2)))D('m_rail_'+d);
-  if((t==8||t==5)&&m&(16<<i))D('m_pedge_'+d)})};
+ D(t==0?(v>=22?'m_gf'+(v==22?0:2):v>=20?'m_gs'+(v-20):'m_g'+v%8):t==4?'m_d'+v%2:t==1?'m_dirt'+v%2:t==2?'m_w'+v%4:t==13?'m_wp'+v%4:t==12?'m_e'+v%4:t==3?'m_bd'+v%2:t==5?'m_plz'+(v%4==0?'1':''):t==6?'m_out'+v%4:t==7?'m_pk_h':t==11?'m_pk_v':t==8?'m_p'+v%4:t==9?'m_rd'+v%2:'m_lot');
+ DN.forEach((d,i)=>{if(t==2||t==13){if(m&(1<<i))D(t==13?'m_wedgep_'+d:'m_wedge_'+d)}else if([0,4,1,8,12,5].includes(t)){if(m&(1<<i))D('m_bank_'+d)}else if((t==7||t==11)&&m&(1<<i)&&((t==7)==(i<2)))D('m_rail_'+d);
+  if((t==8||t==5)&&m&(16<<i))D('m_pedge_'+d);if(t==12&&m&(16<<i))D('m_eedge_'+d)})};
 /* Nền dựng theo MẢNG (chunk 32x32 ô = 512 px) quanh khung nhìn thay cho Phaser Tilemap (162.000 đối tượng Tile, ~1.000 quad/khung): chỉ giữ vài mảng gần người chơi trong bộ nhớ, mỗi mảng là 1 ảnh → vài quad/khung */
 const tkeys=[],tmap=new Map(),TG=new Uint16Array(W*H),TCOLS=40,PHS=[],STARS=[];
 for(let y=0;y<H;y++)for(let x=0;x<W;x++){const k=keyOf(x,y);let i=tmap.get(k);if(i===undefined){i=tkeys.length;tmap.set(k,i);tkeys.push(k)}TG[y*W+x]=i}
@@ -46,7 +47,7 @@ const gUpd=force=>{const v=sc.cameras.main.worldView,x0=Math.max(0,Math.floor(v.
  if(gJ&&gRows(gJ,9)){const j=gJ;gJ=null;gFin(j).u=gSt}};
 sc.gupd=gUpd;sc.GC=GC;
 /* Atlas lúc chạy: gộp mọi ảnh trang trí/công trình pxl vào MỘT texture 'mpk' → ít đổi texture, ít ngắt batch khi vẽ */
-const AT=new Set();{const re=/^m_(h_|bang|phuong|dua|tre|lieu|giay|bush|fl_|lau|pad|lotus|lantern|bench|stone|petal)/,ks=Object.keys(typeof MAPART!=='undefined'?MAPART:{}).filter(k=>re.test(k)).map(k=>[k,TI(k)]).sort((a,b)=>b[1].height-a[1].height);
+const AT=new Set();{const re=/^m_(h_|bang|phuong|dua|tre|lieu|giay|bush|xoai|mit|buoi|cau|chuoi|tram|san|dambut|gian|rom|xuong|fl_|lau|pad|lotus|lantern|bench|stone|petal)/,ks=Object.keys(typeof MAPART!=='undefined'?MAPART:{}).filter(k=>re.test(k)).map(k=>[k,TI(k)]).sort((a,b)=>b[1].height-a[1].height);
  let x=2,y=2,rowH=0,AW=1024;const pos=[];for(const[k,im]of ks){if(x+im.width+2>AW){x=2;y+=rowH+2;rowH=0}pos.push([k,x,y,im]);x+=im.width+2;rowH=Math.max(rowH,im.height)}
  let AH=64;while(AH<y+rowH+2)AH*=2;const cv=document.createElement('canvas');cv.width=AW;cv.height=AH;const cx=cv.getContext('2d');pos.forEach(([k,px,py,im])=>cx.drawImage(im,px,py));
  const tex=sc.textures.addCanvas('mpk',cv);pos.forEach(([k,px,py,im])=>{tex.add(k,0,px,py,im.width,im.height);AT.add(k)})}
@@ -115,13 +116,13 @@ MAPDATA.TREES.forEach(([x,y],i)=>tree(x,y,i%3?'m_bang':'m_phuong',2));
 for(let i=0;i<1200;i++){const x=R()*W|0,y=R()*H|0;if(M[y][x]==2){const px=x*T+R()*12,py=y*T+R()*14,du=700+R()*1200,de=R()*2000,p=sc.add.image(px,py,'sp').setDepth(2).setAlpha(0);sreg(p,()=>[{targets:p,alpha:.8,yoyo:true,repeat:-1,duration:du,delay:de}],{amb:1})}}
 for(let i=0;i<90;i++){const px=R()*W*T,py=R()*H*T,du=6000+R()*4000,de=R()*5000,p=sc.add.image(px,py,'lf').setDepth(9000).setAlpha(0);sreg(p,()=>[{targets:p,x:'+=40',y:'+=55',alpha:{from:0,to:1},duration:du,delay:de,repeat:-1}],{amb:1})}
 const npc=(k,x,y)=>sc.add.image(x*Q*T,y*Q*T,k).setOrigin(.5,1).setDepth(y*Q*T);
-const emmaN=npc('emma',620,1160);npc('khoa',676,1160);npc('tu',1108,952);
+const emmaN=npc('emma',620,1160),emmaSh=sc.add.image(620*Q*T,1160*Q*T-1,'psh').setDepth(1160*Q*T-2);npc('khoa',676,1160);npc('tu',1108,952);
 sc.add.image(1136*Q*T,952*Q*T,'eng').setOrigin(.5,1).setDepth(952*Q*T-1).setScale(3);
 const psh=sc.add.image(163*T,290*T,'psh').setOrigin(.5,.5).setScale(2),pl=sc.add.image(163*T,290*T,'a00').setOrigin(.5,1),arr=sc.add.image(0,0,'arr').setDepth(9999);
 
 /* ===== Trang trí & khí quyển chiều muộn (DECOR sinh từ tools/build_map.py, chỉ là lớp thẩm mỹ) ===== */
 {const gl=document.createElement('canvas');gl.width=gl.height=128;const g=gl.getContext('2d'),gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'rgba(255,240,180,1)');gr.addColorStop(.3,'rgba(255,200,120,.5)');gr.addColorStop(1,'rgba(255,170,90,0)');g.fillStyle=gr;g.fillRect(0,0,128,128);sc.textures.addCanvas('glow',gl);
- const GRD=new Set(['fl_pink','fl_yellow','fl_white','stone0','stone1']),WET=k=>k.startsWith('pad')||k.startsWith('lotus'),SWAY=new Set(['lieu','dua','tre']),PET=[];
+ const GRD=new Set(['fl_pink','fl_yellow','fl_white','stone0','stone1','san0','san1']),WET=k=>k.startsWith('pad')||k.startsWith('lotus'),SWAY=new Set(['lieu','dua','tre','cau','chuoi','tram']),PET=[];
  MAPDATA.DECOR.forEach(([k,x,y])=>{const wet=WET(k),im=AI(x*T,y*T,'m_'+k).setOrigin(k=='lantern'?.46:.5,wet?.5:1).setScale(wet?1:2);im.setDepth(GRD.has(k)?1:wet?2.5:y*T);let mk=null;
   if(wet){const du=1800+R()*1800,de=R()*1500;mk=()=>[{targets:im,y:y*T+1.5,yoyo:true,repeat:-1,duration:du,ease:'Sine.inOut',delay:de}]}
   if(SWAY.has(k)){im.setOrigin(.5,1);const du=2600+R()*2200,de=R()*2000;mk=()=>[{targets:im,angle:{from:-1.1,to:1.1},yoyo:true,repeat:-1,duration:du,ease:'Sine.inOut',delay:de}]}
@@ -144,7 +145,7 @@ const psh=sc.add.image(163*T,290*T,'psh').setOrigin(.5,.5).setScale(2),pl=sc.add
  if(/[?&]lite\b/.test(location.search))sc.setLite(true)}
 const cam=sc.cameras.main;cam.setBounds(0,0,W*T,H*T);cam.startFollow(pl,true,.12,.12);
 const zoom=()=>cam.setZoom(Math.max(1,Math.round(Math.min(innerWidth/560,innerHeight/340))));zoom();sc.scale.on('resize',zoom);cam.centerOn(pl.x,pl.y);cam.preRender();gUpd(true);sRun(true);
-Object.assign(sc,{pl,psh,arr,cam,d:0,wt:0,emmaN});PSK.scene=sc;hudInit(sc);hud();PSK.emit('ready',sc);
+Object.assign(sc,{pl,psh,arr,cam,d:0,wt:0,emmaN,emmaSh});PSK.scene=sc;hudInit(sc);hud();PSK.emit('ready',sc);
 seq([['Học sinh (hồi tưởng)','Chuyện ngày xưa có liên quan gì tới tụi em bây giờ không thầy?'],['An','Mình đã trả lời bằng thêm một mốc thời gian. Câu trả lời đúng, nhưng không chạm được điều em ấy muốn biết.'],['Gợi ý','Đi: phím mũi tên / WASD, hoặc chạm giữ trên màn hình. Nói chuyện: E hoặc nút Tương tác. Mở sổ: N.']])}
 update(t,dt){const sc=this,pl=this.pl,S=STEPS[st.step];if(ended)return;sc.gupd();sc.strm();if(sc.mood)sc.mood(t);if(!sc.lite&&!sc.manLite&&t>8000&&t-(sc.fpsT||0)>1500){sc.fpsT=t;sc.lowN=(this.game.loop.actualFps<38?(sc.lowN||0)+1:0);if(sc.lowN>=4)sc.setLite(true)}
  let vx=0,vy=0;if(!busy&&!nbOpen){if(kd.arrowleft||kd.a)vx--;if(kd.arrowright||kd.d)vx++;if(kd.arrowup||kd.w)vy--;if(kd.arrowdown||kd.s)vy++;
@@ -158,7 +159,7 @@ update(t,dt){const sc=this,pl=this.pl,S=STEPS[st.step];if(ended)return;sc.gupd()
   const z=this.cam.zoom,n=Math.max(1,Math.round(.625*z)),u=n/z;   /* mỗi điểm ảnh sprite = n điểm ảnh MÀN HÌNH (số nguyên) -> luôn sắc nét ở mọi mức zoom */
   if(sc.textures.exists(k)){pl.setTexture(k).setOrigin(.5,62/64).setScale(u).setFlipX(false);this.psh.setScale(2*u)}else{pl.setTexture('a'+d+((this.wt/150|0)%2)).setOrigin(.5,1).setScale(1).setFlipX(false);this.psh.setScale(2)}
   /* Emma (đứng yên ở lối vào, cùng cỡ điểm ảnh với An) */
-  if(this.emmaN&&sc.textures.exists('emmaidle')){this.emmaN.setTexture('emmaidle').setOrigin(.5,62/64).setScale(u)}
+  if(this.emmaN&&sc.textures.exists('emmaidle')){this.emmaN.setTexture('emmaidle').setOrigin(.5,62/64).setScale(u);this.emmaSh.setScale(2*u)}   /* bóng dưới chân giống An */
   pl.setDepth(pl.y);this.psh.setPosition(pl.x,pl.y-1).setDepth(pl.y-1)}hudTick(this,dt);
  if(S){this.arr.setVisible(!S.zone||qt<20).setX(S.p[0]*T).setDepth(9999);if(!this.arr.tw)this.arr.tw=1;this.arr.y=S.p[1]*T-30+Math.sin(t/220)*3;
   near=!busy&&Math.hypot(pl.x-S.p[0]*T,pl.y-S.p[1]*T)<28&&!S.zone;$('act').style.display=near&&!nbOpen?'block':'none';

@@ -49,3 +49,8 @@ body.pro #ui{position:fixed;inset:0;z-index:60;pointer-events:none}body.pro #dlg
 
 /* Đoạn mở đầu có hội thoại: #dlg nằm ngoài #ui và không có z-index nên bị #cine (z-index 50) che hoàn toàn -> chỉ thấy cảnh đứng im. Đưa lên trên cutscene khi body.pro. */
 body.pro #dlg{position:fixed;z-index:70;bottom:calc(var(--bar,11vh)*.18 + 8px)}
+
+/* Emma: nút gọi hỗ trợ (luôn có, không phạt) + nhãn tình huống hư cấu (Bác Tư) */
+#ch button.emh{background:#fff4d8;border:1px dashed #8a5a2b;color:#5a3512;font-size:.82em;padding:6px 10px}
+body.fic::after{content:'TÌNH HUỐNG HƯ CẤU – KHÔNG PHẢI LỜI CHỨNG LỊCH SỬ';position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:60;padding:5px 12px;border:1px solid #e0b872;background:rgba(30,18,8,.82);color:#f6dca0;font:600 12px/1.2 'Inter',system-ui,sans-serif;letter-spacing:.06em;border-radius:3px;pointer-events:none}
+p.sup button.bt{margin:2px 4px 2px 0}

@@ -26,7 +26,31 @@ pp=lambda P:[(x/PX,y/PX) for x,y in P]          # px sơ đồ -> ô
 def poly_mask(P,sc=4):
     im=Image.new('L',(C*sc,R*sc),0);ImageDraw.Draw(im).polygon([(a*sc,b*sc) for a,b in P],fill=1)
     return np.asarray(im)[sc//2::sc,sc//2::sc].astype(bool)
+RIVER=np.zeros((R,C),bool); CROSS=[]; DANG_IN=[]; DANG_OUT=[]; STUBS=[]   # RIVER: chỉ kênh/sông (không gồm hồ); CROSS: chỗ lối đi cắt kênh -> cầu
+def crossings(P,w):
+    """Chỗ một lối đi (đường tim P, bề rộng w ô) đi qua kênh.
+    - cắt trọn trong một nét: cầu ngay.
+    - nét kết thúc trong nước (DANG_IN) hoặc bắt đầu từ trong nước (DANG_OUT): chờ ghép với nét đối diện ở bờ bên kia cùng hướng (ghép ở cuối).
+    Nét chết hẳn trong nước, không có nét tiếp bên kia, thì KHÔNG có cầu."""
+    for (p0,p1,q) in ((P[1],P[0],P[0]),(P[-2],P[-1],P[-1])) if len(P)>1 else ():
+        L=math.hypot(q[0]-p0[0],q[1]-p0[1]) or 1; STUBS.append((q[0],q[1],(q[0]-p0[0])/L,(q[1]-p0[1])/L,w))   # đầu mút lối đi + hướng đi ra
+    for (a,b),(c,e) in zip(P,P[1:]):
+        n=max(2,int(math.hypot(c-a,e-b)*4)); run=None; runs=[]
+        for k in range(n+1):
+            t=k/n; xi,yi=int(a+(c-a)*t),int(b+(e-b)*t)
+            wet=0<=yi<R and 0<=xi<C and RIVER[yi,xi]
+            if wet and run is None: run=[t,t]
+            elif wet: run[1]=t
+            elif run is not None: runs.append(run); run=None
+        if run is not None: runs.append(run)
+        L=math.hypot(c-a,e-b) or 1; ux,uy=(c-a)/L,(e-b)/L
+        for r0,r1 in runs:
+            p0=(a+(c-a)*r0,b+(e-b)*r0); p1=(a+(c-a)*r1,b+(e-b)*r1)
+            if r0>0 and r1<1: CROSS.append((*p0,*p1,w))
+            elif r0>0 and r1>=1: DANG_IN.append((*p0,ux,uy,w))     # đi vào nước rồi hết nét
+            elif r0<=0 and r1<1: DANG_OUT.append((*p1,ux,uy,w))    # nét bắt đầu giữa nước, đi lên bờ
 def thick(P,w,t,only=None,free=False):
+    if t in (5,8): crossings(P,w)
     im=Image.new('L',(C*4,R*4),0);d=ImageDraw.Draw(im)
     for (a,b),(c,e) in zip(P,P[1:]): d.line([(a*4+2,b*4+2),(c*4+2,e*4+2)],fill=1,width=max(1,int(w*4)))
     for (a,b) in P: d.ellipse([a*4+2-w*2,b*4+2-w*2,a*4+2+w*2,b*4+2+w*2],fill=1)
@@ -78,8 +102,42 @@ def chaikin(P,n=2):
         for a,b in zip(P,P[1:]): Q+= [tuple(.75*u+.25*v for u,v in zip(a,b)),tuple(.25*u+.75*v for u,v in zip(a,b))]
         Q.append(P[-1]); P=Q
     return P
+import csv as _csv
+# công trình có chân trên mặt đất (w,h theo ô, đúng kích thước sprite trong game) — kênh KHÔNG được đi xuyên qua
+FOOT={'A3_DEN_THO':(12,12),'B1_NHA_TRUNG_BAY':(22.5,18),'D2_NHA_SAN':(12,9),'D4_BAN_QUAN_LY':(14,7),'F1_NHA_NOC_NGUA_1':(9,9),'F4_NHA_BAT_DAN_1':(9,9),'F5_NHA_ONG_NAM_GIAO':(9,9),'F6_NHA_CU_SAC':(9,9),'F7_NHA_CHU_DINH_2':(9,9),'F8_NHA_BAT_DAN_2':(9,9),'F9_NHA_ONG_CA_NHI_NGUU':(9,9),'F16_NHA_NOC_NGUA_2':(9,9),'E4_NHA_CHU_DINH_1':(9,9),'F10_NHA_TREN_COC_2':(12,9),'F14_NHA_TREN_COC_1':(12,9),
+      'A7_WC_DEN':(3.4,3.4),'B4_WC':(3.4,3.4),'C2_WC':(3.4,3.4),'E5_WC':(3.4,3.4),'F12_WC':(3.4,3.4),'F15_CAFE_HOA_AN':(3.4,3.4),'C3_DIEM_DUNG_CHAN':(4.5,4.5),'E2_DIEM_DUNG_CHAN':(4.5,4.5),'F11_DIEM_DUNG_CHAN':(4.5,4.5),'F13_KHU_AM_THUC':(9,7.5),'C4_QUAY_LUU_NIEM':(4.5,4.5),'D3_QUAY_LUU_NIEM':(4.5,4.5),'E3_QUAY_LUU_NIEM':(4.5,4.5)}
+FOOT_MULTI={'C1_DIEM_DUNG_CHAN':((3.4,3.4),[(-44,-28),(0,-28),(0,10)]),'F3_DIEM_DUNG_CHAN':((4.5,4.5),[(0,-22),(2,22)])}
+BUILD=[]   # (x0,y0,x1,y1) theo ô
+for _r in _csv.DictReader(open(ROOT+'/data/ref/03_feature_manifest.csv',encoding='utf-8-sig')):
+    _x,_y=(float(_r['x_px'])-40)/PX,(float(_r['y_px'])-40)/PX
+    if _r['id'] in FOOT: _w,_h=FOOT[_r['id']]; BUILD.append((_x-_w/2,_y-_h/2,_x+_w/2,_y+_h/2))
+    if _r['id'] in FOOT_MULTI:
+        (_w,_h),_o=FOOT_MULTI[_r['id']]
+        for _dx,_dy in _o: BUILD.append((_x+_dx/PX-_w/2,_y+_dy/PX-_h/2,_x+_dx/PX+_w/2,_y+_dy/PX+_h/2))
+def avoid(P,margin=2.0):
+    """Đẩy đường tim kênh ra khỏi mọi công trình (chừa margin ô + nửa bề rộng kênh), rồi làm mượt để kênh uốn tự nhiên quanh nhà."""
+    P=[list(p) for p in P]
+    def push():
+        n=0
+        for q in P[1:-1]:
+            for x0,y0,x1,y1 in BUILD:
+                m=margin+q[2]/2
+                if x0-m<q[0]<x1+m and y0-m<q[1]<y1+m:
+                    d=[q[0]-(x0-m),(x1+m)-q[0],q[1]-(y0-m),(y1+m)-q[1]]; k=d.index(min(d))
+                    if k==0: q[0]=x0-m-.3
+                    elif k==1: q[0]=x1+m+.3
+                    elif k==2: q[1]=y0-m-.3
+                    else: q[1]=y1+m+.3
+                    n+=1
+        return n
+    for _ in range(14):
+        push()
+        for i in range(1,len(P)-1):
+            for j in (0,1): P[i][j]=.25*P[i-1][j]+.5*P[i][j]+.25*P[i+1][j]
+    for _ in range(6): push()
+    return [tuple(p) for p in P]
 def river(P,only=(0,3,4,5,8,1)):
-    P=chaikin([(x/PX,y/PX,w/PX) for x,y,w in P],3); m=np.zeros((R,C),bool)
+    P=avoid(chaikin([(x/PX,y/PX,w/PX) for x,y,w in P],3)); m=np.zeros((R,C),bool)
     for (a,b,wa),(c,d,wb) in zip(P,P[1:]):
         L=max(1,int(math.hypot(c-a,d-b)*2))
         for k in range(L+1):
@@ -87,13 +145,16 @@ def river(P,only=(0,3,4,5,8,1)):
             x0,x1,y0,y1=int(cx-rad-1),int(cx+rad+2),int(cy-rad-1),int(cy+rad+2)
             sl=(slice(max(0,y0),y1),slice(max(0,x0),x1))
             m[sl]|=((xx[sl]+.5-cx)**2+(yy[sl]+.5-cy)**2)<=rad*rad
-    m&=np.isin(M,only)&inside; M[m]=2; return m
+    m&=np.isin(M,only)&inside; M[m]=2; RIVER[:]|=m; return m
 # kênh chính: từ phía trên (cạnh Chùa Hòa Long) chảy xuống dọc phía tây làng, qua Cổng/cầu 48, kéo tới bãi xe
 MAIN=[(1110,402,26),(1100,470,30),(1088,560,30),(1078,640,30),(1060,700,28),(1035,750,22),(1025,800,20),(1018,850,20),(1008,900,18),(1008,1000,18),(1010,1100,18),(1008,1160,16),(1000,1220,14),(998,1262,12)]
 # nhánh vòng quanh cụm nhà (tách từ kênh chính phía trên, khép lại vào kênh chính phía dưới)
-LOOP=[(1060,705,20),(1125,732,20),(1200,752,20),(1260,760,20),(1310,767,20),(1345,790,20),(1355,830,20),(1362,870,20),(1388,915,20),(1415,945,20),(1432,975,20),(1428,1015,20),(1405,1045,20),(1375,1078,20),(1340,1108,20),(1310,1132,20),(1270,1142,20),(1240,1132,20),(1220,1108,20),(1195,1082,20),(1170,1058,20),(1140,1032,20),(1110,1012,20),(1070,996,20),(1030,988,20)]
+LOOP=[(1060,705,20),(1125,732,20),(1200,752,20),(1260,760,20),(1310,767,20),(1345,790,20),(1355,830,20),(1362,870,20),(1388,915,20),(1415,945,20),(1432,975,20),(1428,1015,20),(1405,1045,20),(1375,1078,20),(1340,1108,20),(1310,1132,20),(1270,1142,20),(1240,1132,20),(1220,1108,20),(1195,1082,20),(1170,1058,20),(1140,1032,20),(1110,1012,20),(1070,996,20),(1030,988,20),(1008,986,20)]
 POND=[(1005,862),(1098,858),(1106,888),(1005,906)]                               # ao nhỏ cạnh Nhà bát dần 1
-river(MAIN); river(LOOP); M[poly_mask(pp(POND))&inside&np.isin(M,[0,3,4,5,8,1])]=2
+river(MAIN); river(LOOP); _pm=poly_mask(pp(POND))&inside&np.isin(M,[0,3,4,5,8,1]); M[_pm]=2; RIVER[:]|=_pm
+_rl,_rn=ndi.label(RIVER)   # 4-liên thông: mọi kênh/ao phải LIỀN thành một mạng (không hở dù chỉ một dải cỏ)
+assert _rn==1,('kênh/ao bị tách thành %d khối'%_rn,[int((_rl==i).sum()) for i in range(1,_rn+1)])
+_rd=ndi.distance_transform_edt(~RIVER)
 # Hồ Sao: sân tròn có bậc, hồ ngôi sao 5 cánh ở giữa
 HS=(218,166)
 disc(*HS,16.4,16.4,5,[0,4]); disc(*HS,14,14,4,[5]); disc(*HS,11.6,11.6,5,[4])
@@ -104,7 +165,41 @@ ImageDraw.Draw(star).polygon(pts,fill=1); sm=np.asarray(star).reshape(R,8,C,8).m
 Wd=lambda w:max(2,round(w*1.5))
 WATERISH=[2]
 def P5(P,w=2,**k): return thick(o2(P),Wd(w),5,only=[0,4,5,3,1],**k)
-def P8(P,w=2): return thick(o2(P),Wd(w),8,only=[0,4,5,3,1,8])
+def _smooth(P,n=3):
+    P=[(float(x),float(y)) for x,y in P]
+    for _ in range(n):
+        Q=[P[0]]
+        for a,b in zip(P,P[1:]): Q+=[(.75*a[0]+.25*b[0],.75*a[1]+.25*b[1]),(.25*a[0]+.75*b[0],.25*a[1]+.75*b[1])]
+        P=Q+[P[-1]]
+    return P
+LANEM=np.zeros((R,C),bool)   # các ô lối đất trong làng (vẽ bằng tile đất nện thay vì gạch lát)
+WOB=.9
+def lane(P,w,only=(0,4,5,3,1,8),seed=0):
+    """Lối đi làng kiểu thật: góc được bo tròn, đường uốn nhẹ theo sóng chậm (biên độ ~1 ô), bề rộng lúc thon lúc phình;
+    đầu mút, ngã ba và chỗ gần kênh được ghìm thẳng để nối khít và để cầu vẫn thẳng. Cầu/đầu mút tính theo đường tim gốc P."""
+    crossings(P,w)
+    Q=_smooth(P,3); Ls=[0.]
+    for a,b in zip(Q,Q[1:]): Ls.append(Ls[-1]+math.hypot(b[0]-a[0],b[1]-a[1]))
+    tot=Ls[-1] or 1.; rr=np.random.default_rng(seed+int(P[0][0]*7+P[0][1]*13)); ph=rr.random(4)*6.283
+    pts=[];ws=[]
+    for i,(x,y) in enumerate(Q):
+        a=Q[max(0,i-1)]; b=Q[min(len(Q)-1,i+1)]; tx,ty=b[0]-a[0],b[1]-a[1]; tl=math.hypot(tx,ty) or 1.; nx,ny=-ty/tl,tx/tl
+        s_=Ls[i]; xi,yi=min(C-1,max(0,int(x))),min(R-1,max(0,int(y)))
+        tp=min(1.,s_/7,(tot-s_)/7,_rd[yi,xi]/8)
+        tp=tp*tp*(3-2*tp)
+        off=tp*WOB*(.62*math.sin(6.283*s_/19+ph[0])+.38*math.sin(6.283*s_/8.5+ph[1]))
+        pts.append((x+nx*off,y+ny*off)); ws.append(w*(1+.1*tp*math.sin(6.283*s_/13+ph[2])))
+    im=Image.new('L',(C*4,R*4),0); d=ImageDraw.Draw(im)
+    for (a,b),(c,e),w1 in zip(pts,pts[1:],ws): d.line([(a*4+2,b*4+2),(c*4+2,e*4+2)],fill=1,width=max(1,int(w1*4)))
+    for (a,b),w1 in zip(pts,ws): d.ellipse([a*4+2-w1*2,b*4+2-w1*2,a*4+2+w1*2,b*4+2+w1*2],fill=1)
+    m=np.asarray(im).reshape(R,4,C,4).max((1,3)).astype(bool)&np.isin(M,only)
+    for x0,y0,x1,y1 in BUILD:
+        if x1-x0>=8: m[int(y0):int(y1)+1,int(x0):int(x1)+1]=False                  # lối đi không đè lên nhà/công trình lớn (chòi, bốt nhỏ nằm ngay trên lối nên không cắt)
+    M[m]=8; LANEM[:]|=m; return m
+def P8(P,w=2):
+    Pc=o2(P)
+    if w<=2 and min(p[0] for p in Pc)>=276: return lane(Pc,Wd(w))                 # lối trong làng: hữu cơ
+    return thick(Pc,Wd(w),8,only=[0,4,5,3,1,8])                                  # trục/lối của khu trang nghiêm: giữ thẳng
 P8([(53,105),(127,105)],3)                                      # trục ngang Cổng 4 → Cổng vào mộ → Cổng/cầu 48
 P8([(93,58),(93,105)],3)                                        # trục dọc Cổng 3 xuống
 P8([(81,146),(81,106)],2)                                       # lối bộ Cổng 1 đi lên
@@ -124,27 +219,76 @@ P8([(60,92),(78,98),(93,98)],1.5); P8([(60,80),(66,80)],1.5)
 disc(140*S,103*S,6*S,6*S,5,[0,3,5,8,1]); disc(140*S,103*S,3.2*S,3.2*S,8,[5])
 P8([(127,105),(139,105)],3)
 P8([(139,108),(139,113),(135,114)],2); P8([(139,113),(142,125),(146,129)],2); P8([(146,129),(156,131)],2)
-P8([(156,131),(160,134),(166,134),(168,124)],2); P8([(168,124),(179,129)],2)
+P8([(156,131),(160,134),(166,134),(168,124)],2); P8([(183,123),(183,131),(179,132)],2)   # lối vào Nhà Bát Dần 2 từ đường phía đông (không còn lối chéo cắt kênh)
 P8([(166,134),(166,139)],2); P8([(168,118),(166,111),(166,105)],2)
-P8([(151,142),(151,159)],2); P8([(151,146),(183,146)],2); P8([(183,146),(188,150)],2); P8([(146,129),(146,140)],2)
+P8([(151,142),(151,159)],2); P8([(151,146),(183,146)],2); P8([(183,146),(188,150)],2)
 # bên phải kênh vòng: lối nối qua cầu tới các công trình rìa phải
 P8([(178,113),(187,113)],2); P8([(186,126),(188,113)],2)
-thick(pp([(1425,905),(1496,904)]),Wd(2),8,only=[0,3,8]); thick(pp([(1466,984),(1568,984),(1616,936)]),Wd(2),8,only=[0,3,8])
-thick(pp([(1410,1072),(1536,1072),(1530,1140),(1504,1208)]),Wd(2),8,only=[0,3,8]); thick(pp([(1395,832),(1416,832)]),Wd(2),8,only=[0,3,8])
-thick(pp([(1530,1140),(1496,1184)]),Wd(2),8,only=[0,3,8])
-# ---- 6. cầu: mọi chỗ lối đi cắt nước đều có cầu (x1,y1,x2,y2,rộng) theo px sơ đồ
-BR=[(1000,843,1092,843,26),     # Cổng/cầu 48 (có trên sơ đồ, màu cam): nối trục ngang vào làng
-    (985,1136,1040,1136,22),    # lối D–E qua kênh phía tây (nhánh về bãi xe)
-    (1208,1074,1208,1130,20),   # lối từ Cổng số 2 lên cụm nhà, qua cạnh dưới kênh vòng
-    (1330,832,1395,832,20),     # sang Điểm dừng chân góc trên phải
-    (1362,905,1428,905,20),     # sang Nhà trên cọc 2
-    (1400,984,1466,984,20),     # sang Khu ẩm thực / WC
-    (1345,1072,1410,1072,20)]   # sang Nhà trên cọc 1
-BRIDGES=[]
-for x1,y1,x2,y2,w in BR:
-    a,b,c,d=x1/PX,y1/PX,x2/PX,y2/PX; vert=abs(d-b)>abs(c-a)
-    m=thick([(a,b),(c,d)],w/PX,11 if vert else 7,only=[2,0,3,4,5,8,1],free=True)
-    BRIDGES.append([a,b,c,d,w/PX,1 if vert else 0])
+lane(pp([(1425,905),(1496,904)]),Wd(2),only=(0,3,8)); lane(pp([(1466,984),(1568,984),(1616,936)]),Wd(2),only=(0,3,8))
+lane(pp([(1410,1072),(1536,1072),(1530,1140),(1504,1208)]),Wd(2),only=(0,3,8)); lane(pp([(1395,832),(1416,832)]),Wd(2),only=(0,3,8))
+lane(pp([(1530,1140),(1496,1184)]),Wd(2),only=(0,3,8))
+# ---- 6. cầu: TỰ DỰNG ở mọi chỗ một lối đi cắt qua kênh (CROSS, ghi nhận trong thick()) và CHỈ ở đó.
+#      Không còn danh sách cầu đặt tay: lối đi chết bên bờ không có cầu; cầu luôn nối hai đoạn đường cùng một lối.
+# lối mòn trên bãi cỏ giữa làng, đi vòng qua từng điểm Hòa An (đường đất hẹp, uốn) và nối với đường làng ở phía tây
+lane([(279,243),(285,239),(291,236),(297,235.5),(303,236),(309,237)],2.2,only=(0,4,1,3),seed=5)
+lane([(309,237),(313,243),(316,248),(317,254)],2.2,only=(0,4,1,3),seed=6)
+lane([(317,254),(311,258.5),(304,259)],2.2,only=(0,4,1,3),seed=7)
+# ---- 5b. lối đi nào kết thúc sát bờ kênh thì phải đi tiếp sang bờ bên kia tới đường có sẵn (rồi mới có cầu); không có đường bên kia thì lối đi dừng ở bờ như một bến, KHÔNG có cầu cụt
+_rd=ndi.distance_transform_edt(~RIVER)
+_PATHS=lambda: np.isin(M,[5,8])
+# lối đi phía đông kênh vòng vốn dẫn về cụm nhà ở trong vòng: điểm dừng chân góc trên, nhà mái lá, khu ẩm thực, nhà mái lá phía dưới, lối cổng 2 lên cụm nhà
+LINK_OK=[(348.8,208.0),(356.2,226.2),(366.5,246.0),(352.5,268.0),(302.0,284.0)]
+LINKS=[]
+for (sx,sy,ux,uy,w) in list(STUBS):
+    xi,yi=int(sx),int(sy)
+    if not(0<=yi<R and 0<=xi<C) or RIVER[yi,xi] or _rd[yi,xi]>9 or sx<300 or not _PATHS()[yi,xi]: continue
+    if not any(math.hypot(sx-ax,sy-ay)<.8 for ax,ay in LINK_OK): continue                            # chỉ nối các lối đi vốn dẫn sang bờ bên kia (không đoán, không bịa đường mới)
+    st=0; hit=None; wet=False; run_in=False; t=1.0
+    while t<34:
+        x,y=sx+ux*t,sy+uy*t; xj,yj=int(x),int(y)
+        if not(0<=yj<R and 0<=xj<C): break
+        if RIVER[yj,xj]:
+            if not wet and t>16: break                         # nước phải ở ngay trước mặt (<=10 ô), không nối xa
+            wet=True; run_in=True
+        elif wet:
+            for dd in (0,-1,1,-2,2):                               # dung sai ngang 2 ô: lối đi bên kia có thể lệch hàng một chút
+                x2,y2=x-uy*dd,y+ux*dd; xk,yk=int(x2),int(y2)
+                if 0<=yk<R and 0<=xk<C and _PATHS()[yk,xk]: hit=(x2,y2); break
+            if hit: break
+        elif not wet and _PATHS()[yj,xj] and t>3: break           # gặp đường trước khi tới nước: đã nối rồi
+        if wet and not RIVER[yj,xj] and M[yj,xj] in (6,9,10): break
+        t+=.5
+    if hit and wet: LINKS.append((sx,sy,hit[0],hit[1]) if abs(hit[1]-sy)<.6 or abs(hit[0]-sx)<.6 else (sx,sy,hit[0]*abs(uy)+sx*abs(ux),hit[1]*abs(ux)+sy*abs(uy),hit))
+for l in LINKS:
+    if len(l)==4: thick([(l[0],l[1]),(l[2],l[3])],3,8,only=[0,3,5,8,1,4])
+    else: sx,sy,mx,my,h=l; thick([(sx,sy),(mx,my),(h[0],h[1])],3,8,only=[0,3,5,8,1,4])   # đi thẳng qua kênh rồi nhích ngang vào đường bên kia
+print('nối lối đi qua kênh:',len(LINKS),[[round(v,1) for v in l[:4]] for l in LINKS])
+for (xa,ya,ux,uy,w) in DANG_IN:                       # ghép nét vào-nước với nét ra-nước cùng hướng ở bờ bên kia (cách tối đa 14 ô)
+    best=None
+    for (xb,yb,vx,vy,w2) in DANG_OUT:
+        dx,dy=xb-xa,yb-ya; dist=math.hypot(dx,dy)
+        if 1<dist<=14 and ux*vx+uy*vy>.8 and (dx*ux+dy*uy)/dist>.8 and (best is None or dist<best[0]): best=(dist,xb,yb,w2)
+    if best: CROSS.append((xa,ya,best[1],best[2],max(w,best[3])))
+BRIDGES=[]; _seen=[]
+for x1,y1,x2,y2,w in CROSS:
+    mx,my=(x1+x2)/2,(y1+y2)/2
+    if any(math.hypot(mx-a,my-b)<3 for a,b in _seen): continue
+    _seen.append((mx,my)); vert=abs(y2-y1)>abs(x2-x1); wd=max(5.0,w+2)
+    if vert: a,b,c,d=mx,min(y1,y2)-1.5,mx,max(y1,y2)+1.5
+    else:    a,b,c,d=min(x1,x2)-1.5,my,max(x1,x2)+1.5,my
+    thick([(a,b),(c,d)],wd,11 if vert else 7,only=[2,0,3,4,5,8,1],free=True)
+    BRIDGES.append([a,b,c,d,wd,1 if vert else 0])
+print('cầu tự dựng:',len(BRIDGES),[[round(t,1) for t in b[:4]] for b in BRIDGES])
+# ---- kiểm tra ràng buộc thực tế: (1) không công trình nào đứng trên nước, (2) mỗi cầu có đường ở CẢ HAI đầu
+_bad=[(round(x0),round(y0)) for x0,y0,x1,y1 in BUILD if (M[int(y0):int(y1)+1,int(x0):int(x1)+1]==2).any()]
+assert not _bad,('công trình đè lên nước',_bad)
+_pm=np.isin(M,[5,8,9])
+for a_,b_,c_,d_,w_,v_ in BRIDGES:
+    L_=math.hypot(c_-a_,d_-b_); ux_,uy_=(c_-a_)/L_,(d_-b_)/L_
+    for sg in (-1,1):
+        ex,ey=(a_ if sg<0 else c_)+ux_*sg*3,(b_ if sg<0 else d_)+uy_*sg*3
+        assert _pm[max(0,int(ey)-3):int(ey)+4,max(0,int(ex)-3):int(ex)+4].any(),('cầu cụt (không có đường ở một đầu)',(round(a_,1),round(b_,1),round(c_,1),round(d_,1)))
+print('kiểm tra: không nhà nào trên nước; mọi cầu có đường hai đầu')
 # ---- 7. cổng
 GATES={'G1_CONG_1':(81,147,2,1),'G2_CONG_2':(151,160,2,1),'G3_CONG_3':(92,60,1,1),'G4_CONG_4':(53,105,1,2),'A5_CONG_MO':(109,104,2,1),'GX_CONG_KHONG_NHAN':(128,105,1,2),'GA_CONG_AM_THUC':(188,151,2,1)}
 for k,(gc,gr,a,b) in GATES.items():
@@ -197,7 +341,7 @@ dph=ndi.distance_transform_edt(~phm); dmo=ndi.distance_transform_edt(M!=4); dedg
 dbr=np.full((R,C),99.)
 for a,b,c_,d_,w,v in BRIDGES: dbr=np.minimum(dbr,np.hypot(xx+.5-(a+c_)/2,yy+.5-(b+d_)/2)-max(abs(c_-a),abs(d_-b))/2)
 DECOR=[]; placed=[]
-LAY={**{k:'tree' for k in ('bang','phuong','dua','tre','lieu','giay','bush')},**{k:'fl' for k in ('fl_pink','fl_yellow','fl_white')},**{k:'lotus' for k in ('pad0','pad1','lotus','lotus2')},'lau':'lau','lantern':'lantern','bench':'bench','stone0':'stone','stone1':'stone'}
+LAY={**{k:'tree' for k in ('bang','phuong','dua','tre','lieu','giay','bush','xoai','mit','buoi','cau','chuoi','tram')},**{k:'fl' for k in ('fl_pink','fl_yellow','fl_white')},**{k:'lotus' for k in ('pad0','pad1','lotus','lotus2')},'lau':'lau','lantern':'lantern','bench':'bench','stone0':'stone','stone1':'stone'}
 def far(x,y,r,kinds=None,kind=None):
     L=LAY.get(kind)
     return all((x-a)**2+(y-b)**2>=((r+rr)/2)**2 for a,b,rr,_k in placed if (LAY.get(_k)==L if kinds is None else _k in kinds))
@@ -211,16 +355,71 @@ def pts(mask,n_try,rr,kinds_pick,block,r_of=None,count=None,k_far=None):
         x,y=xs[i]+rng.random()*.6+.2,ys[i]+.9
         kd=kinds_pick(rng); rr2=(r_of or (lambda k:rr))(kd)
         if far(x,y,rr2,k_far,kd):
-            put(kd,x,y,rr2,block and kd in('bang','phuong','dua','tre','lieu')); n+=1
+            put(kd,x,y,rr2,block and kd in('bang','phuong','dua','tre','lieu','xoai','mit','buoi','cau','chuoi','tram')); n+=1
             if count and n>=count: break
 pick=lambda ws:(lambda g:g.choice([k for k,_ in ws],p=np.array([w for _,w in ws])/sum(w for _,w in ws)))
 TREEK=('bang','phuong','dua','tre','lieu')
 # (1) hàng cây viền ranh, cách mép 4–9 ô (như công viên thật)
 band=ok_grass&(dedge>=5)&(dedge<=11)&(dwat>=4)&(dmo>=8)&(dpath>=5)
-pts(band,6000,15,pick([('dua',.35),('bang',.25),('phuong',.2),('tre',.2)]),True,lambda k:{'tre':12,'dua':16}.get(k,22))
+pts(band,9000,15,pick([('dua',.3),('bang',.2),('phuong',.14),('tre',.12),('xoai',.14),('mit',.07),('cau',.02),('chuoi',.01)]),True,lambda k:{'tre':12,'dua':16,'cau':11,'chuoi':11,'xoai':21,'mit':20}.get(k,22))
 # (2) cây rải bên trong bãi cỏ
 inner=ok_grass&(dedge>=11)&(dwat>=4)&(dmo>=10)&(dpath>=4)&(dfe>=3)
-pts(inner,6000,26,pick([('bang',.34),('phuong',.26),('dua',.14),('tre',.12),('giay',.14)]),True,lambda k:{'giay':12,'tre':14,'dua':18}.get(k,26))
+pts(inner,9000,24,pick([('bang',.2),('phuong',.14),('dua',.1),('tre',.08),('giay',.08),('xoai',.2),('mit',.1),('buoi',.06),('cau',.02),('chuoi',.02)]),True,lambda k:{'giay':12,'tre':14,'dua':18,'cau':11,'chuoi':11,'xoai':22,'mit':20,'buoi':18}.get(k,24))
+# (2b) vườn nhà: mỗi nhà có 3–6 cây ăn trái/cau/chuối quanh chân nhà (cách 2.5–9 ô), không che cửa phía trước (nửa dưới trước cửa để trống)
+bm=np.zeros((R,C),bool)
+for x0,y0,x1,y1 in BUILD: bm[max(0,int(y0)-0):int(y1)+1,max(0,int(x0)):int(x1)+1]=True
+HOAAN_ZONES=[(298,222,314,236),(309,231,324,245),(296,244,312,261),(286,221,300,235),(311,244,323,256)]   # các điểm Hòa An + bàn Khoa + trạm diễn giải: chừa trống
+for x0,y0,x1,y1 in HOAAN_ZONES: bm[y0:y1+1,x0:x1+1]=True
+dbm=ndi.distance_transform_edt(~bm)
+gok=(M==0)&~BLK&(dpath>=1.6)&(dph>=2)&(dgate>=6)&(dbr>=3)&(dwat>=3)&(dmo>=6)&(dbm>=2.5)
+for _r in csv.DictReader(open(ROOT+'/data/ref/03_feature_manifest.csv',encoding='utf-8-sig')):
+    if _r['id'] in FOOT and FOOT[_r['id']][0]>=9 and ('NHA' in _r['id']):
+        hx,hy=(float(_r['x_px'])-40)/PX,(float(_r['y_px'])-40)/PX; hw,hh=FOOT[_r['id']][0]/2,FOOT[_r['id']][1]/2
+        dxr=np.maximum(np.abs(xx+.5-hx)-hw,0); dyr=np.maximum(np.abs(yy+.5-hy)-hh,0); dr=np.hypot(dxr,dyr)
+        front=(yy+.5>hy+hh-1)&(np.abs(xx+.5-hx)<hw+2)                   # dải trước cửa nhà để thoáng
+        pts(gok&(dr>=2.5)&(dr<=9)&~front,600,13,pick([('xoai',.28),('mit',.2),('cau',.12),('chuoi',.12),('buoi',.14),('dua',.14)]),True,lambda k:{'cau':5,'chuoi':6,'dua':9,'buoi':8,'mit':9,'xoai':10}.get(k,9),count=9)
+# (2f) sân đất + hàng rào dâm bụt + giàn bầu + rơm + tre sau nhà (đồ trang trí rời, không chặn đường đi) — mỗi nhà một "khuôn viên" làng quê
+HOUSES=[]
+for _r in csv.DictReader(open(ROOT+'/data/ref/03_feature_manifest.csv',encoding='utf-8-sig')):
+    if _r['id'] in FOOT and FOOT[_r['id']][0]>=9 and ('NHA' in _r['id']):
+        HOUSES.append((_r['id'],(float(_r['x_px'])-40)/PX,(float(_r['y_px'])-40)/PX,FOOT[_r['id']][0]/2,FOOT[_r['id']][1]/2))
+def _okd(x,y,wm=1.6,pm=1.2):
+    xi,yi=int(x),int(y)
+    return 0<=yi<R and 0<=xi<C and M[yi,xi]==0 and not BLK[yi,xi] and dpath[yi,xi]>=pm and dwat[yi,xi]>=wm and dmo[yi,xi]>=4
+for k_,(iid,hx,hy,hw,hh) in enumerate(HOUSES):
+    y0,y1,x0,x1=int(hy+hh-3),int(hy+hh+4),int(hx-5),int(hx+5)
+    if not (M[y0:y1+1,x0:x1+1]==2).any(): DECOR.append(['san%d'%(k_%2),round(hx,2),round(hy+hh+3.8,2)])      # sân đất nện trước nhà
+    for sx in (-1,1):                                                                                           # rào dâm bụt hai bên sân
+        for j in range(2):
+            bx,by=hx+sx*(hw+.6+j*1.7),hy+hh+3.3
+            if _okd(bx,by): put('dambut',bx,by,2.4)
+    gx=hx-(hw+3.6) if k_%2==0 else hx+(hw+3.6)
+    if _okd(gx,hy+hh-.5,wm=2.2): put('gian',gx,hy+hh-.5,3.4)                                                    # giàn bầu bên hông
+    if iid in('F5_NHA_ONG_NAM_GIAO','F9_NHA_ONG_CA_NHI_NGUU') and _okd(hx+hw+1.8,hy+hh-1):                     # nhà mái lá: đống rơm
+        put('rom',hx+hw+1.8,hy+hh-1,3)
+    for _ in range(2):                                                                                          # tre làng sau nhà
+        bx,by=hx+rng.uniform(-hw-3,hw+3),hy-hh-rng.uniform(.8,3.5)
+        if _okd(bx,by,wm=2.5) and far(bx,by,12,None,'tre'): put('tre',bx,by,12,True)
+# xuồng ba lá kéo lên bờ kênh ở khu làng
+_xm=(M==0)&~BLK&(dwat>=1.2)&(dwat<=2.4)&(dpath>=2.5)&(dgate>=6)&(dbr>=5)&(dmo>=8)&(dbm>=3)&(xx>=262)
+pts(_xm,3000,40,lambda g:'xuong',False,count=3,k_far=('xuong',))
+# (2c) tràm dọc bờ kênh nước ngọt (cây bản địa vùng ngập), thưa và xen kẽ
+tram_m=(M==0)&~BLK&(dwat>=2.4)&(dwat<=5.5)&(dpath>=2)&(dph>=2)&(dgate>=6)&(dbr>=4)&(dmo>=6)&(dbm>=3)&(xx>=240)
+pts(tram_m,5000,11,lambda g:'tram',True,count=48,k_far=('tram',))
+# (2d) vài hàng cau dọc lối đi làng
+cau_m=(M==0)&~BLK&(dpath>=2)&(dpath<=3.6)&(dph>=2)&(dgate>=6)&(dbr>=4)&(dmo>=6)&(dbm>=3)&(xx>=240)&(dwat>=3)
+pts(cau_m,3000,14,lambda g:'cau',True,count=12,k_far=('cau',))
+# (2e) bổ sung bãi giữa: cây ăn quả mọc tự nhiên, thưa
+inner2=ok_grass&(dedge>=9)&(dwat>=3)&(dmo>=8)&(dpath>=2.5)&(dfe>=3)&(dbm>=3)
+pts(inner2,12000,16,pick([('xoai',.26),('mit',.16),('buoi',.1),('cau',.03),('chuoi',.05),('dua',.12),('tre',.06),('bang',.12),('phuong',.1)]),True,lambda k:{'tre':8,'dua':10,'cau':5,'chuoi':6,'xoai':11,'mit':10,'buoi':9}.get(k,12),count=240)
+# (2g0) vườn cây ăn trái dọc hai bên lối làng (cách mép lối 2–7 ô): xoài, mít, bưởi, chuối, cau, dừa
+_ls=(M==0)&~BLK&(dpath>=2.0)&(dpath<=7)&(dph>=2)&(dgate>=6)&(dbr>=4)&(dwat>=3)&(dmo>=8)&(dbm>=2.5)&(dedge>=3)&(xx>=250)
+pts(_ls,12000,9,pick([('xoai',.3),('mit',.18),('buoi',.14),('chuoi',.1),('cau',.1),('dua',.18)]),True,lambda k:{'cau':5,'chuoi':6,'dua':9,'buoi':8,'mit':9,'xoai':10}.get(k,9),count=110)
+# (2g) bụi tre làng dọc bờ kênh và ven ranh phía đông, thưa đều
+_trem=(M==0)&~BLK&(((dwat>=2.5)&(dwat<=7))|(dedge<=11))&(dpath>=2)&(dph>=2)&(dgate>=6)&(dbr>=4)&(dmo>=8)&(dbm>=3)&(xx>=250)
+pts(_trem,4000,10,lambda g:'tre',True,count=34,k_far=('tre',))
+# (2h) bụi cây thấp (hoa giấy, bụi) rải quanh nhà cho đỡ trống
+pts(gok,3000,7,pick([('giay',.5),('bush',.5)]),False,lambda k:7,count=40)
 # (3) liễu rủ ven kênh / hồ
 shore=ok_grass&(dwat>=4)&(dwat<=8)&(dmo>=8)&(dpath>=3)&(dfe>=6)
 pts(shore,4000,34,lambda g:'lieu',True,count=22,k_far=('lieu',))
@@ -262,7 +461,8 @@ pts(shoreland,3000,8,pick([('stone0',.5),('stone1',.5)]),False,count=46)
 print('trang trí:',{k:sum(1 for d in DECOR if d[0]==k) for k in sorted(set(d[0] for d in DECOR))})
 CH='0123456789ab'
 js='/* Sinh tự động bởi tools/build_map.py (v3, 1 ô = 4 px sơ đồ). Không sửa tay: sửa build_map.py rồi chạy lại. */\n'
-js+='const MAPDATA={W:%d,H:%d,TREES:%s,BRIDGES:%s,PH:%s,DECOR:%s,M:[\n%s],B:[\n%s]};\n'%(C,R,json.dumps(TREES,separators=(',',':')),json.dumps(BRIDGES,separators=(',',':')),json.dumps(PH,ensure_ascii=False,separators=(',',':')),json.dumps(DECOR,separators=(',',':')),',\n'.join('"%s"'%''.join(CH[v] for v in row) for row in M),',\n'.join('"%s"'%''.join('1' if v else '0' for v in row) for row in BLK))
+XR=(RIVER.astype(np.uint8)*1+(LANEM&(M==8)).astype(np.uint8)*2)
+js+='const MAPDATA={W:%d,H:%d,TREES:%s,BRIDGES:%s,PH:%s,DECOR:%s,M:[\n%s],B:[\n%s],X:[\n%s]};\n'%(C,R,json.dumps(TREES,separators=(',',':')),json.dumps(BRIDGES,separators=(',',':')),json.dumps(PH,ensure_ascii=False,separators=(',',':')),json.dumps(DECOR,separators=(',',':')),',\n'.join('"%s"'%''.join(CH[v] for v in row) for row in M),',\n'.join('"%s"'%''.join('1' if v else '0' for v in row) for row in BLK),',\n'.join('"%s"'%''.join(str(int(v)) for v in row) for row in XR))
 open(ROOT+'/js/data/mapdata.js','w').write(js)
 pal={0:(120,179,71),1:(199,162,106),2:(79,168,203),3:(217,184,74),4:(47,125,86),5:(208,201,182),6:(159,174,126),7:(155,106,58),8:(196,198,193),9:(138,140,139),10:(220,220,212),11:(155,106,58)}
 rgb=np.zeros((R,C,3),np.uint8)

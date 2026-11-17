@@ -45,15 +45,16 @@ const RIV=build([
 /* Phần 2 – chơi được trong thư viện (hội thoại, tự dựng theo từng câu: onLine) rồi tới đây */
 const PA=Math.ceil(RIV.end)+2;
 const POST=build([
- {s:'bk',tr:'dip',td:.9,t:['','Thứ làm An để ý không phải chữ in, mà là những dòng ghi chú ở bên lề.'],m:9.5},
- {s:'rd1',tr:'dissolve',td:.9,t:['EMMA','“Cậu nghĩ người viết mấy dòng đó có muốn ai đọc được không?”']},
- {s:'rd2',tr:'cut',t:['AN','“Tớ cũng chưa biết. Nhưng đã viết ra giấy thì chắc cũng mong có người đọc. Mình tới nơi rồi tính.”']},
+ {s:'bk',tr:'dip',td:.9,t:['','Điều níu An lại không phải những dòng chữ in ngay ngắn, mà là những nét bút bên lề – chỗ đậm, chỗ nhòe, có câu bị gạch đi rồi viết lại, như thể người viết vẫn chưa thôi nghĩ về điều mình ghi xuống.'],m:9.5},
+ {s:'rd1',tr:'dissolve',td:.9,t:['EMMA','“Do you think whoever wrote these wanted someone to read them? Or did they just write to keep themselves from forgetting?”‖Cậu nghĩ người viết có muốn ai đó đọc được những dòng này không? Hay họ chỉ viết để tự mình khỏi quên?']},
+ {s:'rd2',tr:'cut',t:['AN','“Tớ chưa biết. Có những điều người ta viết ra không hẳn để kể cho người khác nghe. Nhưng nếu đã giữ chúng lại trong một cuốn sách lâu như vậy, có lẽ đó cũng chưa bao giờ là chuyện riêng hoàn toàn.”']},
+ {s:'rd1',tr:'cut',t:['EMMA','“Then when we get there, let’s not only chase answers. Maybe we should work out what the writer was wondering in the first place.”‖Vậy đến nơi, mình đừng chỉ chăm chăm tìm câu trả lời. Có khi phải hiểu xem ban đầu người viết đã băn khoăn điều gì đã.']},
  {s:'rdB',tr:'cut',d:2.6},
- {s:'rd3',tr:'dissolve',td:.7,t:['','Không có ánh sáng kỳ lạ, cũng chẳng có tiếng gọi bí ẩn nào. Chỉ có hàng cây, con đường quê và một khoảng lặng.'],m:9},
+ {s:'rd3',tr:'dissolve',td:.7,t:['','Không có ánh sáng kỳ lạ, cũng chẳng có tiếng gọi nào vọng lên từ quá khứ. Trước mắt họ chỉ có hàng cây, con đường quê và cánh cổng mở ra một khoảng lặng.'],m:9},
  {s:'gate',tr:'dip',td:1.2,lead:1.3,t:['','“Hãy bắt đầu bằng sự kính trọng.”'],m:14.5}],PA);
 const AUTO=[...RIV.sh,...POST.sh],SUB=[...RIV.sb,...POST.sb],PRO_AT=RIV.end,END_AT=POST.end;
 /* Phụ đề hiện từng chữ theo nhịp đọc */
-function showSub(q){const w=q[3].split(' '),tot=q[3].length,rev=(q[1]-q[0])*.72;let acc=0;SB.className='';
+function showSub(q){let tx=q[3];if(tx.includes('‖')){const[e,v]=tx.split('‖');tx=st.c.sup===0?e+' ('+v+')':e}const w=tx.split(' '),tot=tx.length,rev=(q[1]-q[0])*.72;let acc=0;SB.className='';
  SB.innerHTML=(q[2]?'<b>'+q[2]+'</b>':'')+w.map(t=>{const d=(acc/tot*rev).toFixed(2);acc+=t.length+1;return'<span style="transition-delay:'+d+'s">'+t+'</span>'}).join(' ');void SB.offsetWidth;SB.className='in'}
 
 /* ---------- Camera & vẽ lớp ---------- */

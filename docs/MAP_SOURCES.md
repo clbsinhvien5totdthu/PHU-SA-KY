@@ -51,3 +51,10 @@ Công thức ô bản v2 (cũ): `col = (x−40)÷8`, `row = (y−40)÷8` trên �
 - **Khởi động:** dựng tileset bằng khoá số, ít tổ hợp hơn và canvas tạm (trước đó ~2,7 s CPU ở bước này, nay không đáng kể). Canvas đọc ngược pixel trong cutscene dùng `willReadFrequently` để tránh "GPU stall due to ReadPixels".
 - **Mỗi khung:** minimap chỉ vẽ ~9 lần/giây; âm lượng nhạc chỉ ghi khi đổi đáng kể.
 - **Chế độ nhẹ:** tắt đom đóm, cánh hoa, lấp lánh nước, ánh đèn. Tự bật khi FPS < 38 trong 6 giây liên tiếp; hoặc mở thẳng với `?lite`. Console có dòng "[psk] chế độ nhẹ".
+
+## Bản v5: tileset thực tế hơn (pxl)
+- **Nguồn:** `assets/art/map.px.js` (viết lại phần ô nền + cây cối; phần công trình `m_h_*` giữ nguyên). Dựng lại: `node <pxl>/bin/pxl.js build assets/art/map.px.js --out assets/art/out && node tools/build_mapart.js`.
+- **Cơ sở thực tế (ĐBSCL / Đồng Tháp):** nước kênh phù sa xanh lục đục (không xanh dương) có phản chiếu trời chiều, bèo tấm; bờ bùn phù sa nâu đỏ, mép ướt sẫm, bùn khô sáng, cỏ rủ ra mép; cỏ nhiệt đới nhiều sắc xanh, búi lá có hướng, mảng vàng-xanh do nắng, cỏ ba lá; gạch lát từng viên khác tông, mạch vữa tối, rêu ở mạch; sân granit vát cạnh; đường nhựa có hạt, vạch kẻ mòn; ván cầu từng tấm khác tông, thớ gỗ, đầu đinh.
+- **Mọi ô nền tuần hoàn** (tileable): họa tiết quấn mép 16 px nên ghép liền.
+- **Thêm biến thể:** cỏ 4 → 8 (`m_g0..7`), ngoài ranh 2 → 4 (`m_out0..3`). `js/scene.js` đã đổi `v%4`→`v%8` và `v%2`→`v%4` tương ứng; tên và kích thước các sprite khác giữ nguyên nên `mapdata`/`quests` không đổi.
+- **Cây:** tán lá dựng bằng lưới cụm lá có mặt dưới tối + đỉnh sáng lệch trên-trái, viền gồ ghề hữu cơ; bàng (3 tầng dẹt), phượng (tán dù, hoa đỏ cam), dừa (lá chét hai bên, buồng dừa, thân có vòng), tre (mấu đốt, lá thon), liễu (cành rủ chuyển sắc), hoa giấy, bụi, lau, sen.
