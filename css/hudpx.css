@@ -1,0 +1,74 @@
+/* HUD pixel art + tiếp cận (v18b). Khung/nút/icon vẽ bằng tools/gen_hud_art.py. Tỷ lệ 2x số nguyên, image-rendering:pixelated. */
+:root{--hp-ink:#3b2412;--hp-focus:#ffd24a}
+.ic{display:inline-block;width:24px;height:24px;vertical-align:-7px;background:center/contain no-repeat;image-rendering:pixelated;flex:none}
+.ic-book{background-image:url(../assets/ui/icon_book.png)}.ic-people{background-image:url(../assets/ui/icon_people.png)}.ic-map{background-image:url(../assets/ui/icon_map.png)}.ic-note{background-image:url(../assets/ui/icon_note.png)}
+.ic-sliders{background-image:url(../assets/ui/icon_sliders.png)}.ic-search{background-image:url(../assets/ui/icon_search.png)}.ic-bubble{background-image:url(../assets/ui/icon_bubble.png)}.ic-bulb{background-image:url(../assets/ui/icon_bulb.png)}
+.ic-compass{background-image:url(../assets/ui/icon_compass.png)}.ic-ink{background-image:url(../assets/ui/icon_ink.png)}.ic-speaker{background-image:url(../assets/ui/icon_speaker.png)}.ic-mute{background-image:url(../assets/ui/icon_mute.png)}
+.ic-hourglass{background-image:url(../assets/ui/icon_hourglass.png)}.ic-half{background-image:url(../assets/ui/icon_half.png)}.ic-pencil{background-image:url(../assets/ui/icon_pencil.png)}.ic-check{background-image:url(../assets/ui/icon_check.png)}
+.ic-question{background-image:url(../assets/ui/icon_question.png)}.ic-clock{background-image:url(../assets/ui/icon_clock.png)}.ic-pin{background-image:url(../assets/ui/icon_pin.png)}
+/* ---- khung lớn: giấy dó + khung gỗ + đinh đồng ---- */
+.box{background:none;border:10px solid transparent;border-image:url(../assets/ui/panel.png) 5 fill/10px stretch;border-radius:0;box-shadow:none;image-rendering:pixelated;filter:drop-shadow(0 3px 0 rgba(42,31,51,.32))}
+/* ---- khung nhỏ cho chip/nhãn nổi ---- */
+#hy,#qturn,.pop,#snd,#loc,#toast,#cmp span,#stpc .chip.x{border:6px solid transparent;border-image:url(../assets/ui/chip.png) 3 fill/6px stretch}
+#loc,#toast{padding:2px 10px}#hy{padding:2px 8px}#qturn{padding:1px 8px}#snd{padding:2px 10px}.pop{padding:0 8px}
+#cmp span{border-width:6px;padding:0 4px;background:none}
+/* ---- nút: đồng, 3 trạng thái ---- */
+.bt,#act,#side button,#hpb,.hp-t,.hp-x{border:8px solid transparent;border-image:url(../assets/ui/btn.png) 4 fill/8px stretch;border-radius:0;background:none;color:var(--hp-ink);cursor:pointer;image-rendering:pixelated;margin-top:0;filter:drop-shadow(0 2px 0 rgba(42,31,51,.3))}
+.bt{padding:2px 12px;margin-top:8px}
+#side button{padding:1px 8px;display:flex;align-items:center;gap:6px;min-height:40px;font-size:15px;width:max-content}
+#act{padding:6px 14px;font:400 26px/1.1 var(--px);display:none;align-items:center;gap:6px}
+.bt:hover,#act:hover,#side button:hover,#hpb:hover,.hp-t:hover,.hp-x:hover{border-image-source:url(../assets/ui/btn_hover.png)}
+.bt:active,#act:active,#side button:active,.hp-t:active,.hp-x:active{border-image-source:url(../assets/ui/btn_press.png);transform:translateY(2px);filter:none}
+.hp-t[aria-pressed=true],.hp-x[aria-pressed=true]{border-image-source:url(../assets/ui/btn_on.png)}
+kbd{font:400 15px/1 var(--px);background:#5b3418;color:#fff6d8;padding:2px 5px;box-shadow:inset 2px 2px 0 #7a4b24,inset -2px -2px 0 #3a1f1a;border-radius:0}
+#side button .bl{white-space:nowrap}
+/* ---- lựa chọn hội thoại + chip bàn đóng dấu ---- */
+#ch button,.chip{border:6px solid transparent;border-image:url(../assets/ui/choice.png) 3 fill/6px stretch;border-radius:0;background:none;padding:2px 6px;image-rendering:pixelated}
+#ch button:hover,#ch button:focus-visible,.chip:hover:not(:disabled){border-image-source:url(../assets/ui/choice_hover.png)}
+.chip.on{border-image-source:url(../assets/ui/btn_on.png);border-width:8px;border-image-slice:4;border-image-width:8px;padding:0 4px;font-weight:700}
+.chip.lock{border-image-source:url(../assets/ui/btn_on.png);border-width:8px;border-image-slice:4;border-image-width:8px;padding:0 4px}
+/* ---- nhãn + pip ---- */
+.tg,#hy .bd,#oq b{border-radius:0;box-shadow:0 0 0 2px #3a1f1a,inset 2px 2px 0 #b07a45,inset -2px -2px 0 #5b3418;margin-left:6px}
+#oq b{margin-left:2px;margin-bottom:5px}
+#oq{font-size:15.5px;border-bottom:0;padding-bottom:2px;background:linear-gradient(90deg,#c9a86a 50%,transparent 0) bottom/8px 2px repeat-x}
+#oq b i.ic{width:18px;height:18px;vertical-align:-4px;margin-right:2px}
+#pips{gap:3px}#pips i{height:12px;border:4px solid transparent;border-image:url(../assets/ui/pip_off.png) 2 fill/4px stretch;background:none;box-sizing:border-box;image-rendering:pixelated}
+#pips i.on{border-image-source:url(../assets/ui/pip_on.png)}#pips i.cur{border-image-source:url(../assets/ui/pip_cur.png)}
+#qturn i{border-radius:0;width:12px;height:12px;border:0;background:#e3cf9c;box-shadow:0 0 0 2px #3a1f1a,inset 2px 2px 0 #f6e7bd}#qturn i.u{background:#b9852f;box-shadow:0 0 0 2px #3a1f1a,inset 2px 2px 0 #e0b25a,inset -2px -2px 0 #7e5a1c}
+#qturn small{opacity:1;color:#5a3a1c}
+/* ---- HUD dưới trái ---- */
+#pt b{border-radius:0!important;box-shadow:0 0 0 2px #3a1f1a,inset 2px 2px 0 rgba(255,246,216,.45),inset -2px -2px 0 rgba(42,31,51,.4)!important}
+#pt b:nth-child(1){outline:3px solid #f5c542;outline-offset:0}
+#mtr{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:13.5px}#mtr span{white-space:nowrap}#mtr .ic{width:20px;height:20px;vertical-align:-6px;margin-right:2px}#mtr b{font:400 19px var(--px)}
+#clk .ic{width:20px;height:20px;vertical-align:-6px;margin-right:3px}
+#keys{opacity:1;color:#5a3a1c;font-size:15px}
+#who{border-radius:0;border:0;padding:0 12px 1px;box-shadow:0 0 0 3px #3a1f1a,inset 3px 3px 0 #ecc66a,inset -3px -3px 0 #a9803f;top:-22px;left:20px}
+/* ---- la bàn ---- */
+#cmp svg{display:none}#cmp img{width:51px;height:51px;display:block;image-rendering:pixelated;margin:-3px;filter:drop-shadow(0 2px 0 rgba(42,31,51,.45))}
+/* ---- lớp phủ đầy màn ---- */
+#hpp{position:fixed;inset:0;z-index:92;display:none;align-items:center;justify-content:center;background:rgba(10,15,5,.7);padding:10px;box-sizing:border-box}
+#hpc{width:min(460px,96%);max-height:92%;overflow:auto;padding:4px 10px;font-size:15.5px}
+#hpc h3{margin:2px 0 8px;font:400 28px var(--px);letter-spacing:.03em}#hpc h3 .ic{vertical-align:-6px}
+.hp-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0;flex-wrap:wrap}.hp-row b{font-size:15px}.hp-g{display:flex;gap:6px;flex-wrap:wrap}
+.hp-t,.hp-x{padding:2px 10px;font:inherit;font-size:15px;min-height:40px}
+.hp-note{font-size:13px;color:#5a3a1c;margin:6px 0 2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* ---- tiếp cận ---- */
+:focus-visible{outline:3px solid var(--hp-focus);outline-offset:2px;box-shadow:0 0 0 2px #2a1f33}
+button{touch-action:manipulation}
+body.hp-l #ui,body.hp-l #dlg,body.hp-l #act,body.hp-l #toast,body.hp-l #nbc,body.hp-l #endc,body.hp-l #cpc,body.hp-l #stpc,body.hp-l #xcc,body.hp-l #hpc{zoom:1.15}
+body.hp-xl #ui,body.hp-xl #dlg,body.hp-xl #act,body.hp-xl #toast,body.hp-xl #nbc,body.hp-xl #endc,body.hp-xl #cpc,body.hp-xl #stpc,body.hp-xl #xcc,body.hp-xl #hpc{zoom:1.3}
+body.hp-hc .box,body.hp-hc #hy,body.hp-hc #qturn,body.hp-hc .pop,body.hp-hc #snd,body.hp-hc #loc,body.hp-hc #toast{color:#1a1208}
+body.hp-hc .box{border-image-source:url(../assets/ui/panel_hc.png)}
+body.hp-hc #hy,body.hp-hc #qturn,body.hp-hc .pop,body.hp-hc #snd,body.hp-hc #loc,body.hp-hc #toast{border-image-source:url(../assets/ui/chip_hc.png)}
+body.hp-hc .tg,body.hp-hc #hy .bd,body.hp-hc #oq b,body.hp-hc kbd{background:#1a1208;color:#fff6d8;box-shadow:0 0 0 2px #1a1208}
+body.hp-hc #qturn small,body.hp-hc .hp-note,body.hp-hc #keys{color:#1a1208}
+body.hp-hc .xcard .gap,body.hp-hc .hint,body.hp-hc .why{color:#1a1208;opacity:1}
+body.hp-rm *,body.hp-rm *::before{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+@media(pointer:coarse){#side button,.bt,#act,.chip,#ch button,#snd,#hy,.hp-t,.hp-x{min-height:44px}.chip{padding:6px 8px}}
+@media(max-width:560px){#side button{padding:0 6px;font-size:14px;gap:4px}#side button .ic{width:22px;height:22px}#side button kbd{display:none}#hud{max-width:calc(100vw - 170px)}}
+
+.hp-t[aria-pressed=true]::before,.chip.on::before,.chip.lock::before{content:'✔ '}
+
+@media(max-width:560px){#loc{top:auto!important;bottom:calc(196px + env(safe-area-inset-bottom,0px))!important}}
